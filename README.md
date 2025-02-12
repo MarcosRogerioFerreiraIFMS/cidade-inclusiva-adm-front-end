@@ -17,8 +17,9 @@
 
 ## Estrutura do Projeto
 ### Arquitetura base do projeto "Cidade Inclusiva"
-
-
+<div align="center">
+  <img src="arquitetura-base.png" />
+</div>
 
 ### Tecnologias de desenvolvimento para Front End
 Lista de tecnologias utilizadas.
