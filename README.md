@@ -59,14 +59,14 @@ Para rodar o projeto localmente, siga os passos abaixo:
 
 3. **Instale as dependências:**
 
-    ```sh
-    pnpm i
-    ```
-
     Caso não tenha o pnpm instalado, execute:
 
     ```sh
     npm install -g pnpm
+    ```
+
+    ```sh
+    pnpm i
     ```
 
 4. **Execute a aplicação:**
