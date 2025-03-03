@@ -1,19 +1,77 @@
 # Projeto Cidade Inclusiva - Painel Administrativo
-## Documentação de apoio
 
-|Descrição|Link|
+O projeto "Cidade Inclusiva - Painel Administrativo" visa melhorar a mobilidade urbana para cadeirantes. Este painel permite que administradores gerenciem e monitorem dados essenciais para criar uma cidade mais acessível e inclusiva.
+
+## Documentação de Apoio
+
+| Descrição | Link |
 |:---|:---|
-|Documentação do projeto Mobile|[Documentação Cidade Inclusiva](https://docs.google.com/document/d/1VxejBnzkMbvmlPWUQOMgSNrHDl5ugXdu/edit?usp=sharing&ouid=102192252225915503282&rtpof=true&sd=true)|
-|Figma|[Protótipo inicial das interfaces no Figma](https://www.figma.com/design/sHp0ryMHBTla6oVVEYJSOv/Cidade-Inclusiva---Administra%C3%A7%C3%A3o?t=bAvL4J7JhD7i1ASY-0)|
-|Protótipo do Mobile no Vercel|[Cidade Inclusiva - Mobile](https://fundect-pictec3-mobile-cidade-inclusiva.vercel.app/login)|
-|Protótipo do Mobile no Github|[Cidade Inclusiva - Mobile](https://github.com/marcosrogerio-jrf/fundect-pictec3-mobile-cidade-inclusiva)|
-|Modelagem UML do Projeto|[Cidade Inclusiva - UML](https://app.diagrams.net/#G1c72Gns79DE7laBVADoPoukr65F1AaNS-#%7B%22pageId%22%3A%22mtrVlBZr0wSEAqDMiRos%22%7D)|
+| Documentação do Projeto Mobile | [Documentação Cidade Inclusiva](https://docs.google.com/document/d/1VxejBnzkMbvmlPWUQOMgSNrHDl5ugXdu/edit?usp=sharing&ouid=102192252225915503282&rtpof=true&sd=true) |
+| Protótipo Inicial no Figma | [Figma](https://www.figma.com/design/sHp0ryMHBTla6oVVEYJSOv) |
+| Protótipo Mobile no Vercel | [Cidade Inclusiva - Mobile](https://fundect-pictec3-mobile-cidade-inclusiva.vercel.app/login) |
+| Repositório Mobile no GitHub | [Cidade Inclusiva - Mobile](https://github.com/marcosrogerio-jrf/fundect-pictec3-mobile-cidade-inclusiva) |
+| Modelagem UML do Projeto | [Cidade Inclusiva - UML](https://app.diagrams.net/#G1c72Gns79DE7laBVADoPoukr65F1AaNS-) |
 
 ## Estrutura do Projeto
-### Arquitetura base do projeto "Cidade Inclusiva"
-<div align="center">
-  <img src="arquitetura-base.png" />
-</div>
 
-### Tecnologias de desenvolvimento para Front End
-Lista de tecnologias utilizadas.
+### Arquitetura Base do Projeto "Cidade Inclusiva"
+
+![Arquitetura Base](docs/arquitetura-base.png)
+
+### Tecnologias Utilizadas
+
+Lista de tecnologias utilizadas:
+
+| Tecnologia | Descrição | Link de Acesso |
+|:---|:---|:---|
+| React | Biblioteca JavaScript para construção de interfaces de usuário. | [React](https://react.dev/) |
+| Next.js | Framework React para desenvolvimento de aplicações web com renderização do lado do servidor. | [Next.js](https://nextjs.org/) |
+| Tailwind CSS | Framework CSS utilitário para criar designs customizados rapidamente. | [Tailwind CSS](https://tailwindcss.com/) |
+| TypeScript | Superset do JavaScript que adiciona tipagem estática ao código. | [TypeScript](https://www.typescriptlang.org/) |
+| shadcn | Biblioteca de componentes UI para React, focada em acessibilidade e personalização. | [shadcn](https://ui.shadcn.com/) |
+| pnpm | Gerenciador de pacotes rápido e eficiente para JavaScript. | [pnpm](https://pnpm.io/) |
+
+### Ferramentas de Linting
+
+Lista de ferramentas de linting utilizadas no projeto:
+
+| Ferramenta | Descrição | Link de Acesso |
+|:---|:---|:---|
+| ESLint | Ferramenta de linting para identificar e corrigir problemas em código JavaScript/TypeScript. | [ESLint](https://eslint.org/) |
+| Prettier | Ferramenta de formatação de código que garante um estilo consistente. | [Prettier](https://prettier.io/) |
+
+### Como Rodar o Projeto
+
+Para rodar o projeto localmente, siga os passos abaixo:
+
+1. **Clone o repositório:**
+
+    ```sh
+    git clone https://github.com/MarcosRogerioFerreiraIFMS/cidade-inclusiva-adm-front-end.git
+    ```
+
+2. **Acesse o diretório do projeto:**
+
+    ```sh
+    cd cidade-inclusiva-adm-front-end
+    ```
+
+3. **Instale as dependências:**
+
+    ```sh
+    pnpm i
+    ```
+
+    Caso não tenha o pnpm instalado, execute:
+
+    ```sh
+    npm install -g pnpm
+    ```
+
+4. **Execute a aplicação:**
+
+    ```sh
+    pnpm dev
+    ```
+
+O servidor será iniciado em `http://localhost:3000`.
