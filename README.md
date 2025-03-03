@@ -25,7 +25,6 @@ Lista de tecnologias utilizadas:
 | Tecnologia | Descrição | Link de Acesso |
 |:---|:---|:---|
 | React | Biblioteca JavaScript para construção de interfaces de usuário. | [React](https://react.dev/) |
-| Vite | Vite é uma ferramenta de construção de frontend extremamente rápida que impulsiona a próxima geração de aplicativos web. | [Vite](https://vite.dev/) |
 | Next.js | Framework React para desenvolvimento de aplicações web com renderização do lado do servidor. | [Next.js](https://nextjs.org/) |
 | Tailwind CSS | Framework CSS utilitário para criar designs customizados rapidamente. | [Tailwind CSS](https://tailwindcss.com/) |
 | TypeScript | Superset do JavaScript que adiciona tipagem estática ao código. | [TypeScript](https://www.typescriptlang.org/) |
