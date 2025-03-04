@@ -2,8 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 export function Header() {
   return (
-    <header className="bg-secondary border-secondary-foreground flex h-25 items-center justify-between border-l-2 px-10 py-3">
-      <h1 className="text-secondary-foreground text-[32px]">Dashboard</h1>
+    <header className="bg-secondary border-secondary-foreground flex h-20 items-center justify-between border-l-2 px-5 py-3">
+      <h1 className="text-secondary-foreground text-2xl">Dashboard</h1>
 
       <div className="flex items-center gap-3">
         <Avatar className="h-[50px] w-[50px] cursor-pointer rounded-full border-3">
