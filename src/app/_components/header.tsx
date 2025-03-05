@@ -1,4 +1,12 @@
-import { HomeIcon } from 'lucide-react'
+import {
+  AccessibilityIcon,
+  BusFrontIcon,
+  ContactIcon,
+  HomeIcon,
+  NewspaperIcon,
+  TriangleAlertIcon,
+  WrenchIcon
+} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
@@ -38,7 +46,7 @@ export function Header() {
               className="flex items-center gap-3"
               href="/acessibilidade-urbana"
             >
-              <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+              <AccessibilityIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
               <p className="text-secondary-muted-foreground line-clamp-3">
                 Acessibilidade Urbana
               </p>
@@ -46,7 +54,7 @@ export function Header() {
           </li>
           <li>
             <Link className="flex items-center gap-3" href="/contatos">
-              <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+              <ContactIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
               <p className="text-secondary-muted-foreground line-clamp-3">
                 Contatos
               </p>
@@ -57,7 +65,7 @@ export function Header() {
               className="flex items-center gap-3"
               href="/oficinas-manutencao"
             >
-              <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+              <WrenchIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
               <p className="text-secondary-muted-foreground line-clamp-3">
                 Oficinas de Manutenção
               </p>
@@ -68,7 +76,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/oficinas-manutencao/listar"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <WrenchIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Listar oficinas de manutenção
                   </p>
@@ -79,7 +87,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/oficinas-manutencao/adicionar"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <WrenchIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Adicionar oficinas de manutenção
                   </p>
@@ -89,7 +97,7 @@ export function Header() {
           </li>
           <li>
             <Link className="flex items-center gap-3" href="/noticias">
-              <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+              <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
               <p className="text-secondary-muted-foreground line-clamp-3">
                 Notícias
               </p>
@@ -100,7 +108,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/noticias/visao-geral"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Visão Geral
                   </p>
@@ -111,7 +119,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/noticias/listar"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Listar Notícias
                   </p>
@@ -122,7 +130,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/noticias/adicionar"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Adicionar Notícias
                   </p>
@@ -132,7 +140,7 @@ export function Header() {
           </li>
           <li>
             <Link className="flex items-center gap-3" href="/ocorrencias">
-              <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+              <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
               <p className="text-secondary-muted-foreground line-clamp-3">
                 Ocorrências
               </p>
@@ -143,7 +151,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/ocorrencias/visao-geral"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Visão Geral
                   </p>
@@ -154,7 +162,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/ocorrencias/listar"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Listar Ocorrências
                   </p>
@@ -165,7 +173,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/ocorrencias/mapa"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Mapa Interativo
                   </p>
@@ -176,7 +184,7 @@ export function Header() {
                   className="flex items-center gap-3"
                   href="/ocorrencias/gerar-relatorio"
                 >
-                  <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
                   <p className="text-secondary-muted-foreground line-clamp-3">
                     Gerar relatório de ocorrências
                   </p>
@@ -186,7 +194,7 @@ export function Header() {
           </li>
           <li>
             <Link className="flex items-center gap-3" href="/transporte">
-              <HomeIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
+              <BusFrontIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
               <p className="text-secondary-muted-foreground line-clamp-3">
                 Transporte
               </p>
