@@ -1,3 +1,12 @@
 export default function Home() {
-  return <></>
+  return (
+    <main
+      className="mt-20 ml-70 grid place-items-center bg-slate-200 p-5"
+      style={{
+        height: 'calc(100dvh - 5rem)'
+      }}
+    >
+      <h1 className="text-4xl text-slate-900">Dashboard</h1>
+    </main>
+  )
 }
