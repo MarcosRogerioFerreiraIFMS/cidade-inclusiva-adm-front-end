@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <main
-      className="mt-20 ml-70 grid place-items-center bg-slate-200 p-5"
+      className="mt-20 ml-70 grid place-items-center p-5"
       style={{
         height: 'calc(100dvh - 5rem)'
       }}
