@@ -33,16 +33,12 @@ export function Header() {
         return 'Adicionar Oficinas de Manutenção'
       case '/noticias':
         return 'Notícias'
-      case '/noticias/visao-geral':
-        return 'Visão Geral de Notícias'
       case '/noticias/listar':
         return 'Listar Notícias'
       case '/noticias/adicionar':
         return 'Adicionar Notícias'
       case '/ocorrencias':
         return 'Ocorrências'
-      case '/ocorrencias/visao-geral':
-        return 'Visão Geral de Ocorrências'
       case '/ocorrencias/listar':
         return 'Listar Ocorrências'
       case '/ocorrencias/mapa':
@@ -118,13 +114,6 @@ export function Header() {
             <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
               <li>
                 <LinkItem
-                  href="/noticias/visao-geral"
-                  icon={NewspaperIcon}
-                  text="Visão Geral"
-                />
-              </li>
-              <li>
-                <LinkItem
                   href="/noticias/listar"
                   icon={NewspaperIcon}
                   text="Listar Notícias"
@@ -146,13 +135,6 @@ export function Header() {
               text="Ocorrências"
             />
             <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
-              <li>
-                <LinkItem
-                  href="/ocorrencias/visao-geral"
-                  icon={TriangleAlertIcon}
-                  text="Visão Geral"
-                />
-              </li>
               <li>
                 <LinkItem
                   href="/ocorrencias/listar"
