@@ -1,3 +1,5 @@
+'use client'
+
 import {
   AccessibilityIcon,
   BusFrontIcon,
@@ -9,12 +11,53 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 export function Header() {
+  function handleTitle() {
+    const router = usePathname()
+
+    if (router === '/') return 'Dashboard'
+
+    switch (router) {
+      case '/acessibilidade-urbana':
+        return 'Acessibilidade Urbana'
+      case '/contatos':
+        return 'Contatos'
+      case '/oficinas-manutencao':
+        return 'Oficinas de Manutenção'
+      case '/oficinas-manutencao/listar':
+        return 'Listar Oficinas de Manutenção'
+      case '/oficinas-manutencao/adicionar':
+        return 'Adicionar Oficinas de Manutenção'
+      case '/noticias':
+        return 'Notícias'
+      case '/noticias/visao-geral':
+        return 'Visão Geral de Notícias'
+      case '/noticias/listar':
+        return 'Listar Notícias'
+      case '/noticias/adicionar':
+        return 'Adicionar Notícias'
+      case '/ocorrencias':
+        return 'Ocorrências'
+      case '/ocorrencias/visao-geral':
+        return 'Visão Geral de Ocorrências'
+      case '/ocorrencias/listar':
+        return 'Listar Ocorrências'
+      case '/ocorrencias/mapa':
+        return 'Mapa Interativo de Ocorrências'
+      case '/ocorrencias/gerar-relatorio':
+        return 'Gerar Relatório de Ocorrências'
+      case '/transporte':
+        return 'Transporte'
+      default:
+        return 'Página não encontrada'
+    }
+  }
   return (
     <>
-      <aside className="bg-secondary fixed top-0 left-0 flex h-full w-[280px] flex-col gap-10 px-5 pt-5">
+      <aside className="bg-secondary fixed top-0 left-0 flex h-full w-[280px] flex-col gap-10 pt-5 pr-2 pb-5 pl-5">
         <Link
           className="relative flex h-[52px] w-[222px] shrink-0 grow-0"
           href="/"
@@ -31,180 +74,120 @@ export function Header() {
           />
         </Link>
 
-        <ul className="flex flex-col gap-4 overflow-y-auto px-4 pb-20 [&::-webkit-scrollbar]:hidden">
+        <ul className="[&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-y-auto pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full">
           <li>
-            <Link className="flex items-center gap-3" href="/">
-              <HomeIcon className="text-secondary-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-foreground line-clamp-3 font-bold">
-                Dashboard
-              </p>
-            </Link>
+            <LinkItem href="/" icon={HomeIcon} text="Dashboard" />
           </li>
 
           <li>
-            <Link
-              className="flex items-center gap-3"
+            <LinkItem
               href="/acessibilidade-urbana"
-            >
-              <AccessibilityIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-muted-foreground line-clamp-3">
-                Acessibilidade Urbana
-              </p>
-            </Link>
+              icon={AccessibilityIcon}
+              text="Acessibilidade Urbana"
+            />
           </li>
           <li>
-            <Link className="flex items-center gap-3" href="/contatos">
-              <ContactIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-muted-foreground line-clamp-3">
-                Contatos
-              </p>
-            </Link>
+            <LinkItem href="/contatos" icon={ContactIcon} text="Contatos" />
           </li>
           <li>
-            <Link
-              className="flex items-center gap-3"
+            <LinkItem
               href="/oficinas-manutencao"
-            >
-              <WrenchIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-muted-foreground line-clamp-3">
-                Oficinas de Manutenção
-              </p>
-            </Link>
+              icon={WrenchIcon}
+              text="Oficinas de Manutenção"
+            />
             <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/oficinas-manutencao/listar"
-                >
-                  <WrenchIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Listar oficinas de manutenção
-                  </p>
-                </Link>
+                  icon={WrenchIcon}
+                  text="
+                  Listar oficinas de manutenção"
+                />
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/oficinas-manutencao/adicionar"
-                >
-                  <WrenchIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Adicionar oficinas de manutenção
-                  </p>
-                </Link>
+                  icon={WrenchIcon}
+                  text="Adicionar oficinas de manutenção"
+                />
               </li>
             </ul>
           </li>
           <li>
-            <Link className="flex items-center gap-3" href="/noticias">
-              <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-muted-foreground line-clamp-3">
-                Notícias
-              </p>
-            </Link>
+            <LinkItem href="/noticias" icon={NewspaperIcon} text="Notícias" />
             <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/noticias/visao-geral"
-                >
-                  <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Visão Geral
-                  </p>
-                </Link>
+                  icon={NewspaperIcon}
+                  text="Visão Geral"
+                />
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/noticias/listar"
-                >
-                  <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Listar Notícias
-                  </p>
-                </Link>
+                  icon={NewspaperIcon}
+                  text="Listar Notícias"
+                />
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/noticias/adicionar"
-                >
-                  <NewspaperIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Adicionar Notícias
-                  </p>
-                </Link>
+                  icon={NewspaperIcon}
+                  text="Adicionar Notícias"
+                />
               </li>
             </ul>
           </li>
           <li>
-            <Link className="flex items-center gap-3" href="/ocorrencias">
-              <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-muted-foreground line-clamp-3">
-                Ocorrências
-              </p>
-            </Link>
+            <LinkItem
+              href="/ocorrencias"
+              icon={TriangleAlertIcon}
+              text="Ocorrências"
+            />
             <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/ocorrencias/visao-geral"
-                >
-                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Visão Geral
-                  </p>
-                </Link>
+                  icon={TriangleAlertIcon}
+                  text="Visão Geral"
+                />
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/ocorrencias/listar"
-                >
-                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Listar Ocorrências
-                  </p>
-                </Link>
+                  icon={TriangleAlertIcon}
+                  text="Listar Ocorrências"
+                />
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/ocorrencias/mapa"
-                >
-                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Mapa Interativo
-                  </p>
-                </Link>
+                  icon={TriangleAlertIcon}
+                  text="Mapa Interativo"
+                />
               </li>
               <li>
-                <Link
-                  className="flex items-center gap-3"
+                <LinkItem
                   href="/ocorrencias/gerar-relatorio"
-                >
-                  <TriangleAlertIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-                  <p className="text-secondary-muted-foreground line-clamp-3">
-                    Gerar relatório de ocorrências
-                  </p>
-                </Link>
+                  icon={TriangleAlertIcon}
+                  text="Gerar relatório de ocorrências"
+                />
               </li>
             </ul>
           </li>
           <li>
-            <Link className="flex items-center gap-3" href="/transporte">
-              <BusFrontIcon className="text-secondary-muted-foreground h-6 w-6 shrink-0 grow-0" />
-              <p className="text-secondary-muted-foreground line-clamp-3">
-                Transporte
-              </p>
-            </Link>
+            <LinkItem
+              href="/transporte"
+              icon={BusFrontIcon}
+              text="Transporte"
+            />
           </li>
         </ul>
       </aside>
 
       <header className="bg-secondary border-secondary-foreground fixed top-0 left-70 flex h-20 w-full items-center justify-between border-l-2 px-5 py-3">
-        <h1 className="text-secondary-foreground text-2xl">Dashboard</h1>
+        <h1 className="text-secondary-foreground text-2xl">{handleTitle()}</h1>
 
         <div className="flex items-center gap-3">
           <Avatar className="h-[50px] w-[50px] cursor-pointer rounded-full border-3">
@@ -227,5 +210,26 @@ export function Header() {
         </div>
       </header>
     </>
+  )
+}
+
+interface LinkItemProps {
+  href: string
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  text: string
+}
+
+function LinkItem({ href, icon: Icon, text }: LinkItemProps) {
+  const router = usePathname()
+  const isActive = router === href
+
+  return (
+    <Link
+      className={`${isActive ? 'text-secondary-foreground' : 'text-secondary-muted-foreground'} hover:text-secondary-foreground-hover flex items-center gap-3 transition-colors`}
+      href={href}
+    >
+      <Icon className="h-6 w-6 shrink-0 grow-0" />
+      <p className={`line-clamp-3 ${isActive ? 'font-bold' : ''}`}>{text}</p>
+    </Link>
   )
 }
