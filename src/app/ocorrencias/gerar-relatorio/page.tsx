@@ -1,14 +1,11 @@
+import { Container } from '@/app/_components/container'
+
 export default function OcorrenciasGerarRelatorio() {
   return (
-    <main
-      className="mt-20 ml-70 grid place-items-center p-5"
-      style={{
-        height: 'calc(100dvh - 5rem)'
-      }}
-    >
+    <Container>
       <h1 className="text-4xl text-slate-900">
         Gerar Relatório de Ocorrências
       </h1>
-    </main>
+    </Container>
   )
 }
