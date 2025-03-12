@@ -15,9 +15,9 @@ import { usePathname } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 export function Header() {
-  function handleTitle() {
-    const router = usePathname()
+  const router = usePathname()
 
+  function handleTitle() {
     if (router === '/') return 'Dashboard'
 
     switch (router) {
@@ -70,7 +70,7 @@ export function Header() {
           />
         </Link>
 
-        <ul className="[&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-y-auto pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full">
+        <ul className="[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-y-auto pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full">
           <li>
             <LinkItem href="/" icon={HomeIcon} text="Dashboard" />
           </li>
@@ -166,6 +166,11 @@ export function Header() {
             />
           </li>
         </ul>
+
+        <p className="text-secondary-muted-foreground mt-auto text-center text-xs">
+          &copy; {new Date().getFullYear()} Cidade Inclusiva. Todos os direitos
+          reservados.
+        </p>
       </aside>
 
       <header className="bg-secondary border-secondary-foreground fixed top-0 left-70 flex h-20 w-full items-center justify-between border-l-2 px-5 py-3">
