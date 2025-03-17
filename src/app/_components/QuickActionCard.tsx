@@ -23,9 +23,11 @@ export function QuickActionCard({
         </p>
       </div>
 
-      <Button variant="secondary" size="lg">
-        <Link href={href}>Acessar</Link>
-      </Button>
+      <Link href={href}>
+        <Button variant="secondary" size="lg">
+          Acessar
+        </Button>
+      </Link>
     </article>
   )
 }
