@@ -14,7 +14,7 @@
 
 'use client'
 
-import { useMenuStore } from '@/store/useMenuStore'
+import { useMenuStore } from '@/app/_store/useMenuStore'
 
 interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode

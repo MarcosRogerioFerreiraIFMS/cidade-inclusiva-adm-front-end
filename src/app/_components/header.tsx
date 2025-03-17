@@ -1,6 +1,6 @@
 'use client'
 
-import { useMenuStore } from '@/store/useMenuStore'
+import { useMenuStore } from '@/app/_store/useMenuStore'
 import {
   AccessibilityIcon,
   BusFrontIcon,
