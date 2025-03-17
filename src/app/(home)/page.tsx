@@ -33,6 +33,7 @@ const QuickActions = [
     href: '/oficinas-manutencao'
   }
 ]
+
 export default function Home() {
   return (
     <Container>

@@ -12,6 +12,10 @@
  *  - Use apenas um por página.
  */
 
+'use client'
+
+import { useMenuStore } from '@/store/useMenuStore'
+
 interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -24,9 +28,11 @@ export function Container({
   className,
   ...rest
 }: ContainerProps) {
+  const { showMenu } = useMenuStore()
+
   return (
     <main
-      className={`mt-20 ml-70 flex flex-col gap-5 p-5 ${className || ''}`}
+      className={`mt-20 flex flex-col gap-5 p-5 transition-all ${showMenu ? 'ml-70' : 'ml-0'} ${className || ''}`}
       style={{
         height: 'calc(100dvh - 5rem)',
         ...style

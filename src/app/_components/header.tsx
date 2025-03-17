@@ -1,10 +1,12 @@
 'use client'
 
+import { useMenuStore } from '@/store/useMenuStore'
 import {
   AccessibilityIcon,
   BusFrontIcon,
   ContactIcon,
   HomeIcon,
+  MenuSquareIcon,
   NewspaperIcon,
   TriangleAlertIcon,
   WrenchIcon
@@ -13,9 +15,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Button } from './ui/button'
 
 export function Header() {
   const router = usePathname()
+
+  const { showMenu, toggleMenu } = useMenuStore()
 
   function handleTitle() {
     if (router === '/') return 'Dashboard'
@@ -53,22 +58,27 @@ export function Header() {
   }
   return (
     <>
-      <aside className="bg-secondary fixed top-0 left-0 flex h-full w-[280px] flex-col gap-10 pt-5 pr-2 pb-5 pl-5">
-        <Link
-          className="relative flex h-[52px] w-[222px] shrink-0 grow-0"
-          href="/"
-        >
-          <Image
-            src="/logo.png"
-            alt="Cidade Inclusiva"
-            fill
-            className="pointer-events-none object-cover select-none"
-            sizes="(max-width: 768px) 100vw, 210px"
-            placeholder="blur"
-            blurDataURL="/logo.png"
-            priority={false}
-          />
-        </Link>
+      <aside
+        className={`bg-secondary fixed top-0 left-0 z-50 flex h-full w-[280px] transform flex-col gap-10 pt-5 pr-2 pb-5 pl-5 transition-transform ${showMenu ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <div className="flex items-center gap-2 pr-4">
+          <Button variant="ghost" size="icon" onClick={toggleMenu}>
+            <MenuSquareIcon className="text-secondary-foreground size-6" />
+          </Button>
+          <Link href="/" className="h-full w-full">
+            <Image
+              width={0}
+              height={0}
+              src="/logo.png"
+              alt="Cidade Inclusiva"
+              className="pointer-events-none w-full object-contain select-none"
+              sizes="(max-width: 768px) 100vw, 210px"
+              placeholder="blur"
+              blurDataURL="/logo.png"
+              priority={false}
+            />
+          </Link>
+        </div>
 
         <ul className="[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-y-auto pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full">
           <li>
@@ -173,8 +183,22 @@ export function Header() {
         </p>
       </aside>
 
-      <header className="bg-secondary border-secondary-foreground fixed top-0 left-70 flex h-20 w-full items-center justify-between border-l-2 px-5 py-3">
-        <h1 className="text-secondary-foreground text-2xl">{handleTitle()}</h1>
+      <header
+        className={`bg-secondary fixed top-0 flex h-20 items-center justify-between px-5 py-3 ${showMenu ? 'border-secondary-foreground left-70 w-[calc(100%-280px)] border-l-2' : 'left-0 w-full'} z-40 transition-all`}
+      >
+        <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleMenu}
+            className={`${showMenu ? 'sr-only' : ''}`}
+          >
+            <MenuSquareIcon className="text-secondary-foreground size-6" />
+          </Button>
+          <h1 className="text-secondary-foreground text-2xl">
+            {handleTitle()}
+          </h1>
+        </div>
 
         <div className="flex items-center gap-3">
           <Avatar className="h-[50px] w-[50px] cursor-pointer rounded-full border-3">
