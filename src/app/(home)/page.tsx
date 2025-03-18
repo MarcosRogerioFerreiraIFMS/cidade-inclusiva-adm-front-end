@@ -6,7 +6,7 @@ import {
   TriangleAlertIcon,
   WrenchIcon
 } from 'lucide-react'
-import { Container } from '../_components/container'
+import { Container } from '../_components/Container'
 import { InfoCard } from '../_components/InfoCard'
 import { QuickActionCard } from '../_components/QuickActionCard'
 
