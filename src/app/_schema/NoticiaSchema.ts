@@ -60,20 +60,29 @@ export const NoticiaSchema = z
       }),
     categoriaCustomizada: z
       .string()
-      .nonempty('Categoria é obrigatória')
-      .min(
-        CATEGORIA_MIN_LENGTH,
-        `A categoria deve ter pelo menos ${CATEGORIA_MIN_LENGTH} caracteres`
+      .trim()
+      .transform((val) => val.replace(/\s+/g, ' '))
+      .refine(
+        (categoria) => categoria.length === 0 || isNaN(Number(categoria)),
+        {
+          message: 'Categoria deve ser texto'
+        }
       )
-      .max(
-        CATEGORIA_MAX_LENGTH,
-        `A categoria deve ter no máximo ${CATEGORIA_MAX_LENGTH} caracteres`
+      .refine(
+        (categoria) =>
+          categoria.length === 0 || categoria.length >= CATEGORIA_MIN_LENGTH,
+        {
+          message: `A categoria deve ter pelo menos ${CATEGORIA_MIN_LENGTH} caracteres`
+        }
       )
-      .refine((categoria) => isNaN(Number(categoria)), {
-        message: 'Categoria deve ser uma string'
-      })
+      .refine(
+        (categoria) =>
+          categoria.length === 0 || categoria.length <= CATEGORIA_MAX_LENGTH,
+        {
+          message: `A categoria deve ter no máximo ${CATEGORIA_MAX_LENGTH} caracteres`
+        }
+      )
       .optional()
-      .or(z.literal(''))
   })
   .refine(
     (data) =>

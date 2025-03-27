@@ -20,6 +20,7 @@ import {
   SelectValue
 } from '@/app/_components/ui/select'
 import { Textarea } from '@/app/_components/ui/textarea'
+import { criarNoticiaMapper } from '@/app/_mappers/NoticiaMapper'
 import { NoticiaData, NoticiaSchema } from '@/app/_schema/NoticiaSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeftIcon, Trash2Icon, UploadIcon } from 'lucide-react'
@@ -50,7 +51,7 @@ export default function FullForm() {
 
   async function onSubmit(values: z.infer<typeof NoticiaSchema>) {
     try {
-      const response = await criarNoticia(values)
+      const response = await criarNoticia(criarNoticiaMapper(values))
 
       if (!response || response.error) {
         alert(response?.error?.message || 'Erro ao criar notícia.')
