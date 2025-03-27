@@ -74,7 +74,7 @@ export default function FullForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto w-full max-w-250 space-y-4 pb-5"
+          className="mx-auto w-full max-w-250 space-y-4"
         >
           <FormField
             control={form.control}

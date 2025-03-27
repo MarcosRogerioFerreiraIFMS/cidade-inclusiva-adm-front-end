@@ -32,7 +32,7 @@ export function Container({
 
   return (
     <main
-      className={`[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background mt-20 flex flex-col gap-5 overflow-y-auto p-5 transition-all [&::-webkit-scrollbar]:w-2 ${showMenu ? 'ml-70' : 'ml-0'} ${className || ''}`}
+      className={`[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background mt-20 flex flex-col gap-5 overflow-y-auto px-5 pt-5 pb-10 transition-all [&::-webkit-scrollbar]:w-2 ${showMenu ? 'ml-70' : 'ml-0'} ${className || ''}`}
       style={{
         height: 'calc(100dvh - 5rem)',
         ...style

@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${roboto.className} antialiased`}>
+      <body className={`${roboto.className} overflow-hidden antialiased`}>
         <Header />
         {children}
       </body>
