@@ -184,7 +184,7 @@ export function Header() {
       </aside>
 
       <header
-        className={`bg-secondary fixed top-0 flex h-20 items-center justify-between px-5 py-3 ${showMenu ? 'border-secondary-foreground left-70 w-[calc(100%-280px)] border-l-2' : 'left-0 w-full'} z-40 transition-all`}
+        className={`bg-secondary fixed top-0 flex h-full max-h-20 items-center justify-between px-5 py-3 ${showMenu ? 'border-secondary-foreground left-70 w-[calc(100%-280px)] border-l-2' : 'left-0 w-full'} z-40 transition-all`}
       >
         <div className="flex items-center gap-3">
           <Button

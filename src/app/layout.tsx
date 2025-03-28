@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import { Header } from './_components/Header'
+import { ToastNotifier } from './_components/ToastNotifier'
 import './globals.css'
 
 const roboto = Roboto({
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={`${roboto.className} overflow-hidden antialiased`}>
         <Header />
         {children}
+        <ToastNotifier />
       </body>
     </html>
   )

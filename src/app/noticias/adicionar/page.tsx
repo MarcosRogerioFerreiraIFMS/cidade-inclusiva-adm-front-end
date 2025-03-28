@@ -2,6 +2,7 @@
 
 import { criarNoticia } from '@/app/_actions/NoticiaActions'
 import { Container } from '@/app/_components/Container'
+import { notify } from '@/app/_components/ToastNotifier'
 import { Button } from '@/app/_components/ui/button'
 import {
   Form,
@@ -54,15 +55,25 @@ export default function FullForm() {
       const response = await criarNoticia(criarNoticiaMapper(values))
 
       if (!response || response.error) {
-        alert(response?.error?.message || 'Erro ao criar notícia.')
+        notify({
+          message: 'Erro ao criar notícia.',
+          type: 'error'
+        })
         return
       }
 
-      alert('Notícia criada com sucesso!')
+      notify({
+        message: 'Notícia criada com sucesso!',
+        type: 'success'
+      })
+
       form.reset(defaultValues)
     } catch (error) {
       console.error('Erro ao criar notícia:', error)
-      alert('Ocorreu um erro inesperado.')
+      notify({
+        message: 'Erro ao criar notícia.',
+        type: 'error'
+      })
     }
   }
 
@@ -84,7 +95,11 @@ export default function FullForm() {
               <FormItem>
                 <FormLabel>Título da Notícia</FormLabel>
                 <FormControl>
-                  <Input placeholder="Digite o título da notícia" {...field} />
+                  <Input
+                    placeholder="Digite o título da notícia"
+                    disabled={form.formState.isSubmitting}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,6 +117,7 @@ export default function FullForm() {
                     height={120}
                     resize="none"
                     placeholder="Digite o conteúdo detalhado da notícia"
+                    disabled={form.formState.isSubmitting}
                     {...field}
                   />
                 </FormControl>
@@ -123,6 +139,7 @@ export default function FullForm() {
                       field.value ? field.value.toISOString().split('T')[0] : ''
                     }
                     onChange={(e) => field.onChange(new Date(e.target.value))}
+                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -140,6 +157,7 @@ export default function FullForm() {
                   <Input
                     type="url"
                     placeholder="https://exemplo.com"
+                    disabled={form.formState.isSubmitting}
                     {...field}
                   />
                 </FormControl>
@@ -158,6 +176,7 @@ export default function FullForm() {
                   <Input
                     type="url"
                     placeholder="https://exemplo.com/imagem.jpg"
+                    disabled={form.formState.isSubmitting}
                     {...field}
                   />
                 </FormControl>
@@ -176,6 +195,7 @@ export default function FullForm() {
                   onValueChange={field.onChange}
                   value={field.value}
                   defaultValue={field.value}
+                  disabled={form.formState.isSubmitting}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -205,6 +225,7 @@ export default function FullForm() {
                   <FormControl>
                     <Input
                       placeholder="Digite a categoria personalizada"
+                      disabled={form.formState.isSubmitting}
                       {...field}
                     />
                   </FormControl>
@@ -219,6 +240,7 @@ export default function FullForm() {
               variant="outline"
               type="button"
               onClick={() => history.back()}
+              disabled={form.formState.isSubmitting}
             >
               <ArrowLeftIcon />
               Cancelar
@@ -228,11 +250,16 @@ export default function FullForm() {
               variant="destructive"
               type="button"
               onClick={() => form.reset(defaultValues)}
+              disabled={form.formState.isSubmitting}
             >
               <Trash2Icon />
               Limpar
             </Button>
-            <Button variant="secondary" type="submit">
+            <Button
+              variant="secondary"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
               <UploadIcon />
               Publicar
             </Button>
