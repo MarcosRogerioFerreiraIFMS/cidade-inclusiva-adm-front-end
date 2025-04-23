@@ -25,12 +25,14 @@ Lista de tecnologias utilizadas:
 
 | 🚀 Tecnologia | 📖 Descrição | 🔗 Link de Acesso |
 |:---|:---|:---|
-| React | Biblioteca JavaScript para construção de interfaces de usuário. | [React](https://react.dev/) |
-| Next.js | Framework React para desenvolvimento de aplicações web com renderização do lado do servidor. | [Next.js](https://nextjs.org/) |
+| ⚛️ React | Biblioteca JavaScript para construção de interfaces de usuário. | [React](https://react.dev/) |
+| 🌟 Next.js | Framework React para desenvolvimento de aplicações web com renderização do lado do servidor. | [Next.js](https://nextjs.org/) |
 | 🎨 Tailwind CSS | Framework CSS utilitário para criar designs customizados rapidamente. | [Tailwind CSS](https://tailwindcss.com/) |
-| TypeScript | Superset do JavaScript que adiciona tipagem estática ao código. | [TypeScript](https://www.typescriptlang.org/) |
-| 🧩 shadcn | Biblioteca de componentes UI para React, focada em acessibilidade e personalização. | [shadcn](https://ui.shadcn.com/) |
+| ⌨️ TypeScript | Superset do JavaScript que adiciona tipagem estática ao código. | [TypeScript](https://www.typescriptlang.org/) |
+| 🧩 shadcn/ui | Biblioteca de componentes UI para React, focada em acessibilidade e personalização. | [shadcn](https://ui.shadcn.com/) |
 | ⚡ pnpm | Gerenciador de pacotes rápido e eficiente para JavaScript. | [pnpm](https://pnpm.io/) |
+| ✅ Zod | Biblioteca de declaração e validação de esquemas. | [Zod](https://zod.dev/) |
+| 📝 React Hook Form | Biblioteca para gerenciamento de formulários no React. | [React Hook Form](https://react-hook-form.com/) |
 
 ### 🔍 Ferramentas de Linting
 
@@ -38,8 +40,8 @@ Lista de ferramentas de linting utilizadas no projeto:
 
 | 🛠️ Ferramenta | 📖 Descrição | 🔗 Link de Acesso |
 |:---|:---|:---|
-| ESLint | Ferramenta de linting para identificar e corrigir problemas em código JavaScript/TypeScript. | [ESLint](https://eslint.org/) |
-| Prettier | Ferramenta de formatação de código que garante um estilo consistente. | [Prettier](https://prettier.io/) |
+| 🧹 ESLint | Ferramenta de linting para identificar e corrigir problemas em código JavaScript/TypeScript. | [ESLint](https://eslint.org/) |
+| 💅 Prettier | Ferramenta de formatação de código que garante um estilo consistente. | [Prettier](https://prettier.io/) |
 
 ### 🚀 Como Rodar o Projeto
 
