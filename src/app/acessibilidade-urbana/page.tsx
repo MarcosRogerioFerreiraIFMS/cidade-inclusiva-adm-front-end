@@ -1,4 +1,4 @@
-import { Container } from '../_components/Container'
+import { Container } from '@/app/_components/Container'
 
 export default function AcessibilidadeUrbana() {
   return (

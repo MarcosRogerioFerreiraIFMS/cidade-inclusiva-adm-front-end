@@ -15,6 +15,8 @@
 'use client'
 
 import { useMenuStore } from '@/app/_store/useMenuStore'
+import { cn } from '../_lib/utils'
+import { Card, CardContent } from './ui/card'
 
 interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode
@@ -32,14 +34,19 @@ export function Container({
 
   return (
     <main
-      className={`[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background mt-20 flex flex-col gap-5 overflow-y-auto px-5 pt-5 pb-10 transition-all [&::-webkit-scrollbar]:w-2 ${showMenu ? 'ml-70' : 'ml-0'} ${className || ''}`}
+      className={cn(
+        `[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background mt-20 flex flex-col gap-5 overflow-y-auto px-5 pt-5 pb-10 transition-all [&::-webkit-scrollbar]:w-2 ${showMenu ? 'ml-70' : 'ml-0'}`,
+        className
+      )}
       style={{
         height: 'calc(100dvh - 5rem)',
         ...style
       }}
       {...rest}
     >
-      {children}
+      <Card className="mx-auto w-full max-w-350">
+        <CardContent className="space-y-4">{children}</CardContent>
+      </Card>
     </main>
   )
 }

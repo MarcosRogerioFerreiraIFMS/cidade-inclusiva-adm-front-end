@@ -11,9 +11,11 @@
   --card-foreground: #101010;
   --popover: #fdfdfd;
   --popover-foreground: #101010;
-  --primary: #1f781c;
+  --primary: #135ca5;
   --primary-foreground: #fafafa;
-  --secondary: #135ca5;
+  --primary-foreground-hover: #b0f2ff;
+  --primary-muted-foreground: #dcdcdc;
+  --secondary: #1f781c;
   --secondary-foreground: #fafafa;
   --secondary-foreground-hover: #b0f2ff;
   --secondary-muted-foreground: #dcdcdc;
@@ -25,7 +27,7 @@
   --destructive-foreground: #d9534f;
   --border: #fafafa;
   --input: #ebebeb;
-  --ring: var(--secondary);
+  --ring: var(--primary);
   --chart-1: #a64d00;
   --chart-2: #1e90ff;
   --chart-3: #5f9ea0;
@@ -51,6 +53,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-foreground-hover: var(--primary-foreground-hover);
+  --color-primary-muted-foreground: var(--primary-muted-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary-foreground-hover: var(--secondary-foreground-hover);

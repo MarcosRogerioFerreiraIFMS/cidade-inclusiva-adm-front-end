@@ -6,9 +6,10 @@ import {
   TriangleAlertIcon,
   WrenchIcon
 } from 'lucide-react'
-import { Container } from '../_components/Container'
-import { InfoCard } from '../_components/InfoCard'
-import { QuickActionCard } from '../_components/QuickActionCard'
+
+import { Container } from '@/app/_components/Container'
+import { InfoCard } from '@/app/_components/InfoCard'
+import { QuickActionCard } from '@/app/_components/QuickActionCard'
 
 const QuickActions = [
   {
@@ -84,7 +85,7 @@ const summaryOfLastThreeMonths = [
 
 export default function Home() {
   return (
-    <Container>
+    <Container className="animate-fade-in">
       <h2 className="text-2xl">Acesso Rápido</h2>
 
       <section className="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">

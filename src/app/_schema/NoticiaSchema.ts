@@ -39,11 +39,58 @@ export const NoticiaSchema = z
       .refine((conteudo) => isNaN(Number(conteudo)), {
         message: 'Conteúdo deve ser texto'
       }),
-    url: z.string().url('URL inválida').optional().or(z.literal('')),
+    url: z
+      .string()
+      .url('URL inválida')
+      .optional()
+      .or(z.literal(''))
+      .transform((val) => val || '')
+      .refine((url) => {
+        if (!url || url.trim() === '') return true
+
+        const urlPattern =
+          /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/[^\s]*)?$/i
+
+        try {
+          new URL(url)
+          return urlPattern.test(url)
+        } catch {
+          return false
+        }
+      }, 'A URL não parece ser válida'),
     dataPublicacao: z.date({
       required_error: 'Data de publicação é obrigatória'
     }),
-    foto: z.string().url('URL inválida').optional().or(z.literal('')),
+    foto: z
+      .string()
+      .url('URL da imagem inválida')
+      .optional()
+      .or(z.literal(''))
+      .transform((val) => val || '')
+      .refine((url) => {
+        if (!url || url.trim() === '') return true
+
+        try {
+          const imageExtensions = [
+            '.jpg',
+            '.jpeg',
+            '.png',
+            '.gif',
+            '.webp',
+            '.svg',
+            '.bmp'
+          ]
+
+          return (
+            imageExtensions.some((ext) => url.toLowerCase().endsWith(ext)) ||
+            url.includes('/image/') ||
+            url.includes('/img/') ||
+            url.includes('cloudinary')
+          )
+        } catch {
+          return false
+        }
+      }, 'A URL não parece ser uma imagem válida'),
     categoria: z
       .string()
       .nonempty('Categoria é obrigatória')
@@ -86,8 +133,8 @@ export const NoticiaSchema = z
   })
   .refine(
     (data) =>
-      data.categoria !== 'outro' ||
-      (data.categoria === 'outro' &&
+      data.categoria !== 'Outro' ||
+      (data.categoria === 'Outro' &&
         (data.categoriaCustomizada?.trim()?.length ?? 0) > 0),
     {
       message:
@@ -96,4 +143,4 @@ export const NoticiaSchema = z
     }
   )
 
-export type NoticiaData = z.infer<typeof NoticiaSchema>
+export type NoticiaData = z.infer<typeof NoticiaSchema> & { id?: string }

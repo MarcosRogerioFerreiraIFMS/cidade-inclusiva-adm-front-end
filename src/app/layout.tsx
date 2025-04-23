@@ -5,7 +5,7 @@ import { ToastNotifier } from './_components/ToastNotifier'
 import './globals.css'
 
 const roboto = Roboto({
-  weight: ['400', '700'],
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin']
 })
 

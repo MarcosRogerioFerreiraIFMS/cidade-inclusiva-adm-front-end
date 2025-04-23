@@ -41,7 +41,11 @@ export function Header() {
       case '/noticias/listar':
         return 'Listar Notícias'
       case '/noticias/adicionar':
-        return 'Adicionar Notícias'
+        return 'Adicionar Notícia'
+      case `/noticias/editar/${router.split('/')[3]}`:
+        return 'Editar Notícia'
+      case `/noticias/visualizar/${router.split('/')[3]}`:
+        return 'Visualizar Notícia'
       case '/ocorrencias':
         return 'Ocorrências'
       case '/ocorrencias/listar':
@@ -59,11 +63,11 @@ export function Header() {
   return (
     <>
       <aside
-        className={`bg-secondary fixed top-0 left-0 z-50 flex h-full w-[280px] transform flex-col gap-10 pt-5 pr-2 pb-5 pl-5 transition-transform ${showMenu ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`bg-primary fixed top-0 left-0 z-50 flex h-full w-[280px] transform flex-col gap-10 pt-5 pr-2 pb-5 pl-5 transition-transform ${showMenu ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center gap-2 pr-4">
           <Button variant="ghost" size="icon" onClick={toggleMenu}>
-            <MenuSquareIcon className="text-secondary-foreground size-6" />
+            <MenuSquareIcon className="text-primary-foreground size-6" />
           </Button>
           <Link href="/" className="h-full w-full">
             <Image
@@ -177,14 +181,14 @@ export function Header() {
           </li>
         </ul>
 
-        <p className="text-secondary-muted-foreground mt-auto text-center text-xs">
+        <p className="text-primary-muted-foreground mt-auto text-center text-xs">
           &copy; {new Date().getFullYear()} Cidade Inclusiva. Todos os direitos
           reservados.
         </p>
       </aside>
 
       <header
-        className={`bg-secondary fixed top-0 flex h-full max-h-20 items-center justify-between px-5 py-3 ${showMenu ? 'border-secondary-foreground left-70 w-[calc(100%-280px)] border-l-2' : 'left-0 w-full'} z-40 transition-all`}
+        className={`bg-primary fixed top-0 flex h-full max-h-20 items-center justify-between px-5 py-3 ${showMenu ? 'border-primary-foreground left-70 w-[calc(100%-280px)] border-l-2' : 'left-0 w-full'} z-40 transition-all`}
       >
         <div className="flex items-center gap-3">
           <Button
@@ -193,11 +197,9 @@ export function Header() {
             onClick={toggleMenu}
             className={`${showMenu ? 'sr-only' : ''}`}
           >
-            <MenuSquareIcon className="text-secondary-foreground size-6" />
+            <MenuSquareIcon className="text-primary-foreground size-6" />
           </Button>
-          <h1 className="text-secondary-foreground text-2xl">
-            {handleTitle()}
-          </h1>
+          <h1 className="text-primary-foreground text-2xl">{handleTitle()}</h1>
         </div>
 
         <div className="flex items-center gap-3">
@@ -211,10 +213,10 @@ export function Header() {
           </Avatar>
 
           <div className="flex w-full max-w-[200px] flex-col items-center justify-center gap-1">
-            <h2 className="text-secondary-foreground w-full truncate text-xs font-bold">
+            <h2 className="text-primary-foreground w-full truncate text-xs font-bold">
               João Pedro Alves
             </h2>
-            <div className="text-secondary-foreground w-full truncate text-[10px]">
+            <div className="text-primary-foreground w-full truncate text-[10px]">
               Administrador
             </div>
           </div>
@@ -236,7 +238,7 @@ function LinkItem({ href, icon: Icon, text }: LinkItemProps) {
 
   return (
     <Link
-      className={`${isActive ? 'text-secondary-foreground' : 'text-secondary-muted-foreground'} hover:text-secondary-foreground-hover flex items-center gap-3 transition-colors`}
+      className={`${isActive ? 'text-primary-foreground' : 'text-primary-muted-foreground'} hover:text-primary-foreground-hover flex items-center gap-3 transition-colors`}
       href={href}
     >
       <Icon className="h-6 w-6 shrink-0 grow-0" />

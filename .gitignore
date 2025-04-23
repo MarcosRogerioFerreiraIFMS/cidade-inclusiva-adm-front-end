@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Prisma
 dev.db*
+
+# npm
+package-lock.json

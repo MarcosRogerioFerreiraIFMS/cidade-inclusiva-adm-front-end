@@ -4,7 +4,7 @@ import { Button } from './_components/ui/button'
 export default function NotFound() {
   return (
     <main
-      className="mt-20 ml-70 flex flex-col items-center justify-center gap-4 p-5"
+      className="animate-fade-in mt-20 ml-70 flex flex-col items-center justify-center gap-4 p-5"
       style={{
         height: 'calc(100dvh - 5rem)'
       }}

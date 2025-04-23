@@ -1,6 +1,6 @@
 'use client'
 
-import { criarNoticia } from '@/app/_actions/Noticia'
+import { atualizarNoticia, buscarNoticiaPorId } from '@/app/_actions/Noticia'
 import { Container } from '@/app/_components/Container'
 import { notify } from '@/app/_components/ToastNotifier'
 import { Button } from '@/app/_components/ui/button'
@@ -22,21 +22,24 @@ import {
 } from '@/app/_components/ui/select'
 import { Textarea } from '@/app/_components/ui/textarea'
 import { NoticiaCategories } from '@/app/_constants/NoticiaCategories'
-import { criarNoticiaMapper } from '@/app/_mappers/NoticiaMapper'
+import {
+  atualizarNoticiaMapper,
+  prepararDadosParaEdicao
+} from '@/app/_mappers/NoticiaMapper'
 import { NoticiaData, NoticiaSchema } from '@/app/_schema/NoticiaSchema'
+import { useNoticiasStore } from '@/app/_store/useNoticiasStore'
 import { validateImageUrl } from '@/app/_utils/imageUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
+  AlertCircleIcon,
   ArrowLeftIcon,
   ImageIcon,
   Loader2Icon,
-  Trash2Icon,
-  UploadIcon
+  SaveIcon
 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-
-import { useEffect, useState } from 'react'
+import { use, useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -50,17 +53,65 @@ const defaultValues = {
   categoriaCustomizada: ''
 }
 
-export default function FullForm() {
+interface EditarNoticiaPageProps {
+  params: Promise<{
+    id: string
+  }>
+}
+
+export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
+  const { id } = use(params)
+
+  const router = useRouter()
+
+  const { fetchNoticias } = useNoticiasStore()
+
+  const [loading, setLoading] = useState(true)
+
+  const [error, setError] = useState<string | null>(null)
+
+  const [isValidatingImage, setIsValidatingImage] = useState(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+
+  const [isFormDirty, setIsFormDirty] = useState(false)
+
   const form = useForm<NoticiaData>({
     resolver: zodResolver(NoticiaSchema),
     defaultValues
   })
 
-  const router = useRouter()
+  const carregarNoticia = useCallback(async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      setImagePreview(null)
+      setIsFormDirty(false)
+      setIsValidatingImage(false)
 
-  const [isValidatingImage, setIsValidatingImage] = useState(false)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [isFormDirty, setIsFormDirty] = useState(false)
+      const { data, error } = await buscarNoticiaPorId(id)
+
+      if (error || !data) {
+        setError('Falha ao carregar notícia. Tente novamente.')
+        return
+      }
+
+      const dadosPreparados = prepararDadosParaEdicao(data)
+      form.reset(dadosPreparados)
+
+      if (dadosPreparados.foto) {
+        setImagePreview(dadosPreparados.foto)
+      }
+    } catch (err) {
+      setError('Ocorreu um erro ao carregar a notícia')
+      console.error('Erro ao carregar notícia:', err)
+    } finally {
+      setLoading(false)
+    }
+  }, [id, form])
+
+  useEffect(() => {
+    carregarNoticia()
+  }, [carregarNoticia])
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -82,6 +133,34 @@ export default function FullForm() {
     })
     return () => subscription.unsubscribe()
   }, [form])
+
+  const handleImageUrlChange = async (url: string) => {
+    form.setValue('foto', url)
+
+    if (!url) {
+      setImagePreview(null)
+      return
+    }
+
+    setIsValidatingImage(true)
+    try {
+      const isValid = await validateImageUrl(url)
+      if (isValid) {
+        setImagePreview(url)
+        form.clearErrors('foto')
+      } else {
+        setImagePreview(null)
+        form.setError('foto', {
+          message: 'A imagem não pode ser carregada. Verifique a URL.'
+        })
+      }
+    } catch (error) {
+      console.error('Erro ao validar imagem:', error)
+      setImagePreview(null)
+    } finally {
+      setIsValidatingImage(false)
+    }
+  }
 
   async function onSubmit(values: z.infer<typeof NoticiaSchema>) {
     if (values.foto) {
@@ -108,68 +187,82 @@ export default function FullForm() {
         setIsValidatingImage(false)
         return
       }
+      setIsValidatingImage(false)
     }
-    setIsValidatingImage(false)
 
     try {
-      const response = await criarNoticia(criarNoticiaMapper(values))
+      const response = await atualizarNoticia(
+        id,
+        atualizarNoticiaMapper(values)
+      )
 
-      if (!response || response.error) {
+      if (!response.success) {
         notify({
-          message: 'Erro ao criar notícia.',
+          message: 'Erro ao atualizar notícia.',
           type: 'error'
         })
+        carregarNoticia()
+        fetchNoticias()
         return
       }
 
       notify({
-        message: 'Notícia criada com sucesso!',
+        message: 'Notícia atualizada com sucesso!',
         type: 'success'
       })
 
-      setImagePreview(null)
-      form.reset(defaultValues)
-      setIsFormDirty(false)
+      fetchNoticias()
       router.push('/noticias/listar')
+      setIsFormDirty(false)
     } catch (error) {
-      console.error('Erro ao criar notícia:', error)
+      console.error('Erro ao atualizar notícia:', error)
       notify({
-        message: 'Erro ao criar notícia.',
+        message: 'Erro ao atualizar notícia.',
         type: 'error'
       })
-    }
-  }
-
-  const handleImageUrlChange = async (url: string) => {
-    form.setValue('foto', url)
-
-    if (!url) {
-      setImagePreview(null)
-      return
-    }
-
-    try {
-      const isValid = await validateImageUrl(url)
-      if (isValid) {
-        setImagePreview(url)
-        form.clearErrors('foto')
-      } else {
-        setImagePreview(null)
-        form.setError('foto', {
-          message: 'A imagem não pode ser carregada. Verifique a URL.'
-        })
-      }
-    } catch (error) {
-      console.error('Erro ao validar imagem:', error)
-      setImagePreview(null)
+      carregarNoticia()
+      fetchNoticias()
     }
   }
 
   const watchCategory = form.watch('categoria')
 
+  if (loading) {
+    return (
+      <Container>
+        <div className="flex flex-col items-center justify-center py-12">
+          <Loader2Icon className="text-primary h-12 w-12 animate-spin" />
+          <p className="mt-4 text-lg">Carregando notícia...</p>
+        </div>
+      </Container>
+    )
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <div className="flex flex-col items-center justify-center py-12">
+          <AlertCircleIcon size={50} className="text-destructive" />
+          <p className="text-destructive mt-4 text-lg">{error}</p>
+
+          <div className="mt-4 space-x-4">
+            <Button onClick={() => carregarNoticia()}>Tentar novamente</Button>
+            <Button
+              variant="outline"
+              onClick={() => router.push('/noticias/listar')}
+            >
+              Voltar para listagem
+            </Button>
+          </div>
+        </div>
+      </Container>
+    )
+  }
+
   return (
     <Container className="animate-fade-in">
-      <h2 className="text-2xl">Adicione uma nova Notícia</h2>
+      <h2 className="text-2xl">Editar Notícia</h2>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -246,6 +339,7 @@ export default function FullForm() {
                     placeholder="https://exemplo.com"
                     disabled={form.formState.isSubmitting}
                     {...field}
+                    value={field.value || ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -274,6 +368,7 @@ export default function FullForm() {
                           handleImageUrlChange(e.target.value)
                         }}
                         className="flex-1"
+                        value={field.value || ''}
                       />
                       <Button
                         type="button"
@@ -288,7 +383,7 @@ export default function FullForm() {
                         {isValidatingImage ? (
                           <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
                         ) : (
-                          <ImageIcon />
+                          <ImageIcon className="mr-2 h-4 w-4" />
                         )}
                         Verificar
                       </Button>
@@ -359,6 +454,7 @@ export default function FullForm() {
                       placeholder="Digite a categoria personalizada"
                       disabled={form.formState.isSubmitting}
                       {...field}
+                      value={field.value || ''}
                     />
                   </FormControl>
                   <FormMessage />
@@ -371,31 +467,13 @@ export default function FullForm() {
             <Button
               variant="outline"
               type="button"
-              onClick={() => {
-                form.reset(defaultValues)
-                setImagePreview(null)
-                setIsFormDirty(false)
-                router.push('/noticias/listar')
-              }}
+              onClick={() => router.push('/noticias/listar')}
               disabled={form.formState.isSubmitting || isValidatingImage}
             >
-              <ArrowLeftIcon />
+              <ArrowLeftIcon className="mr-2 h-4 w-4" />
               Cancelar
             </Button>
 
-            <Button
-              variant="destructive"
-              type="button"
-              onClick={() => {
-                form.reset(defaultValues)
-                setImagePreview(null)
-                setIsFormDirty(false)
-              }}
-              disabled={form.formState.isSubmitting || isValidatingImage}
-            >
-              <Trash2Icon />
-              Limpar
-            </Button>
             <Button
               type="submit"
               disabled={form.formState.isSubmitting || isValidatingImage}
@@ -403,13 +481,13 @@ export default function FullForm() {
               {form.formState.isSubmitting || isValidatingImage ? (
                 <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                <UploadIcon />
+                <SaveIcon className="mr-2 h-4 w-4" />
               )}
               {form.formState.isSubmitting
-                ? 'Publicando...'
+                ? 'Salvando...'
                 : isValidatingImage
                   ? 'Validando imagem...'
-                  : 'Publicar'}
+                  : 'Salvar alterações'}
             </Button>
           </div>
         </form>

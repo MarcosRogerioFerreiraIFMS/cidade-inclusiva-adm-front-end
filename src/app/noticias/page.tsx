@@ -1,5 +1,5 @@
-import { Container } from '../_components/Container'
-import { QuickActionCard } from '../_components/QuickActionCard'
+import { Container } from '@/app/_components/Container'
+import { QuickActionCard } from '@/app/_components/QuickActionCard'
 
 const QuickActions = [
   {
@@ -16,7 +16,7 @@ const QuickActions = [
 
 export default function Noticias() {
   return (
-    <Container>
+    <Container className="animate-fade-in">
       <h2 className="text-2xl">Acesso Rápido</h2>
 
       <section className="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">

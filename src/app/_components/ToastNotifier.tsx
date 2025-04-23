@@ -18,7 +18,7 @@ export function ToastNotifier() {
       position="top-right"
       draggable
       closeButton={false}
-      autoClose={3000}
+      autoClose={6000}
       style={{ zIndex: 9999 }}
       toastStyle={{
         position: 'fixed',
