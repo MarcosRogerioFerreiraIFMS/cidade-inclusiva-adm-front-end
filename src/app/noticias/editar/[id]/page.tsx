@@ -26,7 +26,7 @@ import {
   atualizarNoticiaMapper,
   prepararDadosParaEdicao
 } from '@/app/_mappers/NoticiaMapper'
-import { NoticiaData, NoticiaSchema } from '@/app/_schema/NoticiaSchema'
+import { NoticiaSchema } from '@/app/_schema/NoticiaSchema'
 import { useNoticiasStore } from '@/app/_store/useNoticiasStore'
 import { validateImageUrl } from '@/app/_utils/imageUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -47,7 +47,7 @@ const defaultValues = {
   titulo: '',
   conteudo: '',
   url: '',
-  dataPublicacao: undefined,
+  dataPublicacao: new Date(),
   foto: '',
   categoria: '',
   categoriaCustomizada: ''
@@ -58,6 +58,9 @@ interface EditarNoticiaPageProps {
     id: string
   }>
 }
+
+const formatDate = (date: Date | null | undefined): string =>
+  date ? date.toISOString().split('T')[0] : ''
 
 export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
   const { id } = use(params)
@@ -75,7 +78,7 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
 
   const [isFormDirty, setIsFormDirty] = useState(false)
 
-  const form = useForm<NoticiaData>({
+  const form = useForm({
     resolver: zodResolver(NoticiaSchema),
     defaultValues
   })
@@ -315,10 +318,19 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
                 <FormControl>
                   <Input
                     type="date"
-                    value={
-                      field.value ? field.value.toISOString().split('T')[0] : ''
-                    }
-                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                    value={formatDate(field.value)}
+                    onChange={(e) => {
+                      const selectedDate = new Date(e.target.value)
+                      if (isNaN(selectedDate.getTime())) {
+                        form.setError('dataPublicacao', {
+                          message:
+                            'Data inválida. Por favor, insira uma data válida.'
+                        })
+                      } else {
+                        form.clearErrors('dataPublicacao')
+                        field.onChange(selectedDate)
+                      }
+                    }}
                     disabled={form.formState.isSubmitting}
                   />
                 </FormControl>

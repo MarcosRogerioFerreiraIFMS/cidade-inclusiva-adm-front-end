@@ -23,7 +23,7 @@ import {
 import { Textarea } from '@/app/_components/ui/textarea'
 import { NoticiaCategories } from '@/app/_constants/NoticiaCategories'
 import { criarNoticiaMapper } from '@/app/_mappers/NoticiaMapper'
-import { NoticiaData, NoticiaSchema } from '@/app/_schema/NoticiaSchema'
+import { NoticiaSchema } from '@/app/_schema/NoticiaSchema'
 import { validateImageUrl } from '@/app/_utils/imageUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -44,14 +44,17 @@ const defaultValues = {
   titulo: '',
   conteudo: '',
   url: '',
-  dataPublicacao: undefined,
+  dataPublicacao: new Date(),
   foto: '',
   categoria: '',
   categoriaCustomizada: ''
 }
 
+const formatDate = (date: Date | null | undefined): string =>
+  date ? date.toISOString().split('T')[0] : ''
+
 export default function FullForm() {
-  const form = useForm<NoticiaData>({
+  const form = useForm({
     resolver: zodResolver(NoticiaSchema),
     defaultValues
   })
@@ -222,10 +225,19 @@ export default function FullForm() {
                 <FormControl>
                   <Input
                     type="date"
-                    value={
-                      field.value ? field.value.toISOString().split('T')[0] : ''
-                    }
-                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                    value={formatDate(field.value)}
+                    onChange={(e) => {
+                      const selectedDate = new Date(e.target.value)
+                      if (isNaN(selectedDate.getTime())) {
+                        form.setError('dataPublicacao', {
+                          message:
+                            'Data inválida. Por favor, insira uma data válida.'
+                        })
+                      } else {
+                        form.clearErrors('dataPublicacao')
+                        field.onChange(selectedDate)
+                      }
+                    }}
                     disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
