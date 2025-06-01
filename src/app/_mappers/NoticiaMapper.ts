@@ -2,9 +2,16 @@ import { NoticiaCategories } from '../_constants/NoticiaCategories'
 import { NoticiaData } from '../_schema/NoticiaSchema'
 
 export function criarNoticiaMapper(data: NoticiaData): NoticiaData {
+  const tituloFormatted = data.titulo.trim().replace(/\s+/g, ' ')
+
+  const conteudoFormatted = data.conteudo
+    .split('\n')
+    .map((line) => line.trim().replace(/\s+/g, ' '))
+    .join('\n')
+
   const mappedData = {
-    titulo: data.titulo,
-    conteudo: data.conteudo,
+    titulo: tituloFormatted,
+    conteudo: conteudoFormatted,
     url: data.url,
     dataPublicacao: data.dataPublicacao,
     foto: data.foto,

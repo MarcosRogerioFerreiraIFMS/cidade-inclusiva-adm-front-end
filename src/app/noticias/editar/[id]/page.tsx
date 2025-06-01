@@ -282,6 +282,9 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
                     placeholder="Digite o título da notícia"
                     disabled={form.formState.isSubmitting}
                     {...field}
+                    onBlur={(e) => {
+                      field.onChange(e.target.value.trim().replace(/\s+/g, ' '))
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -302,6 +305,15 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
                     placeholder="Digite o conteúdo detalhado da notícia"
                     disabled={form.formState.isSubmitting}
                     {...field}
+                    onBlur={(e) => {
+                      const value = e.target.value
+                      const newValue = value
+                        .split('\n')
+                        .map((line) => line.trim().replace(/\s+/g, ' '))
+                        .join('\n')
+
+                      field.onChange(newValue)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -352,6 +364,9 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
                     disabled={form.formState.isSubmitting}
                     {...field}
                     value={field.value || ''}
+                    onChange={(e) => {
+                      field.onChange(e.target.value.trim())
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -375,6 +390,9 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
                           form.formState.isSubmitting || isValidatingImage
                         }
                         {...field}
+                        onChange={(e) => {
+                          field.onChange(e.target.value.trim())
+                        }}
                         onBlur={(e) => {
                           field.onBlur()
                           handleImageUrlChange(e.target.value)

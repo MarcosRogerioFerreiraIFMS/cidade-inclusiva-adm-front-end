@@ -189,6 +189,9 @@ export default function FullForm() {
                     placeholder="Digite o título da notícia"
                     disabled={form.formState.isSubmitting}
                     {...field}
+                    onBlur={(e) => {
+                      field.onChange(e.target.value.trim().replace(/\s+/g, ' '))
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -209,6 +212,15 @@ export default function FullForm() {
                     placeholder="Digite o conteúdo detalhado da notícia"
                     disabled={form.formState.isSubmitting}
                     {...field}
+                    onBlur={(e) => {
+                      const value = e.target.value
+                      const newValue = value
+                        .split('\n')
+                        .map((line) => line.trim().replace(/\s+/g, ' '))
+                        .join('\n')
+
+                      field.onChange(newValue)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -258,6 +270,9 @@ export default function FullForm() {
                     placeholder="https://exemplo.com"
                     disabled={form.formState.isSubmitting}
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e.target.value.trim())
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -281,6 +296,9 @@ export default function FullForm() {
                           form.formState.isSubmitting || isValidatingImage
                         }
                         {...field}
+                        onChange={(e) => {
+                          field.onChange(e.target.value.trim())
+                        }}
                         onBlur={(e) => {
                           field.onBlur()
                           handleImageUrlChange(e.target.value)
