@@ -14,6 +14,12 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from './ui/accordion'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
 
@@ -84,102 +90,101 @@ export function Header() {
           </Link>
         </div>
 
-        <ul className="[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-y-auto pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full">
-          <li>
+        <Accordion
+          type="multiple"
+          className="[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-x-hidden overflow-y-auto pr-4 pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full"
+        >
+          <AccordionItem value="dashboard">
             <LinkItem href="/" icon={HomeIcon} text="Dashboard" />
-          </li>
+          </AccordionItem>
 
-          <li>
+          <AccordionItem value="acessibilidade-urbana">
             <LinkItem
               href="/acessibilidade-urbana"
               icon={AccessibilityIcon}
               text="Acessibilidade Urbana"
             />
-          </li>
-          <li>
+          </AccordionItem>
+
+          <AccordionItem value="contatos">
             <LinkItem href="/contatos" icon={ContactIcon} text="Contatos" />
-          </li>
-          <li>
-            <LinkItem
-              href="/oficinas-manutencao"
-              icon={WrenchIcon}
-              text="Oficinas de Manutenção"
-            />
-            <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
-              <li>
-                <LinkItem
-                  href="/oficinas-manutencao/listar"
-                  icon={WrenchIcon}
-                  text="
-                  Listar oficinas de manutenção"
-                />
-              </li>
-              <li>
-                <LinkItem
-                  href="/oficinas-manutencao/adicionar"
-                  icon={WrenchIcon}
-                  text="Adicionar oficinas de manutenção"
-                />
-              </li>
-            </ul>
-          </li>
-          <li>
-            <LinkItem href="/noticias" icon={NewspaperIcon} text="Notícias" />
-            <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
-              <li>
-                <LinkItem
-                  href="/noticias/listar"
-                  icon={NewspaperIcon}
-                  text="Listar Notícias"
-                />
-              </li>
-              <li>
-                <LinkItem
-                  href="/noticias/adicionar"
-                  icon={NewspaperIcon}
-                  text="Adicionar Notícias"
-                />
-              </li>
-            </ul>
-          </li>
-          <li>
-            <LinkItem
-              href="/ocorrencias"
-              icon={TriangleAlertIcon}
-              text="Ocorrências"
-            />
-            <ul className="mt-4 flex flex-col gap-4 pr-4 pl-5">
-              <li>
-                <LinkItem
-                  href="/ocorrencias/listar"
-                  icon={TriangleAlertIcon}
-                  text="Listar Ocorrências"
-                />
-              </li>
-              <li>
-                <LinkItem
-                  href="/ocorrencias/mapa"
-                  icon={TriangleAlertIcon}
-                  text="Mapa Interativo"
-                />
-              </li>
-              <li>
-                <LinkItem
-                  href="/ocorrencias/gerar-relatorio"
-                  icon={TriangleAlertIcon}
-                  text="Gerar relatório de ocorrências"
-                />
-              </li>
-            </ul>
-          </li>
-          <li>
+          </AccordionItem>
+
+          <AccordionItem value="oficinas-manutencao">
+            <AccordionTrigger>
+              <LinkItem
+                href="/oficinas-manutencao"
+                icon={WrenchIcon}
+                text="Oficinas de Manutenção"
+              />
+            </AccordionTrigger>
+            <AccordionContent>
+              <LinkItem
+                href="/oficinas-manutencao/listar"
+                icon={WrenchIcon}
+                text="Listar oficinas de manutenção"
+              />
+              <LinkItem
+                href="/oficinas-manutencao/adicionar"
+                icon={WrenchIcon}
+                text="Adicionar oficinas de manutenção"
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="noticias">
+            <AccordionTrigger>
+              <LinkItem href="/noticias" icon={NewspaperIcon} text="Notícias" />
+            </AccordionTrigger>
+            <AccordionContent>
+              <LinkItem
+                href="/noticias/listar"
+                icon={NewspaperIcon}
+                text="Listar Notícias"
+              />
+              <LinkItem
+                href="/noticias/adicionar"
+                icon={NewspaperIcon}
+                text="Adicionar Notícias"
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="ocorrencias">
+            <AccordionTrigger>
+              <LinkItem
+                href="/ocorrencias"
+                icon={TriangleAlertIcon}
+                text="Ocorrências"
+              />
+            </AccordionTrigger>
+            <AccordionContent>
+              <LinkItem
+                href="/ocorrencias/listar"
+                icon={TriangleAlertIcon}
+                text="Listar Ocorrências"
+              />
+              <LinkItem
+                href="/ocorrencias/mapa"
+                icon={TriangleAlertIcon}
+                text="Mapa Interativo"
+              />
+              <LinkItem
+                href="/ocorrencias/gerar-relatorio"
+                icon={TriangleAlertIcon}
+                text="Gerar relatório de ocorrências"
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="transporte">
             <LinkItem
               href="/transporte"
               icon={BusFrontIcon}
               text="Transporte"
             />
-          </li>
-        </ul>
+          </AccordionItem>
+        </Accordion>
 
         <p className="text-primary-muted-foreground mt-auto text-center text-xs">
           &copy; {new Date().getFullYear()} Cidade Inclusiva. Todos os direitos
@@ -238,7 +243,7 @@ function LinkItem({ href, icon: Icon, text }: LinkItemProps) {
 
   return (
     <Link
-      className={`${isActive ? 'text-primary-foreground' : 'text-primary-muted-foreground'} hover:text-primary-foreground-hover flex items-center gap-3 transition-colors`}
+      className={`${isActive ? 'text-primary-foreground' : 'text-primary-muted-foreground'} hover:text-primary-foreground-hover flex items-center gap-3 text-sm transition-colors`}
       href={href}
     >
       <Icon className="h-6 w-6 shrink-0 grow-0" />
