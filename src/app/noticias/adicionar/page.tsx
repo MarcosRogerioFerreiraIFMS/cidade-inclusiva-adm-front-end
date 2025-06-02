@@ -24,6 +24,7 @@ import { Textarea } from '@/app/_components/ui/textarea'
 import { NoticiaCategories } from '@/app/_constants/NoticiaCategories'
 import { criarNoticiaMapper } from '@/app/_mappers/NoticiaMapper'
 import { NoticiaSchema } from '@/app/_schema/NoticiaSchema'
+import { formatDate } from '@/app/_utils/formatDate'
 import { validateImageUrl } from '@/app/_utils/imageUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -49,9 +50,6 @@ const defaultValues = {
   categoria: '',
   categoriaCustomizada: ''
 }
-
-const formatDate = (date: Date | null | undefined): string =>
-  date ? date.toISOString().split('T')[0] : ''
 
 export default function FullForm() {
   const form = useForm({
@@ -236,7 +234,7 @@ export default function FullForm() {
                 <FormLabel>Data de Publicação</FormLabel>
                 <FormControl>
                   <Input
-                    type="date"
+                    type="datetime-local"
                     value={formatDate(field.value)}
                     onChange={(e) => {
                       const selectedDate = new Date(e.target.value)

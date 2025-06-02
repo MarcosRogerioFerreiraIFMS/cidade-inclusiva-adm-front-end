@@ -28,6 +28,8 @@ import {
 } from '@/app/_mappers/NoticiaMapper'
 import { NoticiaSchema } from '@/app/_schema/NoticiaSchema'
 import { useNoticiasStore } from '@/app/_store/useNoticiasStore'
+import { formatDate } from '@/app/_utils/formatDate'
+
 import { validateImageUrl } from '@/app/_utils/imageUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -58,9 +60,6 @@ interface EditarNoticiaPageProps {
     id: string
   }>
 }
-
-const formatDate = (date: Date | null | undefined): string =>
-  date ? date.toISOString().split('T')[0] : ''
 
 export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
   const { id } = use(params)
@@ -329,7 +328,7 @@ export default function EditarNoticiaPage({ params }: EditarNoticiaPageProps) {
                 <FormLabel>Data de Publicação</FormLabel>
                 <FormControl>
                   <Input
-                    type="date"
+                    type="datetime-local"
                     value={formatDate(field.value)}
                     onChange={(e) => {
                       const selectedDate = new Date(e.target.value)
