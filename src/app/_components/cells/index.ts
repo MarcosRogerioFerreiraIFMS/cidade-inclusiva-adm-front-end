@@ -1,0 +1,6 @@
+export * from './CategoriaCell'
+export * from './ConteudoCell'
+export * from './DataCell'
+export * from './FotoCell'
+export * from './TituloCell'
+export * from './UrlCell'

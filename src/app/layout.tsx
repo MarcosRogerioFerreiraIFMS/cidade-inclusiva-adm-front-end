@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
-import { Header } from './_components/Header'
-import { ToastNotifier } from './_components/ToastNotifier'
+import { LayoutProvider } from './_components/layout/layout-provider'
+import { ThemeProvider } from './_components/ui/theme-provider'
 import './globals.css'
 
 const roboto = Roboto({
@@ -20,11 +20,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${roboto.className} overflow-hidden antialiased`}>
-        <Header />
-        {children}
-        <ToastNotifier />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LayoutProvider>{children}</LayoutProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

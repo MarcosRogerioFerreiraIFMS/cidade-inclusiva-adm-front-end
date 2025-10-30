@@ -1,6 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Veja mais sobre arquivos ignorados: https://help.github.com/articles/ignoring-files/
 
-# dependencies
+# dependências
 /node_modules
 /.pnp
 .pnp.*
@@ -10,17 +10,17 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# testes
 /coverage
 
 # next.js
 /.next/
 /out/
 
-# production
+# produção
 /build
 
-# misc
+# diversos
 .DS_Store
 *.pem
 
@@ -30,8 +30,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env
+# arquivos de ambiente (pode optar por commitar se necessário)
+.env*
+!.env.example
 
 # vercel
 .vercel
@@ -40,8 +41,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Prisma
-dev.db*
+# arquivos temporários
+temp/
 
-# npm
+# gerenciadores de pacotes
+yarn.lock
 package-lock.json
+bun.lock
+
+# boilerplate
+.github/
+backend/
