@@ -1,8 +1,8 @@
-import { NoticiaDetalhes } from '@/app/(pages)/noticias/[id]/_components/noticia-detalhes'
 import { LayoutDashboard } from '@/app/_components/layout/layout-dashboard'
 import { getNoticiaById } from '@/app/_services/noticiaService'
 import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { notFound } from 'next/navigation'
+import { NoticiaDetalhes } from './_components/noticia-detalhes'
 
 export const dynamic = 'force-dynamic'
 

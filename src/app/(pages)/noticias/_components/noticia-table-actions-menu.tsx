@@ -69,13 +69,15 @@ export function NoticiaTableActionsMenu({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <NoticiaDeletarModal
-        noticia={noticia}
-        isOpen={isOpen}
-        onCancel={closeModal}
-        onConfirm={confirmDelete}
-        isLoading={isLoading}
-      />
+      {isOpen && (
+        <NoticiaDeletarModal
+          noticia={noticia}
+          isOpen={isOpen}
+          onCancel={closeModal}
+          onConfirm={confirmDelete}
+          isLoading={isLoading}
+        />
+      )}
     </>
   )
 }

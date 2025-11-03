@@ -2,7 +2,7 @@ import 'server-only'
 
 import { API_CONFIG } from '@/app/_constants/appSettingsConstants'
 import { getServerAuthToken } from '../_services/tokenService'
-import { handleApiError } from './errorHandler'
+import { ApiError, handleApiError } from './errorHandler'
 
 interface ApiClientOptions extends RequestInit {
   next?: {
@@ -64,6 +64,12 @@ export async function apiClient<T = unknown>(
 
     return null
   } catch (error) {
+    // Se já for um ApiError, propaga diretamente
+    if (error instanceof ApiError) {
+      throw error
+    }
+
+    // Caso contrário, processa o erro
     const processedError = handleApiError(null, error)
     throw processedError
   }

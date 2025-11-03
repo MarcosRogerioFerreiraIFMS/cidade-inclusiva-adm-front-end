@@ -1,6 +1,7 @@
 import 'server-only'
 
 import { apiClient } from '@/app/_api/apiClient'
+import { ApiError } from '@/app/_api/errorHandler'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import type { ApiResponse } from '../_types/apiResponsesType'
 
@@ -28,14 +29,12 @@ export async function getNoticiaById(
 
     return result?.data || null
   } catch (error) {
-    if (
-      error instanceof Error &&
-      (error.message.includes('404') ||
-        error.message.includes('não encontrado') ||
-        error.message.includes('not found'))
-    ) {
+    // Se for um erro 404, retorna null para mostrar a página not-found
+    if (error instanceof ApiError && error.status === 404) {
       return null
     }
+
+    // Para outros erros, propaga para o error boundary
     throw error
   }
 }

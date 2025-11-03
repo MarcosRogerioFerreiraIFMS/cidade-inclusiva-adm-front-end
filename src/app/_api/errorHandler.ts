@@ -1,12 +1,25 @@
 import type { ApiErrorResponse } from '../_types/apiResponsesType'
 
 /**
+ * Classe de erro customizada que preserva o status HTTP
+ */
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public status?: number | null
+  ) {
+    super(message)
+    this.name = 'ApiError'
+  }
+}
+
+/**
  * Normaliza e traduz erros de API/fetch em mensagens amigáveis ao usuário
  */
 export function handleApiError(
   status: number | null,
   errorData: unknown
-): Error {
+): ApiError {
   // Se já for um Error, processa a mensagem
   if (errorData instanceof Error) {
     const message = errorData.message.toLowerCase()
@@ -27,13 +40,14 @@ export function handleApiError(
       errorName === 'typeerror' ||
       (errorData.cause && errorData.cause instanceof Error)
     ) {
-      return new Error(
-        'Não foi possível conectar ao servidor. Verifique sua conexão com a internet e tente novamente.'
+      return new ApiError(
+        'Não foi possível conectar ao servidor. Verifique sua conexão com a internet e tente novamente.',
+        status
       )
     }
 
     // Remover mensagens técnicas e torná-las amigáveis
-    return new Error(makeUserFriendly(errorData.message))
+    return new ApiError(makeUserFriendly(errorData.message), status)
   }
 
   if (isApiErrorResponse(errorData)) {
@@ -43,16 +57,17 @@ export function handleApiError(
       defaultMessageForStatus(status) ||
       'Erro inesperado.'
 
-    return new Error(makeUserFriendly(rawMessage))
+    return new ApiError(makeUserFriendly(rawMessage), status)
   }
 
   if (typeof errorData === 'string') {
-    return new Error(makeUserFriendly(errorData))
+    return new ApiError(makeUserFriendly(errorData), status)
   }
 
-  return new Error(
+  return new ApiError(
     defaultMessageForStatus(status) ||
-      'Ocorreu um erro. Por favor, tente novamente.'
+      'Ocorreu um erro. Por favor, tente novamente.',
+    status
   )
 }
 

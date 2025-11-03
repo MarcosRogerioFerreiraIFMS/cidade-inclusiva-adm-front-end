@@ -1,10 +1,5 @@
 'use client'
 
-import { EditIcon, ExternalLinkIcon, Trash2Icon, Undo2Icon } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-
 import { deleteNoticia } from '@/app/_actions/noticiaActions'
 import { Badge } from '@/app/_components/ui/badge'
 import { Button } from '@/app/_components/ui/button'
@@ -14,6 +9,10 @@ import { NoticiaCategoriasDisplay } from '@/app/_enums/noticiaEnums'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
 import { getShadcnBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
+import { EditIcon, ExternalLinkIcon, Trash2Icon, Undo2Icon } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { NoticiaDeletarModal } from '../../_components/noticia-deletar-modal'
 
 interface NoticiaDetalhesProps {
@@ -25,13 +24,13 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
   const { isOpen, isLoading, openModal, closeModal, confirmDelete } =
     useDeleteModal()
 
-  const handleDelete = (id: string) => {
+  const handleDelete = () => {
     openModal(
-      id,
+      noticia.id,
       async () => {
         const result = await deleteNoticia(noticia.id)
         if (result.success) {
-          router.push('/noticias/listar')
+          router.replace('/noticias/listar')
         }
         return result
       },
@@ -59,10 +58,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
               Editar
             </Link>
           </Button>
-          <Button
-            variant="destructive"
-            onClick={() => handleDelete(noticia.id)}
-          >
+          <Button variant="destructive" onClick={handleDelete}>
             <Trash2Icon />
             Deletar
           </Button>
@@ -77,6 +73,8 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
                 src={noticia.foto.url}
                 alt={noticia.titulo}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
                 className="object-cover"
               />
             </div>
@@ -108,13 +106,15 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
         </Button>
       </div>
 
-      <NoticiaDeletarModal
-        noticia={noticia}
-        isOpen={isOpen}
-        onCancel={closeModal}
-        onConfirm={confirmDelete}
-        isLoading={isLoading}
-      />
+      {isOpen && (
+        <NoticiaDeletarModal
+          noticia={noticia}
+          isOpen={isOpen}
+          onCancel={closeModal}
+          onConfirm={confirmDelete}
+          isLoading={isLoading}
+        />
+      )}
     </>
   )
 }
