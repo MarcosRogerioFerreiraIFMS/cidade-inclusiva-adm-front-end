@@ -26,6 +26,7 @@ export default async function NoticiaListarPage() {
           searchKey="titulo"
           searchPlaceholder="Pesquisar por título..."
           actions={<NoticiaTableActions />}
+          enableColumnVisibility={true}
         />
       </div>
     </LayoutDashboard>

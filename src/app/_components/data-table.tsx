@@ -4,6 +4,7 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -16,10 +17,19 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
+  EyeIcon,
   XIcon
 } from 'lucide-react'
 
 import { Button } from '@/app/_components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/app/_components/ui/dropdown-menu'
 import { Input } from '@/app/_components/ui/input'
 import {
   Select,
@@ -45,6 +55,8 @@ interface DataTableProps<TData, TValue> {
   searchPlaceholder?: string
   pageSize?: number
   actions?: React.ReactNode
+  enableColumnVisibility?: boolean
+  defaultHiddenColumns?: string[]
 }
 
 export function DataTable<TData, TValue>({
@@ -53,10 +65,21 @@ export function DataTable<TData, TValue>({
   searchKey,
   searchPlaceholder = 'Pesquisar...',
   pageSize = 10,
-  actions
+  actions,
+  enableColumnVisibility = false,
+  defaultHiddenColumns = []
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    () => {
+      const initialVisibility: VisibilityState = {}
+      defaultHiddenColumns.forEach((columnId) => {
+        initialVisibility[columnId] = false
+      })
+      return initialVisibility
+    }
+  )
   const [animationKey, setAnimationKey] = useState(0)
 
   const table = useReactTable({
@@ -64,6 +87,7 @@ export function DataTable<TData, TValue>({
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -75,7 +99,8 @@ export function DataTable<TData, TValue>({
     },
     state: {
       sorting,
-      columnFilters
+      columnFilters,
+      columnVisibility
     }
   })
 
@@ -99,34 +124,88 @@ export function DataTable<TData, TValue>({
     setAnimationKey((prev) => prev + 1)
   }, [pageIndex])
 
+  const visibleColumnsCount = table
+    .getAllColumns()
+    .filter((col) => col.getIsVisible()).length
+  const toggleableColumns = table
+    .getAllColumns()
+    .filter((col) => col.getCanHide())
+
   return (
     <div className="w-full space-y-4">
-      {searchKey && (
+      {(searchKey || enableColumnVisibility || actions) && (
         <div className="flex items-center justify-between gap-4 py-4">
           <div className="flex w-full max-w-sm items-center gap-2">
-            <Input
-              placeholder={searchPlaceholder}
-              value={
-                (table.getColumn(searchKey)?.getFilterValue() as string) ?? ''
-              }
-              onChange={(event) =>
-                table.getColumn(searchKey)?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-              aria-label={searchPlaceholder}
-            />
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => {
-                table.getColumn(searchKey)?.setFilterValue('')
-              }}
-              aria-label="Limpar pesquisa"
-            >
-              <XIcon aria-hidden="true" />
-            </Button>
+            {searchKey && (
+              <>
+                <Input
+                  placeholder={searchPlaceholder}
+                  value={
+                    (table.getColumn(searchKey)?.getFilterValue() as string) ??
+                    ''
+                  }
+                  onChange={(event) =>
+                    table
+                      .getColumn(searchKey)
+                      ?.setFilterValue(event.target.value)
+                  }
+                  className="max-w-sm"
+                  aria-label={searchPlaceholder}
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => {
+                    table.getColumn(searchKey)?.setFilterValue('')
+                  }}
+                  aria-label="Limpar pesquisa"
+                >
+                  <XIcon aria-hidden="true" />
+                </Button>
+              </>
+            )}
           </div>
-          {actions && <div className="shrink-0">{actions}</div>}
+          <div className="flex shrink-0 items-center gap-2">
+            {enableColumnVisibility && toggleableColumns.length > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="gap-2"
+                    aria-label="Selecionar colunas"
+                  >
+                    <EyeIcon className="size-4" aria-hidden="true" />
+                    Colunas ({visibleColumnsCount})
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[200px]">
+                  <DropdownMenuLabel>Selecionar colunas</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {toggleableColumns.map((column) => {
+                    const columnId = column.id
+                    const columnHeader =
+                      typeof column.columnDef.header === 'string'
+                        ? column.columnDef.header
+                        : columnId
+
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={columnId}
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                        aria-label={`${column.getIsVisible() ? 'Ocultar' : 'Exibir'} coluna ${columnHeader}`}
+                      >
+                        {columnHeader}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+            {actions && <div>{actions}</div>}
+          </div>
         </div>
       )}
       <div className="overflow-hidden rounded-md border">
