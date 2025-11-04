@@ -41,8 +41,12 @@ export function NoticiaTableActionsMenu({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <MoreHorizontalIcon />
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label={`Abrir menu de ações para ${noticia.titulo}`}
+          >
+            <MoreHorizontalIcon aria-hidden="true" />
             <span className="sr-only">Abrir menu</span>
           </Button>
         </DropdownMenuTrigger>
@@ -50,20 +54,31 @@ export function NoticiaTableActionsMenu({
           <DropdownMenuLabel>Ações</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href={`/noticias/${noticia.id}`} prefetch={false}>
-              <EyeIcon />
+            <Link
+              href={`/noticias/${noticia.id}`}
+              prefetch={false}
+              aria-label={`Visualizar notícia ${noticia.titulo}`}
+            >
+              <EyeIcon aria-hidden="true" />
               Visualizar
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/noticias/editar/${noticia.id}`}>
-              <EditIcon />
+            <Link
+              href={`/noticias/editar/${noticia.id}`}
+              aria-label={`Editar notícia ${noticia.titulo}`}
+            >
+              <EditIcon aria-hidden="true" />
               Editar
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" onClick={handleDelete}>
-            <Trash2Icon />
+          <DropdownMenuItem
+            variant="destructive"
+            onClick={handleDelete}
+            aria-label={`Deletar notícia ${noticia.titulo}`}
+          >
+            <Trash2Icon aria-hidden="true" />
             Deletar
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -33,15 +33,17 @@ export function NoticiaTableActions() {
         variant="outline"
         onClick={handleRefresh}
         disabled={isRefreshing || isPending}
+        aria-label="Atualizar lista de notícias"
       >
         <RefreshCwIcon
           className={`${isRefreshing || isPending ? 'animate-spin' : ''}`}
+          aria-hidden="true"
         />
         Atualizar
       </Button>
       <Button asChild>
-        <Link href="/noticias/adicionar">
-          <PlusIcon />
+        <Link href="/noticias/adicionar" aria-label="Adicionar nova notícia">
+          <PlusIcon aria-hidden="true" />
           Adicionar Notícia
         </Link>
       </Button>

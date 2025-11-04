@@ -276,7 +276,7 @@ export function LayoutError({ error, reset }: LayoutErrorProps) {
           {/* Ação Sugerida */}
           {errorInfo.action && (
             <p className="text-muted-foreground flex items-center gap-2 text-center text-sm">
-              <LightbulbIcon className="h-4 w-4 flex-shrink-0" />
+              <LightbulbIcon className="h-4 w-4 shrink-0" />
               {errorInfo.action}
             </p>
           )}
@@ -295,25 +295,22 @@ export function LayoutError({ error, reset }: LayoutErrorProps) {
                   <p className="whitespace-pre-line">{errorInfo.cause}</p>
                 </div>
 
-                {/* Detalhes Técnicos (apenas em dev ou com digest) */}
-                {(process.env.NODE_ENV === 'development' || error?.digest) && (
-                  <div className="bg-muted text-muted-foreground mt-3 rounded-md px-4 py-3 text-left">
-                    <p className="mb-2 text-xs font-medium text-orange-600 uppercase">
-                      Detalhes Técnicos
+                <div className="bg-muted text-muted-foreground mt-3 rounded-md px-4 py-3 text-left">
+                  <p className="mb-2 text-xs font-medium text-orange-600 uppercase">
+                    Detalhes Técnicos
+                  </p>
+                  {error?.message && (
+                    <p className="mb-1 text-xs">
+                      <span className="font-medium">Mensagem:</span>{' '}
+                      {error.message}
                     </p>
-                    {error?.message && (
-                      <p className="mb-1 text-xs">
-                        <span className="font-medium">Mensagem:</span>{' '}
-                        {error.message}
-                      </p>
-                    )}
-                    {error?.digest && (
-                      <p className="text-xs">
-                        <span className="font-medium">ID:</span> {error.digest}
-                      </p>
-                    )}
-                  </div>
-                )}
+                  )}
+                  {error?.digest && (
+                    <p className="text-xs">
+                      <span className="font-medium">ID:</span> {error.digest}
+                    </p>
+                  )}
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

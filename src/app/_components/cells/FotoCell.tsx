@@ -3,9 +3,10 @@ import Image from 'next/image'
 
 interface FotoCellProps {
   foto: FotoResponseDTO | undefined
+  titulo?: string
 }
 
-export function FotoCell({ foto }: FotoCellProps) {
+export function FotoCell({ foto, titulo }: FotoCellProps) {
   if (!foto || !foto.url) {
     return (
       <div className="bg-muted flex aspect-video h-12 items-center justify-center rounded">
@@ -14,11 +15,13 @@ export function FotoCell({ foto }: FotoCellProps) {
     )
   }
 
+  const altText = titulo ? `Imagem da notícia: ${titulo}` : 'Imagem da notícia'
+
   return (
     <div className="relative aspect-video h-12 overflow-hidden rounded">
       <Image
         src={foto.url}
-        alt="Foto da notícia"
+        alt={altText}
         fill
         className="object-cover"
         draggable={false}

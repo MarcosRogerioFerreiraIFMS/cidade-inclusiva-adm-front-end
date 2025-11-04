@@ -5,8 +5,12 @@ import { ThemeProvider } from './_components/ui/theme-provider'
 import './globals.css'
 
 const roboto = Roboto({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin']
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial', 'sans-serif'],
+  adjustFontFallback: true
 })
 
 export const metadata: Metadata = {

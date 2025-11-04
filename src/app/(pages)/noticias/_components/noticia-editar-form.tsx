@@ -276,8 +276,12 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
           />
 
           <div className="flex gap-4">
-            <Button type="submit" disabled={isPending}>
-              <SaveIcon />
+            <Button
+              type="submit"
+              disabled={isPending}
+              aria-label="Salvar alterações da notícia"
+            >
+              <SaveIcon aria-hidden="true" />
               {isPending ? 'Salvando...' : 'Salvar Alterações'}
             </Button>
             <Button
@@ -285,8 +289,9 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
               variant="outline"
               onClick={() => form.reset()}
               disabled={isPending}
+              aria-label="Resetar formulário ao estado inicial"
             >
-              <RotateCwIcon />
+              <RotateCwIcon aria-hidden="true" />
               Resetar
             </Button>
             <Button
@@ -294,6 +299,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
               variant="outline"
               onClick={() => router.back()}
               disabled={isPending}
+              aria-label="Cancelar e voltar"
             >
               Cancelar
             </Button>

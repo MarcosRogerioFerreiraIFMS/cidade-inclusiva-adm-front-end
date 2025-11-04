@@ -29,12 +29,10 @@ export async function getNoticiaById(
 
     return result?.data || null
   } catch (error) {
-    // Se for um erro 404, retorna null para mostrar a página not-found
     if (error instanceof ApiError && error.status === 404) {
       return null
     }
 
-    // Para outros erros, propaga para o error boundary
     throw error
   }
 }

@@ -13,7 +13,7 @@ export default async function NoticiaListarPage() {
     <LayoutDashboard>
       <div className="space-y-6">
         <div>
-          <h1 className="text-4xl font-bold">Notícias</h1>
+          <h1 className="text-3xl font-bold">Notícias</h1>
           <p className="text-muted-foreground mt-2">
             Gerencie todas as notícias do sistema ({noticias.length}{' '}
             {noticias.length === 1 ? 'notícia' : 'notícias'})

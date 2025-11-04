@@ -36,7 +36,7 @@ export function MobileBlocker({ children }: { children: React.ReactNode }) {
 
   if (screenState.isMobile) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6 dark:from-gray-900 dark:to-gray-800">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-linear-to-br from-blue-50 to-indigo-100 p-6 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-md space-y-6 text-center">
           <div className="flex justify-center">
             <div className="rounded-full bg-white p-6 shadow-lg dark:bg-gray-800">

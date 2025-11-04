@@ -21,7 +21,8 @@ export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
     header: 'Imagem',
     cell: ({ row }) => {
       const foto = row.getValue('foto') as NoticiaResponseDTO['foto']
-      return <FotoCell foto={foto} />
+      const titulo = row.getValue('titulo') as string
+      return <FotoCell foto={foto} titulo={titulo} />
     }
   },
   {
@@ -32,9 +33,10 @@ export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="h-auto p-0 hover:bg-transparent"
+          aria-label="Ordenar por título"
         >
           Título
-          <ArrowUpDownIcon />
+          <ArrowUpDownIcon aria-hidden="true" />
         </Button>
       )
     },
@@ -51,9 +53,10 @@ export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="h-auto p-0 hover:bg-transparent"
+          aria-label="Ordenar por categoria"
         >
           Categoria
-          <ArrowUpDownIcon />
+          <ArrowUpDownIcon aria-hidden="true" />
         </Button>
       )
     },
@@ -70,9 +73,10 @@ export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="h-auto p-0 hover:bg-transparent"
+          aria-label="Ordenar por data de publicação"
         >
           Data de Publicação
-          <ArrowUpDownIcon />
+          <ArrowUpDownIcon aria-hidden="true" />
         </Button>
       )
     },

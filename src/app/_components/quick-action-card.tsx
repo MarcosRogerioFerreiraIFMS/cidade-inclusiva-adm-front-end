@@ -36,7 +36,7 @@ function QuickActionImage({
   return (
     <Image
       src={imageSrc}
-      alt={title}
+      alt={`Ícone representando ${title}`}
       width={64}
       height={64}
       draggable={false}
@@ -73,8 +73,8 @@ export function QuickActionCard({
       </CardContent>
       <CardFooter className="flex-col">
         <Button asChild>
-          <Link href={href}>
-            <ForwardIcon />
+          <Link href={href} aria-label={`Acessar ${title}`}>
+            <ForwardIcon aria-hidden="true" />
             <span>Acessar</span>
           </Link>
         </Button>

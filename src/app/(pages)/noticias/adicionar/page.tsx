@@ -6,7 +6,7 @@ export default function NoticiaAdicionarPage() {
     <LayoutDashboard>
       <div className="space-y-6">
         <div>
-          <h1 className="text-4xl font-bold">Adicionar Notícia</h1>
+          <h1 className="text-3xl font-bold">Adicionar Notícia</h1>
           <p className="text-muted-foreground mt-2">
             Crie uma nova notícia para o sistema
           </p>

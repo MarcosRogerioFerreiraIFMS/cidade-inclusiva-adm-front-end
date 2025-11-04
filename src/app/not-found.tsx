@@ -10,6 +10,7 @@ import { useMenuStore } from './_store/menuStore'
  */
 export default function NotFound() {
   const { showMenu } = useMenuStore()
+
   return (
     <main
       className={`animate-fade-in mt-20 flex flex-col items-center justify-center gap-4 p-5 transition-all ${showMenu ? 'ml-70' : 'ml-0'}`}
@@ -18,7 +19,7 @@ export default function NotFound() {
       }}
     >
       <div className="flex flex-col items-center gap-2">
-        <h1 className="text-4xl">Página não encontrada</h1>
+        <h1 className="text-3xl">Página não encontrada</h1>
         <p>A página que você está procurando não existe.</p>
       </div>
 

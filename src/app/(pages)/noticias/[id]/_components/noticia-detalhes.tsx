@@ -42,7 +42,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h1 className="text-4xl font-bold">{noticia.titulo}</h1>{' '}
+          <h1 className="text-3xl font-bold">{noticia.titulo}</h1>{' '}
           <p className="text-muted-foreground">
             Publicado em {formatDateToDateString(noticia.dataPublicacao)}
           </p>
@@ -53,13 +53,20 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
         </div>
         <div className="flex items-center gap-2">
           <Button asChild>
-            <Link href={`/noticias/editar/${noticia.id}`}>
-              <EditIcon />
+            <Link
+              href={`/noticias/editar/${noticia.id}`}
+              aria-label={`Editar notícia ${noticia.titulo}`}
+            >
+              <EditIcon aria-hidden="true" />
               Editar
             </Link>
           </Button>
-          <Button variant="destructive" onClick={handleDelete}>
-            <Trash2Icon />
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            aria-label={`Deletar notícia ${noticia.titulo}`}
+          >
+            <Trash2Icon aria-hidden="true" />
             Deletar
           </Button>
         </div>
@@ -71,11 +78,12 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
             <div className="relative aspect-video h-96 w-fit overflow-hidden rounded-md">
               <Image
                 src={noticia.foto.url}
-                alt={noticia.titulo}
+                alt={`Imagem ilustrativa da notícia: ${noticia.titulo}`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 priority
                 className="object-cover"
+                draggable={false}
               />
             </div>
           </CardContent>
@@ -91,16 +99,24 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
       <div className="flex justify-start gap-4">
         {noticia.url && (
           <Button variant="outline" asChild>
-            <Link href={noticia.url} target="_blank" rel="noopener noreferrer">
-              <ExternalLinkIcon />
+            <Link
+              href={noticia.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Abrir link externo da notícia ${noticia.titulo} em nova aba`}
+            >
+              <ExternalLinkIcon aria-hidden="true" />
               Abrir notícia
             </Link>
           </Button>
         )}
 
         <Button variant="outline" asChild>
-          <Link href="/noticias/listar">
-            <Undo2Icon />
+          <Link
+            href="/noticias/listar"
+            aria-label="Voltar para lista de notícias"
+          >
+            <Undo2Icon aria-hidden="true" />
             <span>Voltar para lista</span>
           </Link>
         </Button>

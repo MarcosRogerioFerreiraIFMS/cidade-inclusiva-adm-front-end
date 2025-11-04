@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function LoginPage() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Elementos decorativos de fundo */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="bg-primary/10 absolute -top-20 -left-20 h-96 w-96 animate-pulse rounded-full blur-3xl" />
@@ -18,7 +18,7 @@ export default async function LoginPage() {
       </div>
 
       {/* Grid Pattern de fundo */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]" />
 
       <div className="relative z-10 grid w-full max-w-6xl items-center gap-16 lg:grid-cols-2">
         {/* Seção de Branding */}
@@ -26,7 +26,7 @@ export default async function LoginPage() {
           <div className="space-y-10 text-center">
             {/* Título e Descrição */}
             <div className="space-y-6">
-              <h1 className="dark:from-primary dark:to-secondary bg-gradient-to-r from-blue-600 via-blue-500 to-green-500 bg-clip-text text-7xl font-extrabold tracking-tight text-transparent drop-shadow-sm dark:via-blue-600">
+              <h1 className="dark:from-primary dark:to-secondary bg-linear-to-r from-blue-600 via-blue-500 to-green-500 bg-clip-text text-7xl font-extrabold tracking-tight text-transparent drop-shadow-sm dark:via-blue-600">
                 Cidade Inclusiva
               </h1>
               <div className="space-y-3">

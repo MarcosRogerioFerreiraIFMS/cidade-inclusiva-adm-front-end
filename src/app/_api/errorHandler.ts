@@ -51,6 +51,31 @@ export function handleApiError(
   }
 
   if (isApiErrorResponse(errorData)) {
+    // Se tiver details com array de erros de validação, processar
+    if (errorData.details && Array.isArray(errorData.details)) {
+      const validationErrors = errorData.details
+        .map((detail) => {
+          if (
+            typeof detail === 'object' &&
+            detail !== null &&
+            'message' in detail
+          ) {
+            return String(detail.message)
+          }
+          return null
+        })
+        .filter(Boolean)
+
+      if (validationErrors.length > 0) {
+        // Se tiver apenas um erro, retornar direto
+        if (validationErrors.length === 1) {
+          return new ApiError(validationErrors[0] as string, status)
+        }
+        // Se tiver múltiplos, concatenar
+        return new ApiError(validationErrors.join(' '), status)
+      }
+    }
+
     const rawMessage =
       errorData.error ||
       errorData.message ||
@@ -126,6 +151,16 @@ function makeUserFriendly(message: string): string {
     return 'Você não tem permissão para realizar esta ação.'
   }
 
+  // Último administrador do sistema
+  if (
+    lowerMessage.includes('último administrador') ||
+    lowerMessage.includes('ultimo administrador') ||
+    lowerMessage.includes('last administrator') ||
+    lowerMessage.includes('cannot delete last admin')
+  ) {
+    return 'Não é possível excluir o último administrador do sistema.'
+  }
+
   // Retorna mensagem original se já for amigável, senão usa uma genérica
   if (isAlreadyUserFriendly(message)) {
     return message
@@ -146,6 +181,7 @@ function isAlreadyUserFriendly(message: string): boolean {
     'tente novamente',
     'verifique',
     'não foi possível',
+    'não é possível',
     'erro ao',
     'aguarde',
     'credenciais',
@@ -154,7 +190,10 @@ function isAlreadyUserFriendly(message: string): boolean {
     'acesso negado',
     'permissão',
     'disponível',
-    'temporariamente'
+    'temporariamente',
+    'excluir',
+    'administrador',
+    'último'
   ]
 
   return friendlyPatterns.some((pattern) => lowerMessage.includes(pattern))

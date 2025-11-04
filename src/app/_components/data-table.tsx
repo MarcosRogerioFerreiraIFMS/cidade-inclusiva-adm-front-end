@@ -113,6 +113,7 @@ export function DataTable<TData, TValue>({
                 table.getColumn(searchKey)?.setFilterValue(event.target.value)
               }
               className="max-w-sm"
+              aria-label={searchPlaceholder}
             />
             <Button
               variant="outline"
@@ -120,11 +121,12 @@ export function DataTable<TData, TValue>({
               onClick={() => {
                 table.getColumn(searchKey)?.setFilterValue('')
               }}
+              aria-label="Limpar pesquisa"
             >
-              <XIcon />
+              <XIcon aria-hidden="true" />
             </Button>
           </div>
-          {actions && <div className="flex-shrink-0">{actions}</div>}
+          {actions && <div className="shrink-0">{actions}</div>}
         </div>
       )}
       <div className="overflow-hidden rounded-md border">
@@ -206,7 +208,7 @@ export function DataTable<TData, TValue>({
                 table.setPageSize(Number(value))
               }}
             >
-              <SelectTrigger className="h-8 w-[80px]">
+              <SelectTrigger className="h-8 w-20">
                 <SelectValue placeholder={currentPageSize} />
               </SelectTrigger>
               <SelectContent side="top">
@@ -249,6 +251,7 @@ export function DataTable<TData, TValue>({
                     }
                   }}
                   className="h-8 w-[60px] text-center"
+                  aria-label={`Ir para página específica (1 a ${pageCount})`}
                 />
               </div>
             )}
@@ -261,9 +264,9 @@ export function DataTable<TData, TValue>({
               className="hidden size-8 transition-all duration-200 hover:scale-105 active:scale-95 lg:flex"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
+              aria-label="Ir para primeira página"
             >
-              <span className="sr-only">Ir para primeira página</span>
-              <ChevronsLeftIcon />
+              <ChevronsLeftIcon aria-hidden="true" />
             </Button>
             <Button
               variant="outline"
@@ -271,9 +274,9 @@ export function DataTable<TData, TValue>({
               className="size-8 transition-all duration-200 hover:scale-105 active:scale-95"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
+              aria-label="Ir para página anterior"
             >
-              <span className="sr-only">Ir para página anterior</span>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon aria-hidden="true" />
             </Button>
             <Button
               variant="outline"
@@ -281,9 +284,9 @@ export function DataTable<TData, TValue>({
               className="size-8 transition-all duration-200 hover:scale-105 active:scale-95"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
+              aria-label="Ir para próxima página"
             >
-              <span className="sr-only">Ir para próxima página</span>
-              <ChevronRightIcon />
+              <ChevronRightIcon aria-hidden="true" />
             </Button>
             <Button
               variant="outline"
@@ -291,9 +294,9 @@ export function DataTable<TData, TValue>({
               className="hidden size-8 transition-all duration-200 hover:scale-105 active:scale-95 lg:flex"
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
+              aria-label="Ir para última página"
             >
-              <span className="sr-only">Ir para última página</span>
-              <ChevronsRightIcon />
+              <ChevronsRightIcon aria-hidden="true" />
             </Button>
           </div>
         </div>

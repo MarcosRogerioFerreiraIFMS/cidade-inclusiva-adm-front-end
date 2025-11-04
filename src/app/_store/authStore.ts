@@ -28,6 +28,9 @@ interface AuthStore {
   initialize: () => Promise<void>
 }
 
+/** Tempo limite para verificação de autenticação */
+const TIMEOUT_CHECK_AUTH_MS = 30 * 60 * 1000 // 30 minutos
+
 // BroadcastChannel para sincronização entre abas
 let authChannel: BroadcastChannel | null = null
 let handleStorageChange: ((e: StorageEvent) => void) | null = null
@@ -233,21 +236,17 @@ export const useAuthStore = create<AuthStore>()((set, get) => {
         })
 
         // Configurar verificação proativa de expiração do token
-        // Verificar a cada 5 minutos se ainda está autenticado
         if (tokenExpirationTimer) {
           clearTimeout(tokenExpirationTimer)
         }
 
-        tokenExpirationTimer = setTimeout(
-          async () => {
-            // Verificar se ainda está autenticado
-            const currentState = get()
-            if (currentState.isAuthenticated && !currentState.isCheckingAuth) {
-              await get().checkAuthentication()
-            }
-          },
-          5 * 60 * 1000
-        ) // 5 minutos
+        tokenExpirationTimer = setTimeout(async () => {
+          // Verificar se ainda está autenticado
+          const currentState = get()
+          if (currentState.isAuthenticated && !currentState.isCheckingAuth) {
+            await get().checkAuthentication()
+          }
+        }, TIMEOUT_CHECK_AUTH_MS)
       } catch {
         set({
           user: null,

@@ -93,7 +93,7 @@ export function LoginForm() {
     <Card className="border-none bg-white/60 shadow-2xl backdrop-blur-xl dark:bg-slate-900/60">
       <CardHeader className="space-y-3 pb-6">
         <div className="flex items-center justify-center gap-2">
-          <div className="dark:from-primary dark:to-secondary rounded-full bg-gradient-to-br from-blue-600 to-green-500 p-2.5 shadow-lg">
+          <div className="dark:from-primary dark:to-secondary rounded-full bg-linear-to-br from-blue-600 to-green-500 p-2.5 shadow-lg">
             <LogInIcon className="size-6 text-white" />
           </div>
         </div>
@@ -108,10 +108,10 @@ export function LoginForm() {
       <CardContent>
         {/* Alerta de Rate Limiting */}
         {rateLimit.isBlocked && (
-          <div className="mb-6 rounded-xl border border-red-200 bg-gradient-to-br from-red-50 to-red-100/50 p-4 shadow-md dark:border-red-900/50 dark:from-red-950/50 dark:to-red-900/20">
+          <div className="mb-6 rounded-xl border border-red-200 bg-linear-to-br from-red-50 to-red-100/50 p-4 shadow-md dark:border-red-900/50 dark:from-red-950/50 dark:to-red-900/20">
             <div className="flex items-start gap-3">
               <div className="rounded-full bg-red-100 p-2 dark:bg-red-900/50">
-                <ShieldAlertIcon className="h-5 w-5 flex-shrink-0 text-red-600 dark:text-red-400" />
+                <ShieldAlertIcon className="h-5 w-5 shrink-0 text-red-600 dark:text-red-400" />
               </div>
               <div className="flex-1 space-y-1.5">
                 <p className="text-sm font-bold text-red-900 dark:text-red-200">
@@ -134,7 +134,7 @@ export function LoginForm() {
         {!rateLimit.isBlocked &&
           rateLimit.remainingAttempts <= 3 &&
           rateLimit.remainingAttempts > 0 && (
-            <div className="mb-6 rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-100/50 p-3.5 shadow-sm dark:border-amber-900/50 dark:from-amber-950/50 dark:to-amber-900/20">
+            <div className="mb-6 rounded-xl border border-amber-200 bg-linear-to-br from-amber-50 to-yellow-100/50 p-3.5 shadow-sm dark:border-amber-900/50 dark:from-amber-950/50 dark:to-amber-900/20">
               <div className="flex items-center gap-2.5">
                 <div className="rounded-full bg-amber-100 p-1.5 dark:bg-amber-900/50">
                   <AlertTriangleIcon className="size-4 text-amber-600 dark:text-amber-400" />
@@ -204,11 +204,18 @@ export function LoginForm() {
                       aria-label={
                         showPassword ? 'Ocultar senha' : 'Mostrar senha'
                       }
+                      tabIndex={-1}
                     >
                       {showPassword ? (
-                        <EyeOffIcon className="text-slate-500" />
+                        <EyeOffIcon
+                          className="text-slate-500"
+                          aria-hidden="true"
+                        />
                       ) : (
-                        <EyeIcon className="text-slate-500" />
+                        <EyeIcon
+                          className="text-slate-500"
+                          aria-hidden="true"
+                        />
                       )}
                     </Button>
                   </div>
@@ -221,17 +228,18 @@ export function LoginForm() {
               <Button
                 type="submit"
                 disabled={isPending || rateLimit.isBlocked}
-                className="dark:from-primary dark:to-secondary flex-1 bg-gradient-to-r from-blue-600 to-green-500 shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:scale-100 disabled:opacity-50"
+                className="dark:from-primary dark:to-secondary flex-1 bg-linear-to-r from-blue-600 to-green-500 shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl disabled:scale-100 disabled:opacity-50"
                 size="lg"
+                aria-label="Fazer login no sistema"
               >
                 {isPending ? (
                   <>
-                    <RotateCwIcon className="animate-spin" />
+                    <RotateCwIcon className="animate-spin" aria-hidden="true" />
                     Entrando...
                   </>
                 ) : (
                   <>
-                    <LogInIcon />
+                    <LogInIcon aria-hidden="true" />
                     Entrar
                   </>
                 )}
@@ -243,8 +251,9 @@ export function LoginForm() {
                 disabled={isPending || rateLimit.isBlocked}
                 className="border-slate-200 bg-white/50 backdrop-blur-sm transition-all hover:bg-white dark:border-slate-700 dark:bg-slate-800/50 dark:hover:bg-slate-800"
                 size="lg"
+                aria-label="Limpar formulário de login"
               >
-                <RotateCwIcon />
+                <RotateCwIcon aria-hidden="true" />
                 Limpar
               </Button>
             </div>

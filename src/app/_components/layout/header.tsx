@@ -9,6 +9,7 @@ import {
   MenuSquareIcon,
   MoonIcon,
   SunIcon,
+  UserIcon,
   WrenchIcon
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -53,6 +54,7 @@ export function Header() {
       }
     }
 
+    if (pathname === '/perfil') return 'Meu Perfil'
     if (pathname.startsWith('/noticias/editar/')) return 'Editar Notícia'
     if (/^\/noticias\/[a-zA-Z0-9-]+$/.test(pathname))
       return 'Visualizar Notícia'
@@ -90,14 +92,20 @@ export function Header() {
             size="icon"
             onClick={toggleMenu}
             className="dark:text-foreground text-white"
+            aria-label="Abrir menu de navegação"
+            aria-expanded={showMenu}
           >
             <MenuSquareIcon className="size-6" />
           </Button>
-          <Link href="/" className="relative aspect-207/48 h-10">
+          <Link
+            href="/"
+            className="relative aspect-207/48 h-10"
+            aria-label="Página inicial - Cidade Inclusiva"
+          >
             <Image
               src="/logo.png"
               fill
-              alt="Cidade Inclusiva"
+              alt="Logotipo Cidade Inclusiva"
               draggable={false}
               priority
               className="rounded-md object-contain shadow-sm"
@@ -174,6 +182,8 @@ export function Header() {
             size="icon"
             onClick={toggleMenu}
             className={`${showMenu ? 'sr-only' : ''} dark:text-foreground text-white`}
+            aria-label="Abrir menu de navegação"
+            aria-expanded={showMenu}
           >
             <MenuSquareIcon className="size-6" />
           </Button>
@@ -188,6 +198,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 className="flex items-center gap-3 p-2 hover:bg-transparent focus-visible:border-none focus-visible:ring-0 dark:hover:bg-transparent"
+                aria-label={`Menu do usuário ${user?.nome || 'Usuário'}`}
               >
                 <Avatar className="size-14 rounded-full border-2">
                   <AvatarImage
@@ -198,6 +209,7 @@ export function Header() {
                         ? user.foto.url
                         : undefined
                     }
+                    alt={`Foto de perfil de ${user?.nome || 'Usuário'}`}
                   />
                   <AvatarFallback>{userInitials}</AvatarFallback>
                 </Avatar>
@@ -214,6 +226,12 @@ export function Header() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem asChild>
+                <Link href="/perfil">
+                  <UserIcon />
+                  <span>Meu Perfil</span>
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <SunIcon />

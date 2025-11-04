@@ -267,8 +267,12 @@ export function NoticiaAdicionarForm() {
           />
 
           <div className="flex gap-4">
-            <Button type="submit" disabled={isPending}>
-              <SaveIcon />
+            <Button
+              type="submit"
+              disabled={isPending}
+              aria-label="Criar nova notícia"
+            >
+              <SaveIcon aria-hidden="true" />
               {isPending ? 'Criando...' : 'Criar Notícia'}
             </Button>
             <Button
@@ -276,8 +280,9 @@ export function NoticiaAdicionarForm() {
               variant="outline"
               onClick={() => form.reset()}
               disabled={isPending}
+              aria-label="Resetar formulário ao estado inicial"
             >
-              <RotateCwIcon />
+              <RotateCwIcon aria-hidden="true" />
               Resetar
             </Button>
             <Button
@@ -285,6 +290,7 @@ export function NoticiaAdicionarForm() {
               variant="outline"
               onClick={() => router.back()}
               disabled={isPending}
+              aria-label="Cancelar e voltar"
             >
               Cancelar
             </Button>
