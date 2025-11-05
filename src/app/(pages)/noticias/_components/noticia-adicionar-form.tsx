@@ -110,6 +110,7 @@ export function NoticiaAdicionarForm() {
                 <FormLabel>Título</FormLabel>
                 <FormControl>
                   <Input
+                    autoComplete="off"
                     placeholder="Digite o título da notícia"
                     {...createAutoFormatHandler(field, formatTrim)}
                     value={field.value ?? ''}
@@ -130,6 +131,7 @@ export function NoticiaAdicionarForm() {
                 <FormLabel>Conteúdo</FormLabel>
                 <FormControl>
                   <Textarea
+                    autoComplete="off"
                     placeholder="Digite o conteúdo da notícia"
                     className="max-h-[400px] min-h-[200px] resize-y"
                     {...createAutoFormatHandler(field, formatContent)}
@@ -223,6 +225,7 @@ export function NoticiaAdicionarForm() {
                 <FormControl>
                   <Input
                     type="url"
+                    autoComplete="url"
                     placeholder="https://exemplo.com/foto.jpg"
                     {...createAutoFormatHandler(field, formatUrl)}
                     value={field.value ?? ''}
@@ -252,6 +255,7 @@ export function NoticiaAdicionarForm() {
                 <FormControl>
                   <Input
                     type="url"
+                    autoComplete="url"
                     placeholder="https://exemplo.com/noticia"
                     {...createAutoFormatHandler(field, formatUrl)}
                     value={field.value ?? ''}

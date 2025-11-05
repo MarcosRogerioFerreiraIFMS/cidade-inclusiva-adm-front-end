@@ -7,5 +7,6 @@ export enum QuickActionImageEnum {
   CONTATOS = 'https://cdn-icons-png.flaticon.com/512/8569/8569393.png',
   NOTICIAS = 'https://cdn-icons-png.flaticon.com/512/1335/1335793.png',
   TRANSPORTE = 'https://cdn-icons-png.flaticon.com/512/2813/2813010.png',
+  USUARIOS = 'https://cdn-icons-png.flaticon.com/512/4128/4128176.png',
   OFICINAS_MANUTENCAO = 'https://cdn-icons-png.flaticon.com/512/1839/1839197.png'
 }

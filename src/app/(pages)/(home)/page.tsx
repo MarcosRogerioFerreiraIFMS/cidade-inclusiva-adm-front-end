@@ -39,6 +39,12 @@ const QuickActions: QuickActionType[] = [
     description: 'Visualize tudo sobre Oficinas de Manutenção',
     imageSrc: QuickActionImageEnum.OFICINAS_MANUTENCAO,
     href: '/oficinas-manutencao'
+  },
+  {
+    title: 'Usuários',
+    description: 'Visualize tudo sobre Usuários',
+    imageSrc: QuickActionImageEnum.USUARIOS,
+    href: '/usuarios'
   }
 ].sort((a, b) => a.title.localeCompare(b.title))
 

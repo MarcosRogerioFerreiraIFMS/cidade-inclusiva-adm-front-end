@@ -1,3 +1,4 @@
+import { removeNonDigits } from '@/app/_utils/formatUtils'
 import axios from 'axios'
 import { useState } from 'react'
 
@@ -33,10 +34,8 @@ export function useCep(): UseCepReturn {
   const [error, setError] = useState<string | null>(null)
 
   const buscarCep = async (cep: string): Promise<CepData | null> => {
-    // Remove caracteres não numéricos
-    const cepLimpo = cep.replace(/\D/g, '')
+    const cepLimpo = removeNonDigits(cep)
 
-    // Valida se tem 8 dígitos - retorna silenciosamente sem erro
     if (cepLimpo.length !== 8) {
       return null
     }

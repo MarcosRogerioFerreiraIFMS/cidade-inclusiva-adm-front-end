@@ -86,3 +86,38 @@ export const sanitizeString = (str: string): string => {
     .replace(/\s+/g, ' ')
     .trim()
 }
+
+/**
+ * Trunca um texto em um tamanho máximo, adicionando reticências se necessário
+ */
+export function truncateText(text: string, maxLength: number): string {
+  if (!text) return ''
+  if (text.length <= maxLength) return text
+  return `${text.substring(0, maxLength)}...`
+}
+
+/**
+ * Gera as iniciais de um nome (primeiras letras das 2 primeiras palavras)
+ * Ou as 2 primeiras letras da primeira palavra se houver apenas uma
+ */
+export function getInitials(name: string): string {
+  if (!name) return 'U'
+
+  const names = name.split(' ').filter((n) => n.length > 0)
+
+  if (names.length >= 2) {
+    return `${names[0][0]}${names[1][0]}`.toUpperCase()
+  }
+
+  return names[0].substring(0, 2).toUpperCase()
+}
+
+/**
+ * Capitaliza a primeira letra de uma palavra
+ * @param {string} word - Palavra a ser capitalizada
+ * @returns {string} Palavra com a primeira letra maiúscula
+ */
+export function capitalizeFirstLetter(word: string): string {
+  if (!word || typeof word !== 'string') return ''
+  return word.charAt(0).toUpperCase() + word.slice(1)
+}

@@ -3,6 +3,7 @@
 import { menuItems } from '@/app/_constants/sidebarItemsConstants'
 import { useAuth } from '@/app/_hooks/useAuth'
 import { useMenuStore } from '@/app/_store/menuStore'
+import { getInitials } from '@/app/_utils/stringUtils'
 import {
   LogOutIcon,
   LucideIcon,
@@ -44,9 +45,11 @@ export function Header() {
   const { user, logout } = useAuth()
 
   const pageTitle = useMemo(() => {
+    // Verifica correspondência exata com itens do menu principal
     const mainItem = menuItems.find((item) => item.href === pathname)
     if (mainItem) return mainItem.title
 
+    // Verifica correspondência exata com subitens
     for (const item of menuItems) {
       if (item.subItems) {
         const subItem = item.subItems.find((sub) => sub.href === pathname)
@@ -54,10 +57,47 @@ export function Header() {
       }
     }
 
+    // Páginas especiais
     if (pathname === '/perfil') return 'Meu Perfil'
-    if (pathname.startsWith('/noticias/editar/')) return 'Editar Notícia'
-    if (/^\/noticias\/[a-zA-Z0-9-]+$/.test(pathname))
-      return 'Visualizar Notícia'
+
+    // Detecta rotas dinâmicas por seção
+    const pathSegments = pathname.split('/').filter(Boolean)
+
+    if (pathSegments.length >= 1) {
+      const section = pathSegments[0]
+      const action = pathSegments[1]
+      const id = pathSegments[2]
+
+      // Encontra o item do menu correspondente à seção
+      const sectionItem = menuItems.find(
+        (item) =>
+          item.href === `/${section}` ||
+          item.subItems?.some((sub) => sub.href.startsWith(`/${section}`))
+      )
+
+      if (sectionItem) {
+        // Mapeia ações comuns para títulos dinâmicos
+        if (action === 'editar' && id) {
+          return `Editar ${sectionItem.text.replace(/s$/, '')}`
+        }
+        if (action === 'adicionar') {
+          return (
+            sectionItem.subItems?.find((sub) => sub.href === pathname)?.title ||
+            `Adicionar ${sectionItem.text.replace(/s$/, '')}`
+          )
+        }
+        if (action === 'listar') {
+          return (
+            sectionItem.subItems?.find((sub) => sub.href === pathname)?.title ||
+            `Listar ${sectionItem.text}`
+          )
+        }
+        // Visualização de item específico (quando há UUID/ID)
+        if (action && /^[a-zA-Z0-9-]{20,}$/.test(action)) {
+          return `Visualizar ${sectionItem.text.replace(/s$/, '')}`
+        }
+      }
+    }
 
     return 'Página não encontrada'
   }, [pathname])
@@ -71,15 +111,7 @@ export function Header() {
     }
   }
 
-  // Obter iniciais do usuário para o avatar
-  const userInitials = useMemo(() => {
-    if (!user?.nome) return 'U'
-    const names = user.nome.split(' ')
-    if (names.length >= 2) {
-      return `${names[0][0]}${names[1][0]}`.toUpperCase()
-    }
-    return names[0].substring(0, 2).toUpperCase()
-  }, [user])
+  const userInitials = useMemo(() => getInitials(user?.nome ?? ''), [user])
 
   return (
     <>

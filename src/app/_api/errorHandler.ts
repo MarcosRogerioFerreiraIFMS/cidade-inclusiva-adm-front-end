@@ -82,6 +82,13 @@ export function handleApiError(
       defaultMessageForStatus(status) ||
       'Erro inesperado.'
 
+    // Sempre retornar a mensagem original do backend se ela existir e for amigável
+    // Isso garante que mensagens específicas da API sejam preservadas
+    if (rawMessage && isAlreadyUserFriendly(rawMessage)) {
+      return new ApiError(rawMessage, status)
+    }
+
+    // Caso contrário, tentar transformar em mensagem amigável
     return new ApiError(makeUserFriendly(rawMessage), status)
   }
 
@@ -100,6 +107,11 @@ export function handleApiError(
  * Transforma mensagens técnicas em mensagens amigáveis ao usuário
  */
 function makeUserFriendly(message: string): string {
+  // Se a mensagem já for amigável, retorna ela sem modificar
+  if (isAlreadyUserFriendly(message)) {
+    return message
+  }
+
   const lowerMessage = message.toLowerCase()
 
   // Token inválido ou expirado
@@ -142,12 +154,16 @@ function makeUserFriendly(message: string): string {
     return 'Os dados informados são inválidos. Verifique e tente novamente.'
   }
 
-  // Permissão negada
+  // Permissão negada - não transformar se já vier mensagem específica da API
   if (
     lowerMessage.includes('forbidden') ||
     lowerMessage.includes('permission denied') ||
     lowerMessage.includes('access denied')
   ) {
+    // Se a mensagem já for específica e amigável, retorna ela
+    if (isAlreadyUserFriendly(message)) {
+      return message
+    }
     return 'Você não tem permissão para realizar esta ação.'
   }
 
@@ -161,11 +177,7 @@ function makeUserFriendly(message: string): string {
     return 'Não é possível excluir o último administrador do sistema.'
   }
 
-  // Retorna mensagem original se já for amigável, senão usa uma genérica
-  if (isAlreadyUserFriendly(message)) {
-    return message
-  }
-
+  // Se chegou aqui e não encontrou nenhum padrão conhecido, usa mensagem genérica
   return 'Ocorreu um erro ao processar sua solicitação. Tente novamente.'
 }
 
@@ -182,18 +194,35 @@ function isAlreadyUserFriendly(message: string): boolean {
     'verifique',
     'não foi possível',
     'não é possível',
+    'não pode',
+    'não possui',
     'erro ao',
     'aguarde',
     'credenciais',
     'email',
+    'telefone',
     'senha',
     'acesso negado',
     'permissão',
+    'permitido',
+    'autorizado',
     'disponível',
     'temporariamente',
     'excluir',
+    'deletar',
+    'remover',
     'administrador',
-    'último'
+    'usuário',
+    'último',
+    'já existe',
+    'cadastrado',
+    'duplicado',
+    'somente',
+    'apenas',
+    'necessário',
+    'requer',
+    'recurso',
+    'operação'
   ]
 
   return friendlyPatterns.some((pattern) => lowerMessage.includes(pattern))

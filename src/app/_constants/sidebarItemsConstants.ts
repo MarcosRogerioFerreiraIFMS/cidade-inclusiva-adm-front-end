@@ -110,6 +110,26 @@ export const menuItems: MenuItem[] = [
     icon: BusFrontIcon,
     text: 'Transporte',
     title: 'Transporte'
+  },
+  {
+    href: '/usuarios',
+    icon: AccessibilityIcon,
+    text: 'Usuários',
+    title: 'Usuários',
+    subItems: [
+      {
+        href: '/usuarios/listar',
+        icon: AccessibilityIcon,
+        text: 'Listar Usuários',
+        title: 'Listar Usuários'
+      },
+      {
+        href: '/usuarios/adicionar',
+        icon: AccessibilityIcon,
+        text: 'Adicionar Usuário',
+        title: 'Adicionar Usuário'
+      }
+    ]
   }
 ]
 

@@ -25,7 +25,6 @@ import {
 } from '@/app/_components/ui/form'
 import { Input } from '@/app/_components/ui/input'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
-import { useAuth } from '@/app/_hooks/useAuth'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useCep } from '@/app/_hooks/useCep'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
@@ -47,13 +46,12 @@ import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 
-interface PerfilFormProps {
+interface UsuarioEditarFormProps {
   usuario: UsuarioResponseDTO
 }
 
-export function PerfilForm({ usuario }: PerfilFormProps) {
+export function UsuarioEditarForm({ usuario }: UsuarioEditarFormProps) {
   const router = useRouter()
-  const { logout, checkAuthentication } = useAuth()
 
   const { notifySuccess, notifyError } = useNotification()
   const {
@@ -117,14 +115,6 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
           form.setValue('endereco.estado', cepData.estado)
         }
 
-        // Revalida os campos de endereço após preencher
-        await form.trigger([
-          'endereco.logradouro',
-          'endereco.bairro',
-          'endereco.cidade',
-          'endereco.estado'
-        ])
-
         notifySuccess({
           message:
             'Endereço preenchido! Você pode editar os campos se necessário.'
@@ -160,16 +150,11 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
         const result = await updateUsuario(usuario.id, dataToSubmit)
 
         if (result.success) {
-          notifySuccess({ message: 'Perfil atualizado com sucesso!' })
-
-          // Revalidar autenticação para buscar dados atualizados do servidor
-          await checkAuthentication()
-
-          // Redirecionar para home após atualização bem-sucedida
-          router.push('/')
+          notifySuccess({ message: 'Usuário atualizado com sucesso!' })
+          router.push('/usuarios/listar')
         } else {
           const errorMessage =
-            result.error ?? 'Ocorreu um erro ao atualizar o perfil.'
+            result.error ?? 'Ocorreu um erro ao atualizar o usuário.'
 
           // Marcar campo específico com erro de duplicação
           const lowerErrorMessage = errorMessage.toLowerCase()
@@ -193,24 +178,19 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
         const errorMessage =
           error instanceof Error
             ? error.message
-            : 'Erro ao atualizar perfil. Tente novamente.'
+            : 'Erro ao atualizar usuário. Tente novamente.'
         notifyError({ message: errorMessage })
       }
     })
   }
 
-  function handleDeleteAccount() {
+  function handleDeleteUser() {
     openModal(
       usuario.id,
       async () => {
-        const result = await deleteUsuario(usuario.id)
-        if (result.success) {
-          await logout()
-          router.push('/login')
-        }
-        return result
+        return await deleteUsuario(usuario.id)
       },
-      'Conta excluída com sucesso.'
+      'Usuário deletado com sucesso!'
     )
   }
 
@@ -231,7 +211,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                     <FormControl>
                       <Input
                         autoComplete="name"
-                        placeholder="Digite seu nome completo"
+                        placeholder="Digite o nome completo"
                         {...createAutoFormatHandler(field, formatTrim)}
                         value={field.value}
                         maxLength={100}
@@ -254,7 +234,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                         <Input
                           type="email"
                           autoComplete="email"
-                          placeholder="seu@email.com"
+                          placeholder="usuario@email.com"
                           {...createAutoFormatHandler(field, formatTrim)}
                           value={field.value}
                           disabled={isPending}
@@ -308,6 +288,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                           {...field}
                           disabled={isPending}
                           className="pr-10"
+                          maxLength={128}
                         />
                       </FormControl>
                       <Button
@@ -336,13 +317,13 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                       </Button>
                     </div>
                     <FormDescription>
-                      Preencha apenas se deseja alterar sua senha
+                      Preencha apenas se deseja alterar a senha
                     </FormDescription>
                     {field.value && field.value.length > 0 && (
                       <FormAlert
                         variant="warning"
-                        title="Atenção: Guarde bem sua nova senha!"
-                        description="Após salvar, você deverá usar esta nova senha para fazer login no sistema. Não será possível recuperá-la."
+                        title="Atenção: Nova senha será definida"
+                        description="Após salvar, o usuário deverá usar esta nova senha para fazer login no sistema."
                       />
                     )}
                     <FormMessage />
@@ -367,7 +348,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                       />
                     </FormControl>
                     <FormDescription>
-                      URL da imagem que será exibida no seu perfil
+                      URL da imagem que será exibida no perfil
                     </FormDescription>
                     <FormMessage />
 
@@ -383,7 +364,6 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
             <div className="space-y-4 border-t pt-6">
               <h2 className="text-lg font-semibold">Endereço</h2>
 
-              {/* Linha 1: CEP, Estado, País */}
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <FormField
                   control={form.control}
@@ -461,7 +441,6 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                 />
               </div>
 
-              {/* Linha 2: Cidade, Bairro */}
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -504,7 +483,6 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                 />
               </div>
 
-              {/* Linha 3: Logradouro, Número */}
               <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                 <div className="md:col-span-3">
                   <FormField
@@ -549,7 +527,6 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                 />
               </div>
 
-              {/* Linha 4: Complemento */}
               <FormField
                 control={form.control}
                 name="endereco.complemento"
@@ -576,7 +553,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                 <Button
                   type="submit"
                   disabled={isPending}
-                  aria-label="Salvar alterações do perfil"
+                  aria-label="Salvar alterações do usuário"
                 >
                   <SaveIcon aria-hidden="true" />
                   {isPending ? 'Salvando...' : 'Salvar Alterações'}
@@ -591,18 +568,29 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
                   <RotateCwIcon aria-hidden="true" />
                   Resetar
                 </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => router.back()}
+                  disabled={isPending}
+                  aria-label="Cancelar e voltar"
+                >
+                  Cancelar
+                </Button>
               </div>
 
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={handleDeleteAccount}
-                disabled={isPending}
-                aria-label="Excluir conta permanentemente"
-              >
-                <Trash2Icon aria-hidden="true" />
-                Excluir Conta
-              </Button>
+              {usuario.tipo !== 'ADMIN' && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  onClick={handleDeleteUser}
+                  disabled={isPending}
+                  aria-label="Excluir usuário permanentemente"
+                >
+                  <Trash2Icon aria-hidden="true" />
+                  Excluir Usuário
+                </Button>
+              )}
             </div>
           </form>
         </Form>
@@ -613,8 +601,8 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
             <AlertDialogDescription>
-              Esta ação não pode ser desfeita. Sua conta será permanentemente
-              excluída e todos os seus dados serão removidos.
+              Esta ação não pode ser desfeita. O usuário será permanentemente
+              excluído e todos os seus dados serão removidos.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -625,7 +613,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
               disabled={isLoading}
             >
               <Trash2Icon />
-              {isLoading ? 'Excluindo...' : 'Excluir Conta'}
+              {isLoading ? 'Excluindo...' : 'Excluir Usuário'}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

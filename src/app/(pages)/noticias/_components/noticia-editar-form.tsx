@@ -121,6 +121,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
                 <FormLabel>Título</FormLabel>
                 <FormControl>
                   <Input
+                    autoComplete="off"
                     placeholder="Digite o título da notícia"
                     {...createAutoFormatHandler(field, formatTrim)}
                     value={field.value ?? ''}
@@ -141,6 +142,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
                 <FormLabel>Conteúdo</FormLabel>
                 <FormControl>
                   <Textarea
+                    autoComplete="off"
                     placeholder="Digite o conteúdo da notícia"
                     className="min-h-[200px]"
                     {...createAutoFormatHandler(field, formatContent)}
@@ -232,6 +234,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
                 <FormControl>
                   <Input
                     type="url"
+                    autoComplete="url"
                     placeholder="https://exemplo.com/foto.jpg"
                     {...createAutoFormatHandler(field, formatUrl)}
                     value={field.value ?? ''}
@@ -261,6 +264,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
                 <FormControl>
                   <Input
                     type="url"
+                    autoComplete="url"
                     placeholder="https://exemplo.com/noticia"
                     {...createAutoFormatHandler(field, formatUrl)}
                     value={field.value ?? ''}
