@@ -2,7 +2,7 @@ import {
   NoticiaCategoriasDisplay,
   type NoticiaCategoria
 } from '@/app/_enums/noticiaEnums'
-import { getShadcnBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
+import { getNoticiaCategoriaBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
 import { Badge } from '../ui/badge'
 
 interface NoticiaCategoriaCellProps {
@@ -11,7 +11,7 @@ interface NoticiaCategoriaCellProps {
 
 export function NoticiaCategoriaCell({ categoria }: NoticiaCategoriaCellProps) {
   const displayName = NoticiaCategoriasDisplay[categoria] ?? categoria
-  const colorClasses = getShadcnBadgeColor(categoria)
+  const colorClasses = getNoticiaCategoriaBadgeColor(categoria)
 
   return <Badge className={colorClasses}>{displayName}</Badge>
 }

@@ -1,4 +1,4 @@
-import type { ComentarioResponseDTO } from './ComentarioResponseDTO'
+import type { ProfissionalEspecialidade } from '@/app/_enums/profissionalEnums'
 import type { FotoResponseDTO } from './FotoResponsesDTO'
 
 /**
@@ -18,9 +18,7 @@ export interface ProfissionalResponseDTO {
   /** Endereço de email do profissional */
   email: string
   /** Área de especialidade do profissional */
-  especialidade: string
+  especialidade: ProfissionalEspecialidade
   /** Data e hora de criação do registro */
   criadoEm: Date
-  /** Lista de comentários associados ao profissional */
-  comentarios: ComentarioResponseDTO[]
 }

@@ -6,8 +6,8 @@ import {
 import { sanitizeContent, sanitizeString } from '../_utils/stringUtils'
 
 // Constantes
-export const NOME_MIN_LENGTH = 3
-export const NOME_MAX_LENGTH = 100
+export const NOME_MIN_LENGTH = 2
+export const NOME_MAX_LENGTH = 120
 export const TITULO_MIN_LENGTH = 3
 export const TITULO_MAX_LENGTH = 100
 export const CONTEUDO_MIN_LENGTH = 10

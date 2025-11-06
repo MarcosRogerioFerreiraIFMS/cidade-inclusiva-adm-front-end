@@ -1,17 +1,8 @@
 'use client'
 
-import { deleteUsuario, updateUsuario } from '@/app/_actions/usuarioActions'
+import { updateUsuario } from '@/app/_actions/usuarioActions'
 import { FormAlert } from '@/app/_components/form-alert'
 import { ProfileImagePreview } from '@/app/_components/profile-image-preview'
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from '@/app/_components/ui/alert-dialog'
 import { Button } from '@/app/_components/ui/button'
 import { Card } from '@/app/_components/ui/card'
 import {
@@ -27,7 +18,6 @@ import { Input } from '@/app/_components/ui/input'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useCep } from '@/app/_hooks/useCep'
-import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { useNotification } from '@/app/_hooks/useNotification'
 import {
   updateUsuarioSchema,
@@ -35,13 +25,7 @@ import {
 } from '@/app/_schemas/usuarioSchema'
 import { removeNonDigits } from '@/app/_utils/formatUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  EyeIcon,
-  EyeOffIcon,
-  RotateCwIcon,
-  SaveIcon,
-  Trash2Icon
-} from 'lucide-react'
+import { EyeIcon, EyeOffIcon, RotateCwIcon, SaveIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
@@ -63,8 +47,6 @@ export function UsuarioEditarForm({ usuario }: UsuarioEditarFormProps) {
     createAutoFormatHandler,
     createOnChangeFormatHandler
   } = useAutoFormat()
-  const { isOpen, isLoading, openModal, closeModal, confirmDelete } =
-    useDeleteModal()
   const { loading: loadingCep, buscarCep } = useCep()
 
   const [isPending, startTransition] = useTransition()
@@ -182,16 +164,6 @@ export function UsuarioEditarForm({ usuario }: UsuarioEditarFormProps) {
         notifyError({ message: errorMessage })
       }
     })
-  }
-
-  function handleDeleteUser() {
-    openModal(
-      usuario.id,
-      async () => {
-        return await deleteUsuario(usuario.id)
-      },
-      'Usuário deletado com sucesso!'
-    )
   }
 
   return (
@@ -578,46 +550,10 @@ export function UsuarioEditarForm({ usuario }: UsuarioEditarFormProps) {
                   Cancelar
                 </Button>
               </div>
-
-              {usuario.tipo !== 'ADMIN' && (
-                <Button
-                  type="button"
-                  variant="destructive"
-                  onClick={handleDeleteUser}
-                  disabled={isPending}
-                  aria-label="Excluir usuário permanentemente"
-                >
-                  <Trash2Icon aria-hidden="true" />
-                  Excluir Usuário
-                </Button>
-              )}
             </div>
           </form>
         </Form>
       </Card>
-
-      <AlertDialog open={isOpen} onOpenChange={closeModal}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Esta ação não pode ser desfeita. O usuário será permanentemente
-              excluído e todos os seus dados serão removidos.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={isLoading}>Cancelar</AlertDialogCancel>
-            <Button
-              variant="destructive"
-              onClick={confirmDelete}
-              disabled={isLoading}
-            >
-              <Trash2Icon />
-              {isLoading ? 'Excluindo...' : 'Excluir Usuário'}
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   )
 }

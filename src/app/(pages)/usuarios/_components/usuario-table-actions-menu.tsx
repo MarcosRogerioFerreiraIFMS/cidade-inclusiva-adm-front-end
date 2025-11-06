@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger
 } from '@/app/_components/ui/dropdown-menu'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
+import { isAdmin } from '@/app/_enums/tipoUsuarioEnum'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import {
   EyeIcon,
@@ -67,7 +68,7 @@ export function UsuarioTableActionsMenu({
               Visualizar
             </Link>
           </DropdownMenuItem>
-          {usuario.tipo !== 'ADMIN' && (
+          {!isAdmin(usuario.tipo) && (
             <>
               <DropdownMenuItem asChild>
                 <Link

@@ -8,7 +8,7 @@ import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import { NoticiaCategoriasDisplay } from '@/app/_enums/noticiaEnums'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
-import { getShadcnBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
+import { getNoticiaCategoriaBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
 import { EditIcon, ExternalLinkIcon, Trash2Icon, Undo2Icon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -46,7 +46,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
           <p className="text-muted-foreground">
             Publicado em {formatDateToDateString(noticia.dataPublicacao)}
           </p>
-          <Badge className={getShadcnBadgeColor(noticia.categoria)}>
+          <Badge className={getNoticiaCategoriaBadgeColor(noticia.categoria)}>
             {NoticiaCategoriasDisplay[noticia.categoria.toUpperCase()] ??
               noticia.categoria}
           </Badge>

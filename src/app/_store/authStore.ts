@@ -6,6 +6,7 @@ import {
   logoutAction
 } from '@/app/_actions/authActions'
 import { UsuarioResponseDTO } from '@/app/_dtos/response'
+import { isAdmin } from '@/app/_enums/tipoUsuarioEnum'
 import { create } from 'zustand'
 import type { LoginCreateDTO } from '../_schemas/loginSchema'
 
@@ -199,7 +200,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => {
         const { user } = authData
 
         // Verificar se é ADMIN
-        if (user.tipo !== 'ADMIN') {
+        if (!isAdmin(user.tipo)) {
           set({
             user: null,
             isAuthenticated: false,

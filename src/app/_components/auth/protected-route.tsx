@@ -1,5 +1,6 @@
 'use client'
 
+import { isAdmin } from '@/app/_enums/tipoUsuarioEnum'
 import { useAuth } from '@/app/_hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -69,7 +70,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
       }
 
       // Verificar se o usuário não é ADMIN
-      if (user.tipo !== 'ADMIN') {
+      if (!isAdmin(user.tipo)) {
         setSecurityError({
           type: 'not_admin',
           message: 'Acesso negado - Permissão insuficiente',
@@ -151,7 +152,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   // Verificação final: garantir que o usuário é ADMIN
-  if (user.tipo !== 'ADMIN') {
+  if (!isAdmin(user.tipo)) {
     return <AuthFallback message="Verificando permissões de administrador..." />
   }
 

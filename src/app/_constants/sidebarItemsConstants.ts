@@ -1,7 +1,7 @@
 import {
   AccessibilityIcon,
+  BriefcaseMedicalIcon,
   BusFrontIcon,
-  ContactIcon,
   HomeIcon,
   LucideIcon,
   NewspaperIcon,
@@ -34,12 +34,6 @@ export const menuItems: MenuItem[] = [
     title: 'Acessibilidade Urbana'
   },
   {
-    href: '/contatos',
-    icon: ContactIcon,
-    text: 'Contatos',
-    title: 'Contatos'
-  },
-  {
     href: '/oficinas-manutencao',
     icon: WrenchIcon,
     text: 'Oficinas de Manutenção',
@@ -56,6 +50,26 @@ export const menuItems: MenuItem[] = [
         icon: WrenchIcon,
         text: 'Adicionar oficinas de manutenção',
         title: 'Adicionar Oficinas de Manutenção'
+      }
+    ]
+  },
+  {
+    href: '/profissionais',
+    icon: BriefcaseMedicalIcon,
+    text: 'Profissionais',
+    title: 'Profissionais',
+    subItems: [
+      {
+        href: '/profissionais/listar',
+        icon: BriefcaseMedicalIcon,
+        text: 'Listar Profissionais',
+        title: 'Listar Profissionais'
+      },
+      {
+        href: '/profissionais/adicionar',
+        icon: BriefcaseMedicalIcon,
+        text: 'Adicionar Profissional',
+        title: 'Adicionar Profissional'
       }
     ]
   },
@@ -106,10 +120,10 @@ export const menuItems: MenuItem[] = [
     ]
   },
   {
-    href: '/transporte',
+    href: '/transportes',
     icon: BusFrontIcon,
-    text: 'Transporte',
-    title: 'Transporte'
+    text: 'Transportes',
+    title: 'Transportes'
   },
   {
     href: '/usuarios',

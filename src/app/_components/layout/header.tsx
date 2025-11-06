@@ -234,8 +234,6 @@ export function Header() {
               >
                 <Avatar className="size-14 rounded-full border-2">
                   <AvatarImage
-                    className="object-cover"
-                    draggable={false}
                     src={
                       user?.foto && typeof user.foto === 'object'
                         ? user.foto.url

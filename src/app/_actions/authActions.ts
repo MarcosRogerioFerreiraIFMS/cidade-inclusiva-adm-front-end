@@ -3,6 +3,7 @@
 import { apiClient } from '../_api/apiClient'
 import { validateWithZod } from '../_api/zodValidator'
 import type { LoginResponseDTO, UsuarioResponseDTO } from '../_dtos/response'
+import { isAdmin } from '../_enums/tipoUsuarioEnum'
 import { createLoginSchema, type LoginCreateDTO } from '../_schemas/loginSchema'
 import {
   deleteServerAuthToken,
@@ -49,7 +50,7 @@ export async function loginAction(data: LoginCreateDTO): Promise<ActionResult> {
     }
 
     // Verificar se o usuário é ADMIN ANTES de salvar o token
-    if (usuario.tipo !== 'ADMIN') {
+    if (!isAdmin(usuario.tipo)) {
       return {
         success: false,
         error: 'Acesso negado. Este sistema é exclusivo para administradores.'
@@ -101,7 +102,7 @@ async function validateWithBackend(): Promise<UsuarioResponseDTO | null> {
 async function ensureIsAdmin(
   user: UsuarioResponseDTO | null
 ): Promise<UsuarioResponseDTO | null> {
-  if (!user || user.tipo !== 'ADMIN') {
+  if (!user || !isAdmin(user.tipo)) {
     await deleteServerAuthToken()
     return null
   }

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { TIPO_USUARIO } from '../_enums/tipoUsuarioEnum'
 import {
   emailSchema,
   enderecoSchema,
@@ -28,7 +29,7 @@ export const createUsuarioSchema = z.object({
   telefone: telefoneSchema,
   email: emailSchema,
   senha: senhaSchema,
-  tipo: z.enum(['USUARIO', 'ADMIN'], {
+  tipo: z.enum(TIPO_USUARIO, {
     required_error: 'O tipo de usuário é obrigatório',
     invalid_type_error: 'O tipo deve ser USUARIO ou ADMIN'
   }),

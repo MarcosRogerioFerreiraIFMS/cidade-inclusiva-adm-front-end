@@ -17,10 +17,10 @@ const QuickActions: QuickActionType[] = [
     href: '/acessibilidade-urbana'
   },
   {
-    title: 'Contatos',
-    description: 'Visualize tudo sobre Contatos',
-    imageSrc: QuickActionImageEnum.CONTATOS,
-    href: '/contatos'
+    title: 'Profissionais',
+    description: 'Visualize tudo sobre Profissionais',
+    imageSrc: QuickActionImageEnum.PROFISSIONAIS,
+    href: '/profissionais'
   },
   {
     title: 'Notícias',
@@ -29,10 +29,10 @@ const QuickActions: QuickActionType[] = [
     href: '/noticias'
   },
   {
-    title: 'Transporte',
-    description: 'Visualize tudo sobre Transporte',
-    imageSrc: QuickActionImageEnum.TRANSPORTE,
-    href: '/transporte'
+    title: 'Transportes',
+    description: 'Visualize tudo sobre Transportes',
+    imageSrc: QuickActionImageEnum.TRANSPORTES,
+    href: '/transportes'
   },
   {
     title: 'Oficinas de Manutenção',

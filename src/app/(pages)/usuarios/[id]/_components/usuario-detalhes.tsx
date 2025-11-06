@@ -10,11 +10,17 @@ import {
   CardTitle
 } from '@/app/_components/ui/card'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
+import {
+  getTipoUsuarioBadgeVariant,
+  getTipoUsuarioLabel,
+  isAdmin
+} from '@/app/_enums/tipoUsuarioEnum'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
 import { formatCEP, formatTelefone } from '@/app/_utils/formatUtils'
 import {
   CalendarIcon,
+  EditIcon,
   MailIcon,
   MapPinIcon,
   PhoneIcon,
@@ -29,19 +35,6 @@ import { UsuarioDeletarModal } from '../../_components/usuario-deletar-modal'
 
 interface UsuarioDetalhesProps {
   usuario: UsuarioResponseDTO
-}
-
-const tipoDisplay: Record<UsuarioResponseDTO['tipo'], string> = {
-  ADMIN: 'Administrador',
-  USUARIO: 'Usuário'
-}
-
-const tipoVariant: Record<
-  UsuarioResponseDTO['tipo'],
-  'default' | 'secondary' | 'destructive' | 'outline'
-> = {
-  ADMIN: 'destructive',
-  USUARIO: 'default'
 }
 
 export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
@@ -68,12 +61,21 @@ export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold">{usuario.nome}</h1>
-          <Badge variant={tipoVariant[usuario.tipo]}>
-            {tipoDisplay[usuario.tipo]}
+          <Badge variant={getTipoUsuarioBadgeVariant(usuario.tipo)}>
+            {getTipoUsuarioLabel(usuario.tipo)}
           </Badge>
         </div>
-        {usuario.tipo !== 'ADMIN' && (
+        {!isAdmin(usuario.tipo) && (
           <div className="flex items-center gap-2">
+            <Button asChild>
+              <Link
+                href={`/usuarios/editar/${usuario.id}`}
+                aria-label={`Editar usuário ${usuario.nome}`}
+              >
+                <EditIcon aria-hidden="true" />
+                Editar
+              </Link>
+            </Button>
             <Button
               variant="destructive"
               onClick={handleDelete}

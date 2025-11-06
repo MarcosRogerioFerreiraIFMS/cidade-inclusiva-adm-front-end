@@ -16,12 +16,7 @@ interface UsuarioFotoCellProps {
 export function UsuarioFotoCell({ foto, nome }: UsuarioFotoCellProps) {
   return (
     <Avatar className="size-10">
-      <AvatarImage
-        className="object-cover"
-        draggable={false}
-        src={foto?.url}
-        alt={`Foto de perfil de ${nome}`}
-      />
+      <AvatarImage src={foto?.url} alt={`Foto de perfil de ${nome}`} />
       <AvatarFallback>{getInitials(nome)}</AvatarFallback>
     </Avatar>
   )

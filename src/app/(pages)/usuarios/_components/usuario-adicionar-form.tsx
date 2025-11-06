@@ -22,6 +22,11 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/app/_components/ui/select'
+import {
+  isAdmin,
+  TipoUsuarioEnum,
+  TipoUsuarioOptions
+} from '@/app/_enums/tipoUsuarioEnum'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useCep } from '@/app/_hooks/useCep'
 import { useNotification } from '@/app/_hooks/useNotification'
@@ -63,7 +68,7 @@ export function UsuarioAdicionarForm() {
       telefone: '',
       senha: '',
       foto: '',
-      tipo: 'USUARIO',
+      tipo: TipoUsuarioEnum.USUARIO,
       endereco: {
         logradouro: '',
         numero: '',
@@ -140,10 +145,9 @@ export function UsuarioAdicionarForm() {
 
     startTransition(async () => {
       try {
-        const result =
-          tipoUsuario === 'ADMIN'
-            ? await createAdmin(dataToSubmit)
-            : await createUsuario(dataToSubmit)
+        const result = isAdmin(tipoUsuario)
+          ? await createAdmin(dataToSubmit)
+          : await createUsuario(dataToSubmit)
 
         if (result.success) {
           notifySuccess({ message: 'Usuário criado com sucesso!' })
@@ -204,12 +208,19 @@ export function UsuarioAdicionarForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="USUARIO">Usuário</SelectItem>
-                      <SelectItem value="ADMIN">Administrador</SelectItem>
+                      {TipoUsuarioOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormDescription>
-                    Administradores têm acesso total ao sistema
+                    {tipoUsuario
+                      ? TipoUsuarioOptions.find(
+                          (opt) => opt.value === tipoUsuario
+                        )?.description
+                      : 'Selecione o tipo de usuário'}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -550,7 +561,7 @@ export function UsuarioAdicionarForm() {
             />
           </div>
 
-          {tipoUsuario === 'ADMIN' && (
+          {isAdmin(tipoUsuario) && (
             <FormAlert
               variant="warning"
               title="Atenção: Criando Administrador"
