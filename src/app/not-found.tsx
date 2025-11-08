@@ -3,6 +3,7 @@
 import { Undo2Icon } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from './_components/ui/button'
+import { APP_ROUTES } from './_constants/appSettingsConstants'
 import { useMenuStore } from './_store/menuStore'
 
 /**
@@ -24,7 +25,7 @@ export default function NotFound() {
       </div>
 
       <Button asChild>
-        <Link href="/">
+        <Link href={APP_ROUTES.HOME}>
           <Undo2Icon />
           <span>Voltar para a página inicial</span>
         </Link>

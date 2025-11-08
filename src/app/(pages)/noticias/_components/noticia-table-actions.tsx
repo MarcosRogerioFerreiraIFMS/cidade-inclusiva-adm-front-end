@@ -2,6 +2,7 @@
 
 import { revalidateNoticias } from '@/app/_actions/noticiaActions'
 import { Button } from '@/app/_components/ui/button'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
@@ -42,7 +43,10 @@ export function NoticiaTableActions() {
         Atualizar
       </Button>
       <Button asChild>
-        <Link href="/noticias/adicionar" aria-label="Adicionar nova notícia">
+        <Link
+          href={APP_ROUTES.NOTICIA_ADICIONAR()}
+          aria-label="Adicionar nova notícia"
+        >
           <PlusIcon aria-hidden="true" />
           Adicionar Notícia
         </Link>

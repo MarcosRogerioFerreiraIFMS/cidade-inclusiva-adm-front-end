@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/app/_components/ui/card'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ProfissionalResponseDTO } from '@/app/_dtos/response'
 import { ProfissionalEspecialidadesDisplay } from '@/app/_enums/profissionalEnums'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
@@ -47,7 +48,7 @@ export function ProfissionalDetalhes({
       async () => {
         const result = await deleteProfissional(profissional.id)
         if (result.success) {
-          router.replace('/profissionais/listar')
+          router.replace(APP_ROUTES.PROFISSIONAL_LISTAR())
         }
         return result
       },
@@ -67,7 +68,7 @@ export function ProfissionalDetalhes({
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold">{profissional.nome}</h1>
+          <h1 className="text-2xl font-bold">{profissional.nome}</h1>
           <Badge className={especialidadeColorClasses}>
             {especialidadeDisplay}
           </Badge>
@@ -75,7 +76,7 @@ export function ProfissionalDetalhes({
         <div className="flex items-center gap-2">
           <Button asChild>
             <Link
-              href={`/profissionais/editar/${profissional.id}`}
+              href={APP_ROUTES.PROFISSIONAL_EDITAR(profissional.id)}
               aria-label={`Editar profissional ${profissional.nome}`}
             >
               <EditIcon aria-hidden="true" />
@@ -185,7 +186,7 @@ export function ProfissionalDetalhes({
       <div className="flex justify-start gap-4">
         <Button variant="outline" asChild>
           <Link
-            href="/profissionais/listar"
+            href={APP_ROUTES.PROFISSIONAL_LISTAR()}
             aria-label="Voltar para lista de profissionais"
           >
             <Undo2Icon aria-hidden="true" />

@@ -1,30 +1,19 @@
 import { LayoutDashboard } from '@/app/_components/layout/layout-dashboard'
 import { QuickActionCard } from '@/app/_components/quick-action-card'
-import { QuickActionImageEnum } from '@/app/_enums/quickActionImageEnum'
-import type { QuickActionType } from '@/app/_types/quickActionType'
+import {
+  getEnabledQuickActions,
+  NOTICIAS_QUICK_ACTIONS
+} from '@/app/_constants/quickActionsConstants'
 
 export default async function NoticiaPage() {
-  const QuickActions: QuickActionType[] = [
-    {
-      title: 'Listar Notícias',
-      description: 'Visualize uma tabela com todas as notícias',
-      imageSrc: QuickActionImageEnum.NOTICIAS,
-      href: '/noticias/listar'
-    },
-    {
-      title: 'Adicionar Notícia',
-      description: 'Adicione uma nova notícia',
-      imageSrc: QuickActionImageEnum.NOTICIAS,
-      href: '/noticias/adicionar'
-    }
-  ]
+  const quickActions = getEnabledQuickActions(NOTICIAS_QUICK_ACTIONS)
 
   return (
     <LayoutDashboard>
-      <h2 className="text-2xl">Acesso Rápido</h2>
+      <h2 className="text-2xl font-bold">Acesso Rápido</h2>
 
       <section className="grid grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-5">
-        {QuickActions.map((action, index) => (
+        {quickActions.map((action, index) => (
           <QuickActionCard key={index} {...action} />
         ))}
       </section>

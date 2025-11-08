@@ -10,8 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/app/_components/ui/dropdown-menu'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
 import { isAdmin } from '@/app/_enums/tipoUsuarioEnum'
+import { useAuth } from '@/app/_hooks/useAuth'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import {
   EyeIcon,
@@ -29,6 +31,7 @@ interface UsuarioTableActionsMenuProps {
 export function UsuarioTableActionsMenu({
   usuario
 }: UsuarioTableActionsMenuProps) {
+  const { user: currentUser } = useAuth()
   const { isOpen, isLoading, openModal, closeModal, confirmDelete } =
     useDeleteModal()
 
@@ -41,6 +44,12 @@ export function UsuarioTableActionsMenu({
       'Usuário deletado com sucesso!'
     )
   }
+
+  const isCurrentUser = currentUser?.id === usuario.id
+  const canEditOrDelete = !isAdmin(usuario.tipo) || isCurrentUser
+  const editRoute = isCurrentUser
+    ? APP_ROUTES.PERFIL
+    : APP_ROUTES.USUARIO_EDITAR(usuario.id)
 
   return (
     <>
@@ -60,20 +69,18 @@ export function UsuarioTableActionsMenu({
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link
-              href={`/usuarios/${usuario.id}`}
-              prefetch={false}
+              href={APP_ROUTES.USUARIO_DETALHE(usuario.id)}
               aria-label={`Visualizar usuário ${usuario.nome}`}
             >
               <EyeIcon aria-hidden="true" />
               Visualizar
             </Link>
           </DropdownMenuItem>
-          {!isAdmin(usuario.tipo) && (
+          {canEditOrDelete && (
             <>
               <DropdownMenuItem asChild>
                 <Link
-                  href={`/usuarios/editar/${usuario.id}`}
-                  prefetch={false}
+                  href={editRoute}
                   aria-label={`Editar usuário ${usuario.nome}`}
                 >
                   <PencilIcon aria-hidden="true" />

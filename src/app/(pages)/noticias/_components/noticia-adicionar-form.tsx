@@ -22,6 +22,7 @@ import {
   SelectValue
 } from '@/app/_components/ui/select'
 import { Textarea } from '@/app/_components/ui/textarea'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import {
   NOTICIA_CATEGORIES,
   NoticiaCategoriasDisplay
@@ -82,7 +83,7 @@ export function NoticiaAdicionarForm() {
 
         if (result.success) {
           notifySuccess({ message: 'Notícia criada com sucesso!' })
-          router.push('/noticias/listar')
+          router.push(APP_ROUTES.NOTICIA_LISTAR())
         } else {
           notifyError({
             message: result.error ?? 'Ocorreu um erro desconhecido.'

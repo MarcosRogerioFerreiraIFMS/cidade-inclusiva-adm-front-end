@@ -2,6 +2,7 @@
 
 import { revalidateUsuarios } from '@/app/_actions/usuarioActions'
 import { Button } from '@/app/_components/ui/button'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
@@ -42,7 +43,7 @@ export function UsuarioTableActions() {
         Atualizar
       </Button>
       <Button asChild aria-label="Adicionar novo usuário">
-        <Link href="/usuarios/adicionar">
+        <Link href={APP_ROUTES.USUARIO_ADICIONAR()}>
           <PlusIcon aria-hidden="true" />
           Adicionar Usuário
         </Link>

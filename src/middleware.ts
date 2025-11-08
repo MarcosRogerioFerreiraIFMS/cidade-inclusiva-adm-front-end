@@ -1,3 +1,4 @@
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { hasValidJWTFormat, isTokenExpired } from '@/app/_utils/jwtUtils'
 import {
   NextResponse,
@@ -6,10 +7,7 @@ import {
 } from 'next/server'
 
 // Rotas que não requerem autenticação (whitelist)
-const PUBLIC_ROUTES = ['/login']
-
-// Rota para redirecionar quando não autenticado
-const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/login'
+const PUBLIC_ROUTES: string[] = [APP_ROUTES.LOGIN]
 
 /**
  * Função para verificar se uma rota é pública
@@ -53,8 +51,8 @@ export function middleware(request: NextRequest) {
     // Se tem token válido e não expirado, redirecionar para home
     if (token) {
       const validation = validateToken(token)
-      if (validation.valid && pathname === '/login') {
-        return NextResponse.redirect(new URL('/', request.url))
+      if (validation.valid && pathname === APP_ROUTES.LOGIN) {
+        return NextResponse.redirect(new URL(APP_ROUTES.HOME, request.url))
       }
     }
     return NextResponse.next()
@@ -62,7 +60,7 @@ export function middleware(request: NextRequest) {
 
   // TODAS as outras rotas requerem token JWT válido
   if (!token) {
-    const loginUrl = new URL(REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE, request.url)
+    const loginUrl = new URL(APP_ROUTES.LOGIN, request.url)
     return NextResponse.redirect(loginUrl)
   }
 
@@ -72,7 +70,7 @@ export function middleware(request: NextRequest) {
   if (!validation.valid) {
     // Token inválido ou expirado - deletar cookie e redirecionar
     const response = NextResponse.redirect(
-      new URL(REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE, request.url)
+      new URL(APP_ROUTES.LOGIN, request.url)
     )
 
     // Deletar cookie inválido

@@ -1,7 +1,11 @@
 import { LayoutDashboard } from '@/app/_components/layout/layout-dashboard'
-import { getUsuarioById } from '@/app/_services/usuarioService'
+import {
+  getUsuarioById,
+  getUsuarioComentarios
+} from '@/app/_services/usuarioService'
 import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { notFound } from 'next/navigation'
+import { UsuarioComentariosList } from './_components/usuario-comentarios-list'
 import { UsuarioDetalhes } from './_components/usuario-detalhes'
 
 export const dynamic = 'force-dynamic'
@@ -21,7 +25,10 @@ export default async function UsuarioDetalhesPage({
     notFound()
   }
 
-  const usuario = await getUsuarioById(id)
+  const [usuario, comentarios] = await Promise.all([
+    getUsuarioById(id),
+    getUsuarioComentarios(id)
+  ])
 
   if (!usuario) {
     notFound()
@@ -30,6 +37,7 @@ export default async function UsuarioDetalhesPage({
   return (
     <LayoutDashboard>
       <UsuarioDetalhes usuario={usuario} />
+      <UsuarioComentariosList comentarios={comentarios} usuarioId={id} />
     </LayoutDashboard>
   )
 }

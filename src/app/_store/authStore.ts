@@ -8,6 +8,7 @@ import {
 import { UsuarioResponseDTO } from '@/app/_dtos/response'
 import { isAdmin } from '@/app/_enums/tipoUsuarioEnum'
 import { create } from 'zustand'
+import { APP_ROUTES } from '../_constants/appSettingsConstants'
 import type { LoginCreateDTO } from '../_schemas/loginSchema'
 
 interface AuthStore {
@@ -67,7 +68,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => {
 
         // Redirecionar para login
         if (typeof window !== 'undefined') {
-          window.location.href = '/login'
+          window.location.href = APP_ROUTES.LOGIN
         }
       }
     }
@@ -292,7 +293,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => {
             }
 
             // Redirecionar para login
-            window.location.href = '/login'
+            window.location.href = APP_ROUTES.LOGIN
           }
         }
         window.addEventListener('storage', handleStorageChange)

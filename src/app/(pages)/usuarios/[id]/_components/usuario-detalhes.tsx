@@ -9,12 +9,14 @@ import {
   CardHeader,
   CardTitle
 } from '@/app/_components/ui/card'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
 import {
   getTipoUsuarioBadgeVariant,
   getTipoUsuarioLabel,
   isAdmin
 } from '@/app/_enums/tipoUsuarioEnum'
+import { useAuth } from '@/app/_hooks/useAuth'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
 import { formatCEP, formatTelefone } from '@/app/_utils/formatUtils'
@@ -39,6 +41,7 @@ interface UsuarioDetalhesProps {
 
 export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
   const router = useRouter()
+  const { user: currentUser } = useAuth()
   const { isOpen, isLoading, openModal, closeModal, confirmDelete } =
     useDeleteModal()
 
@@ -48,7 +51,7 @@ export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
       async () => {
         const result = await deleteUsuario(usuario.id)
         if (result.success) {
-          router.replace('/usuarios/listar')
+          router.replace(APP_ROUTES.USUARIO_LISTAR())
         }
         return result
       },
@@ -56,20 +59,26 @@ export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
     )
   }
 
+  const isCurrentUser = currentUser?.id === usuario.id
+  const canEditOrDelete = !isAdmin(usuario.tipo) || isCurrentUser
+  const editRoute = isCurrentUser
+    ? APP_ROUTES.PERFIL
+    : APP_ROUTES.USUARIO_EDITAR(usuario.id)
+
   return (
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold">{usuario.nome}</h1>
+          <h1 className="text-2xl font-bold">{usuario.nome}</h1>
           <Badge variant={getTipoUsuarioBadgeVariant(usuario.tipo)}>
             {getTipoUsuarioLabel(usuario.tipo)}
           </Badge>
         </div>
-        {!isAdmin(usuario.tipo) && (
+        {canEditOrDelete && (
           <div className="flex items-center gap-2">
             <Button asChild>
               <Link
-                href={`/usuarios/editar/${usuario.id}`}
+                href={editRoute}
                 aria-label={`Editar usuário ${usuario.nome}`}
               >
                 <EditIcon aria-hidden="true" />
@@ -195,7 +204,7 @@ export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
       <div className="flex justify-start gap-4">
         <Button variant="outline" asChild>
           <Link
-            href="/usuarios/listar"
+            href={APP_ROUTES.USUARIO_LISTAR()}
             aria-label="Voltar para lista de usuários"
           >
             <Undo2Icon aria-hidden="true" />

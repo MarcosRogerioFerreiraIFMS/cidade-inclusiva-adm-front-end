@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/app/_components/ui/select'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import {
   isAdmin,
   TipoUsuarioEnum,
@@ -151,7 +152,7 @@ export function UsuarioAdicionarForm() {
 
         if (result.success) {
           notifySuccess({ message: 'Usuário criado com sucesso!' })
-          router.push('/usuarios/listar')
+          router.push(APP_ROUTES.USUARIO_LISTAR())
         } else {
           const errorMessage =
             result.error ?? 'Ocorreu um erro ao criar o usuário.'

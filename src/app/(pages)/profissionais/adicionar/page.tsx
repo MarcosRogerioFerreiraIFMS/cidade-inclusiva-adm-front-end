@@ -1,19 +1,17 @@
-import { ProfissionalAdicionarForm } from '@/app/(pages)/profissionais/_components/profissional-adicionar-form'
 import { LayoutDashboard } from '@/app/_components/layout/layout-dashboard'
+import { ProfissionalAdicionarForm } from '../_components/profissional-adicionar-form'
 
 export default function ProfissionalAdicionarPage() {
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Adicionar Profissional</h1>
-          <p className="text-muted-foreground mt-2">
-            Crie um novo profissional para o sistema
-          </p>
-        </div>
-
-        <ProfissionalAdicionarForm />
+      <div>
+        <h1 className="text-2xl font-bold">Adicionar Profissional</h1>
+        <p className="text-muted-foreground mt-1">
+          Crie um novo profissional para o sistema
+        </p>
       </div>
+
+      <ProfissionalAdicionarForm />
     </LayoutDashboard>
   )
 }

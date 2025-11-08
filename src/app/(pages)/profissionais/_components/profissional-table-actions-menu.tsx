@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/app/_components/ui/dropdown-menu'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ProfissionalResponseDTO } from '@/app/_dtos/response'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import {
@@ -59,8 +60,7 @@ export function ProfissionalTableActionsMenu({
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link
-              href={`/profissionais/${profissional.id}`}
-              prefetch={false}
+              href={APP_ROUTES.PROFISSIONAL_DETALHE(profissional.id)}
               aria-label={`Visualizar profissional ${profissional.nome}`}
             >
               <EyeIcon aria-hidden="true" />
@@ -69,8 +69,7 @@ export function ProfissionalTableActionsMenu({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
-              href={`/profissionais/editar/${profissional.id}`}
-              prefetch={false}
+              href={APP_ROUTES.PROFISSIONAL_EDITAR(profissional.id)}
               aria-label={`Editar profissional ${profissional.nome}`}
             >
               <PencilIcon aria-hidden="true" />

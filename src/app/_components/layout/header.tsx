@@ -1,5 +1,6 @@
 'use client'
 
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { menuItems } from '@/app/_constants/sidebarItemsConstants'
 import { useAuth } from '@/app/_hooks/useAuth'
 import { useMenuStore } from '@/app/_store/menuStore'
@@ -44,6 +45,16 @@ export function Header() {
   const { setTheme } = useTheme()
   const { user, logout } = useAuth()
 
+  // Filtra apenas os itens habilitados (enabled === true ou undefined)
+  const enabledMenuItems = useMemo(() => {
+    return menuItems
+      .filter((item) => item.enabled !== false)
+      .map((item) => ({
+        ...item,
+        subItems: item.subItems?.filter((sub) => sub.enabled !== false)
+      }))
+  }, [])
+
   const pageTitle = useMemo(() => {
     // Verifica correspondência exata com itens do menu principal
     const mainItem = menuItems.find((item) => item.href === pathname)
@@ -58,7 +69,7 @@ export function Header() {
     }
 
     // Páginas especiais
-    if (pathname === '/perfil') return 'Meu Perfil'
+    if (pathname === APP_ROUTES.PERFIL) return 'Editar Perfil'
 
     // Detecta rotas dinâmicas por seção
     const pathSegments = pathname.split('/').filter(Boolean)
@@ -105,9 +116,9 @@ export function Header() {
   const handleLogout = async () => {
     try {
       await logout()
-      router.push('/login')
+      router.push(APP_ROUTES.LOGIN)
     } catch {
-      router.push('/login')
+      router.push(APP_ROUTES.LOGIN)
     }
   }
 
@@ -130,7 +141,7 @@ export function Header() {
             <MenuSquareIcon className="size-6" />
           </Button>
           <Link
-            href="/"
+            href={APP_ROUTES.HOME}
             className="relative aspect-207/48 h-10"
             aria-label="Página inicial - Cidade Inclusiva"
           >
@@ -152,7 +163,7 @@ export function Header() {
           type="multiple"
           className="[&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-track]:bg-background flex flex-col gap-4 overflow-x-hidden overflow-y-auto pr-4 pb-20 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full"
         >
-          {menuItems.map((item, index) => {
+          {enabledMenuItems.map((item, index) => {
             if (item.subItems && item.subItems.length > 0) {
               return (
                 <AccordionItem
@@ -257,9 +268,15 @@ export function Header() {
 
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem asChild>
-                <Link href="/perfil">
+                <Link href={APP_ROUTES.USUARIO_DETALHE(user?.id || '')}>
                   <UserIcon />
-                  <span>Meu Perfil</span>
+                  <span>Ver Perfil</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={APP_ROUTES.PERFIL}>
+                  <UserIcon />
+                  <span>Editar Perfil</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSub>

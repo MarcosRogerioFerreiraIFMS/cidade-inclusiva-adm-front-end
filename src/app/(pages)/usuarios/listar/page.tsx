@@ -11,24 +11,22 @@ export default async function UsuarioListarPage() {
 
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Usuários</h1>
-          <p className="text-muted-foreground mt-2">
-            Gerencie todos os usuários do sistema ({usuarios.length}{' '}
-            {usuarios.length === 1 ? 'usuário' : 'usuários'})
-          </p>
-        </div>
-
-        <DataTable
-          columns={usuarioTableColumns}
-          data={usuarios}
-          searchKey="nome"
-          searchPlaceholder="Pesquisar por nome..."
-          actions={<UsuarioTableActions />}
-          enableColumnVisibility={true}
-        />
+      <div>
+        <h1 className="text-2xl font-bold">Usuários</h1>
+        <p className="text-muted-foreground mt-1">
+          Gerencie todos os usuários do sistema ({usuarios.length}{' '}
+          {usuarios.length === 1 ? 'usuário' : 'usuários'})
+        </p>
       </div>
+
+      <DataTable
+        columns={usuarioTableColumns}
+        data={usuarios}
+        searchKey="nome"
+        searchPlaceholder="Pesquisar por nome..."
+        actions={<UsuarioTableActions />}
+        enableColumnVisibility={true}
+      />
     </LayoutDashboard>
   )
 }

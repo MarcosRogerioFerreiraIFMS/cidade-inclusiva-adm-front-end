@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 
 export type OrdemNota = 'crescente' | 'decrescente' | null
 export type FiltroVisibilidade = 'todos' | 'visiveis' | 'ocultos'
-export type OrdemData = 'recentes' | 'antigas' | null
+export type OrdemData = 'recentes' | 'antigas'
 
 interface FiltrosComentario {
   visibilidade: FiltroVisibilidade
@@ -37,25 +37,22 @@ export function useComentarioFilters(comentarios: ComentarioResponseDTO[]) {
       resultado = resultado.filter((c) => c.nota >= filtros.notaMinima!)
     }
 
-    // Ordenação por nota
-    if (filtros.ordemNota === 'crescente') {
-      resultado.sort((a, b) => a.nota - b.nota)
-    } else if (filtros.ordemNota === 'decrescente') {
-      resultado.sort((a, b) => b.nota - a.nota)
-    }
+    // Ordenação: combina nota e data de forma independente
+    resultado.sort((a, b) => {
+      // Se há ordenação por nota selecionada, aplica como critério primário
+      if (filtros.ordemNota) {
+        const notaDiff =
+          filtros.ordemNota === 'crescente' ? a.nota - b.nota : b.nota - a.nota
 
-    // Ordenação por data
-    if (filtros.ordemData === 'recentes') {
-      resultado.sort(
-        (a, b) =>
-          new Date(b.criadoEm).getTime() - new Date(a.criadoEm).getTime()
-      )
-    } else if (filtros.ordemData === 'antigas') {
-      resultado.sort(
-        (a, b) =>
-          new Date(a.criadoEm).getTime() - new Date(b.criadoEm).getTime()
-      )
-    }
+        // Se as notas forem iguais, usa data como desempate
+        if (notaDiff !== 0) return notaDiff
+      }
+
+      // Ordenação por data (sempre aplicada, seja como principal ou secundária)
+      const dataA = new Date(a.criadoEm).getTime()
+      const dataB = new Date(b.criadoEm).getTime()
+      return filtros.ordemData === 'recentes' ? dataB - dataA : dataA - dataB
+    })
 
     return resultado
   }, [comentarios, filtros])
@@ -89,8 +86,7 @@ export function useComentarioFilters(comentarios: ComentarioResponseDTO[]) {
     return (
       filtros.visibilidade !== 'todos' ||
       filtros.notaMinima !== null ||
-      filtros.ordemNota !== null ||
-      filtros.ordemData !== 'recentes'
+      filtros.ordemNota !== null
     )
   }, [filtros])
 
@@ -99,7 +95,7 @@ export function useComentarioFilters(comentarios: ComentarioResponseDTO[]) {
     if (filtros.visibilidade !== 'todos') count++
     if (filtros.notaMinima !== null) count++
     if (filtros.ordemNota !== null) count++
-    if (filtros.ordemData !== 'recentes') count++
+    // Não conta ordemData como filtro ativo pois sempre tem um valor padrão
     return count
   }, [filtros])
 

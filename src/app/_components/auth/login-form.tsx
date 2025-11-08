@@ -13,6 +13,7 @@ import {
   CardTitle
 } from '@/app/_components/ui/card'
 import { Input } from '@/app/_components/ui/input'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { useNotification } from '@/app/_hooks/useNotification'
 import { useRateLimit } from '@/app/_hooks/useRateLimit'
 import {
@@ -70,7 +71,7 @@ export function LoginForm() {
 
         if (result.success) {
           rateLimit.reset()
-          router.push('/')
+          router.push(APP_ROUTES.HOME)
         } else {
           rateLimit.recordAttempt()
           notifyError({

@@ -1,7 +1,7 @@
-import { UsuarioEditarForm } from '@/app/(pages)/usuarios/_components/usuario-editar-form'
 import { LayoutDashboard } from '@/app/_components/layout/layout-dashboard'
 import { getUsuarioById } from '@/app/_services/usuarioService'
 import { notFound } from 'next/navigation'
+import { UsuarioEditarForm } from '../../_components/usuario-editar-form'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,16 +23,14 @@ export default async function UsuarioEditarPage({
 
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Editar Usuário</h1>
-          <p className="text-muted-foreground mt-2">
-            Edite as informações do usuário &quot;{usuario.nome}&quot;
-          </p>
-        </div>
-
-        <UsuarioEditarForm usuario={usuario} />
+      <div>
+        <h1 className="text-2xl font-bold">Editar Usuário</h1>
+        <p className="text-muted-foreground mt-1">
+          Edite as informações do usuário &quot;{usuario.nome}&quot;
+        </p>
       </div>
+
+      <UsuarioEditarForm usuario={usuario} />
     </LayoutDashboard>
   )
 }

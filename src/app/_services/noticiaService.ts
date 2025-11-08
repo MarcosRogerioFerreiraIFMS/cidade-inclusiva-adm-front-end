@@ -2,14 +2,19 @@ import 'server-only'
 
 import { apiClient } from '@/app/_api/apiClient'
 import { ApiError } from '@/app/_api/errorHandler'
+import { CACHE_CONFIG, CACHE_TAGS } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
+import { API_ROUTES } from '../_constants/appSettingsConstants'
 import type { ApiResponse } from '../_types/apiResponsesType'
 
 export async function getNoticias(): Promise<NoticiaResponseDTO[]> {
   const result = await apiClient<ApiResponse<NoticiaResponseDTO[]>>(
-    '/noticias',
+    API_ROUTES.NOTICIA,
     {
-      next: { revalidate: 60, tags: ['noticias'] }
+      next: {
+        revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
+        tags: [CACHE_TAGS.NOTICIAS]
+      }
     }
   )
 
@@ -21,9 +26,12 @@ export async function getNoticiaById(
 ): Promise<NoticiaResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<NoticiaResponseDTO>>(
-      `/noticias/${id}`,
+      `${API_ROUTES.NOTICIA}/${id}`,
       {
-        next: { revalidate: 60, tags: ['noticias', `noticia-${id}`] }
+        next: {
+          revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
+          tags: [CACHE_TAGS.NOTICIAS, CACHE_TAGS.NOTICIA_ID(id)]
+        }
       }
     )
 

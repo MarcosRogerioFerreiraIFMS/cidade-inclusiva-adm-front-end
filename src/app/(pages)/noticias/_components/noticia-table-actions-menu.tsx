@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/app/_components/ui/dropdown-menu'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { NoticiaDeletarModal } from './noticia-deletar-modal'
@@ -55,8 +56,7 @@ export function NoticiaTableActionsMenu({
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link
-              href={`/noticias/${noticia.id}`}
-              prefetch={false}
+              href={APP_ROUTES.NOTICIA_DETALHE(noticia.id)}
               aria-label={`Visualizar notícia ${noticia.titulo}`}
             >
               <EyeIcon aria-hidden="true" />
@@ -65,7 +65,7 @@ export function NoticiaTableActionsMenu({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
-              href={`/noticias/editar/${noticia.id}`}
+              href={APP_ROUTES.NOTICIA_EDITAR(noticia.id)}
               aria-label={`Editar notícia ${noticia.titulo}`}
             >
               <EditIcon aria-hidden="true" />

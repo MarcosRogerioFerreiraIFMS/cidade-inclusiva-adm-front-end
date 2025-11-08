@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/app/_components/ui/select'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ProfissionalResponseDTO } from '@/app/_dtos/response'
 import {
   PROFISSIONAL_ESPECIALIDADES,
@@ -98,7 +99,7 @@ export function ProfissionalEditarForm({
 
         if (result.success) {
           notifySuccess({ message: 'Profissional atualizado com sucesso!' })
-          router.push('/profissionais/listar')
+          router.push(APP_ROUTES.PROFISSIONAL_LISTAR())
         } else {
           const errorMessage =
             result.error ?? 'Ocorreu um erro ao atualizar o profissional.'

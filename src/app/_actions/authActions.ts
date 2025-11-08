@@ -2,6 +2,7 @@
 
 import { apiClient } from '../_api/apiClient'
 import { validateWithZod } from '../_api/zodValidator'
+import { API_ROUTES } from '../_constants/appSettingsConstants'
 import type { LoginResponseDTO, UsuarioResponseDTO } from '../_dtos/response'
 import { isAdmin } from '../_enums/tipoUsuarioEnum'
 import { createLoginSchema, type LoginCreateDTO } from '../_schemas/loginSchema'
@@ -22,7 +23,7 @@ export async function loginAction(data: LoginCreateDTO): Promise<ActionResult> {
 
   try {
     const result = await apiClient<ApiResponse<LoginResponseDTO>>(
-      '/auth/login',
+      API_ROUTES.AUTH_LOGIN(),
       {
         method: 'POST',
         body: JSON.stringify(validation.data),
@@ -82,7 +83,13 @@ export async function loginAction(data: LoginCreateDTO): Promise<ActionResult> {
  */
 async function validateWithBackend(): Promise<UsuarioResponseDTO | null> {
   try {
-    const result = await apiClient<ApiResponse<UsuarioResponseDTO>>('/auth/me')
+    const result = await apiClient<ApiResponse<UsuarioResponseDTO>>(
+      API_ROUTES.AUTH_ME(),
+      {
+        method: 'GET',
+        cache: 'no-store'
+      }
+    )
 
     if (!result || !result.data) {
       await deleteServerAuthToken()

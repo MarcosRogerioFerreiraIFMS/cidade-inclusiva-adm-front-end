@@ -11,24 +11,22 @@ export default async function ProfissionalListarPage() {
 
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Profissionais</h1>
-          <p className="text-muted-foreground mt-2">
-            Gerencie todos os profissionais do sistema ({profissionais.length}{' '}
-            {profissionais.length === 1 ? 'profissional' : 'profissionais'})
-          </p>
-        </div>
-
-        <DataTable
-          columns={profissionalTableColumns}
-          data={profissionais}
-          searchKey="nome"
-          searchPlaceholder="Pesquisar por nome..."
-          actions={<ProfissionalTableActions />}
-          enableColumnVisibility={true}
-        />
+      <div>
+        <h1 className="text-2xl font-bold">Profissionais</h1>
+        <p className="text-muted-foreground mt-1">
+          Gerencie todos os profissionais do sistema ({profissionais.length}{' '}
+          {profissionais.length === 1 ? 'profissional' : 'profissionais'})
+        </p>
       </div>
+
+      <DataTable
+        columns={profissionalTableColumns}
+        data={profissionais}
+        searchKey="nome"
+        searchPlaceholder="Pesquisar por nome..."
+        actions={<ProfissionalTableActions />}
+        enableColumnVisibility={true}
+      />
     </LayoutDashboard>
   )
 }

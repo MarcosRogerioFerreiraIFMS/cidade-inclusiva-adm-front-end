@@ -4,16 +4,14 @@ import { NoticiaAdicionarForm } from '../_components/noticia-adicionar-form'
 export default function NoticiaAdicionarPage() {
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Adicionar Notícia</h1>
-          <p className="text-muted-foreground mt-2">
-            Crie uma nova notícia para o sistema
-          </p>
-        </div>
-
-        <NoticiaAdicionarForm />
+      <div>
+        <h1 className="text-2xl font-bold">Adicionar Notícia</h1>
+        <p className="text-muted-foreground mt-1">
+          Crie uma nova notícia para o sistema
+        </p>
       </div>
+
+      <NoticiaAdicionarForm />
     </LayoutDashboard>
   )
 }

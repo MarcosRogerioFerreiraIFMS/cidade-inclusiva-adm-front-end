@@ -11,6 +11,11 @@ import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { apiClient } from '../_api/apiClient'
 import { validateWithZod } from '../_api/zodValidator'
+import {
+  API_ROUTES,
+  APP_ROUTES,
+  CACHE_TAGS
+} from '../_constants/appSettingsConstants'
 
 export async function createUsuario(
   data: UsuarioCreateDTO
@@ -21,13 +26,13 @@ export async function createUsuario(
   }
 
   try {
-    await apiClient('/usuarios', {
+    await apiClient(API_ROUTES.USUARIO, {
       method: 'POST',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('usuarios')
-    revalidatePath('/usuarios/listar')
+    revalidateTag(CACHE_TAGS.USUARIOS)
+    revalidatePath(APP_ROUTES.USUARIO_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -49,13 +54,13 @@ export async function createAdmin(
   }
 
   try {
-    await apiClient('/usuarios/admin', {
+    await apiClient(API_ROUTES.USUARIO_CRIAR_ADMIN(), {
       method: 'POST',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('usuarios')
-    revalidatePath('/usuarios/listar')
+    revalidateTag(CACHE_TAGS.USUARIOS)
+    revalidatePath(APP_ROUTES.USUARIO_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -82,16 +87,16 @@ export async function updateUsuario(
   }
 
   try {
-    await apiClient(`/usuarios/${id}`, {
+    await apiClient(`${API_ROUTES.USUARIO}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('usuarios')
-    revalidateTag(`usuario-${id}`)
-    revalidatePath('/perfil')
-    revalidatePath('/usuarios/listar')
-    revalidatePath(`/usuarios/${id}`)
+    revalidateTag(CACHE_TAGS.USUARIOS)
+    revalidateTag(CACHE_TAGS.USUARIO_ID(id))
+    revalidatePath(APP_ROUTES.PERFIL)
+    revalidatePath(APP_ROUTES.USUARIO_LISTAR())
+    revalidatePath(APP_ROUTES.USUARIO_DETALHE(id))
 
     return { success: true }
   } catch (error) {
@@ -110,13 +115,13 @@ export async function deleteUsuario(id: string): Promise<ActionResult> {
   }
 
   try {
-    await apiClient(`/usuarios/${id}`, {
+    await apiClient(API_ROUTES.USUARIO_DELETAR(id), {
       method: 'DELETE'
     })
 
-    revalidateTag('usuarios')
-    revalidatePath('/perfil')
-    revalidatePath('/usuarios/listar')
+    revalidateTag(CACHE_TAGS.USUARIOS)
+    revalidatePath(APP_ROUTES.PERFIL)
+    revalidatePath(APP_ROUTES.USUARIO_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -130,8 +135,8 @@ export async function deleteUsuario(id: string): Promise<ActionResult> {
 }
 
 export async function revalidateUsuarios(): Promise<ActionResult> {
-  revalidateTag('usuarios')
-  revalidatePath('/usuarios/listar')
+  revalidateTag(CACHE_TAGS.USUARIOS)
+  revalidatePath(APP_ROUTES.USUARIO_LISTAR())
 
   return { success: true }
 }

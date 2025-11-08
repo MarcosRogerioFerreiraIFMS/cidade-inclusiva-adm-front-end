@@ -22,6 +22,7 @@ import {
   SelectValue
 } from '@/app/_components/ui/select'
 import { Textarea } from '@/app/_components/ui/textarea'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import {
   NOTICIA_CATEGORIES,
@@ -93,7 +94,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
 
         if (result.success) {
           notifySuccess({ message: 'Notícia atualizada com sucesso!' })
-          router.push('/noticias/listar')
+          router.push(APP_ROUTES.NOTICIA_LISTAR())
         } else {
           notifyError({
             message: result.error ?? 'Ocorreu um erro ao atualizar a notícia.'

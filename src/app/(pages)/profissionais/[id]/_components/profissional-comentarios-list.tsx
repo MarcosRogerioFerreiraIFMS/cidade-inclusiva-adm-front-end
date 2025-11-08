@@ -1,5 +1,6 @@
 'use client'
 
+import { ComentariosFiltros } from '@/app/_components/comentarios-filtros'
 import {
   Avatar,
   AvatarFallback,
@@ -19,6 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/app/_components/ui/tooltip'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ComentarioResponseDTO } from '@/app/_dtos/response'
 import { useComentarioFilters } from '@/app/_hooks/useComentarioFilters'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
@@ -32,7 +34,6 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { ComentarioActionsMenu } from './comentario-actions-menu'
-import { ComentariosFiltros } from './comentarios-filtros'
 
 interface ProfissionalComentariosListProps {
   comentarios: ComentarioResponseDTO[]
@@ -166,7 +167,9 @@ export function ProfissionalComentariosList({
                             asChild
                           >
                             <Link
-                              href={`/usuarios/${comentario.autor.id}`}
+                              href={APP_ROUTES.USUARIO_DETALHE(
+                                comentario.autor.id
+                              )}
                               aria-label={`Ver perfil de ${comentario.autor.nome}`}
                             >
                               <UserIcon className="size-3" aria-hidden="true" />

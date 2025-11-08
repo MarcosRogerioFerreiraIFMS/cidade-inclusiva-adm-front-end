@@ -1,5 +1,6 @@
 'use client'
 
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { usePathname } from 'next/navigation'
 import { ProtectedRoute } from '../auth/protected-route'
 import { Toaster } from '../ui/sonner'
@@ -15,7 +16,7 @@ interface LayoutProviderProps {
  */
 export function LayoutProvider({ children }: LayoutProviderProps) {
   const pathname = usePathname()
-  const isLoginPage = pathname === '/login'
+  const isLoginPage = pathname === APP_ROUTES.LOGIN
 
   // Se for a página de login, não renderiza o Header
   if (isLoginPage) {

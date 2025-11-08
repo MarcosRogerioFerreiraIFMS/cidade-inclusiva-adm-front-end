@@ -1,5 +1,6 @@
 'use client'
 
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { isAdmin } from '@/app/_enums/tipoUsuarioEnum'
 import { useAuth } from '@/app/_hooks/useAuth'
 import { useRouter } from 'next/navigation'
@@ -116,7 +117,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 
     // Pequeno delay para melhor UX
     setTimeout(() => {
-      router.push('/login')
+      router.push(APP_ROUTES.LOGIN)
     }, 500)
   }
 

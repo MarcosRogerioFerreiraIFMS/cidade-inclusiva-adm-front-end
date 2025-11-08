@@ -1,34 +1,35 @@
 import { checkAuth } from '@/app/_actions/authActions'
 import { LayoutDashboard } from '@/app/_components/layout/layout-dashboard'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import { PerfilForm } from './_components/perfil-form'
 
 export const metadata: Metadata = {
-  title: 'Meu Perfil - Cidade Inclusiva',
+  title: 'Edite seu Perfil - Cidade Inclusiva',
   description: 'Edite suas informações pessoais e configurações de conta'
 }
 
 export const dynamic = 'force-dynamic'
 
 export default async function PerfilPage() {
+  // Buscar dados de autenticação no servidor
   const authData = await checkAuth()
 
-  if (!authData || !authData.authenticated || !authData.user) {
-    throw new Error('Usuário não autenticado')
+  if (!authData?.user) {
+    redirect(APP_ROUTES.LOGIN)
   }
-
-  const { user } = authData
 
   return (
     <LayoutDashboard>
-      <div className="space-y-1">
-        <h1 className="text-2xl font-bold">Meu Perfil</h1>
-        <p className="text-muted-foreground">
+      <div>
+        <h1 className="text-2xl font-bold">Edite seu Perfil</h1>
+        <p className="text-muted-foreground mt-1">
           Gerencie suas informações pessoais e configurações de conta
         </p>
       </div>
 
-      <PerfilForm usuario={user} />
+      <PerfilForm usuario={authData.user} />
     </LayoutDashboard>
   )
 }

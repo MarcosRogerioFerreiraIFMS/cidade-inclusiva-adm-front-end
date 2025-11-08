@@ -13,6 +13,7 @@ import {
   WifiOffIcon
 } from 'lucide-react'
 import Link from 'next/link'
+import { APP_ROUTES } from '../../_constants/appSettingsConstants'
 import {
   Accordion,
   AccordionContent,
@@ -324,7 +325,7 @@ export function LayoutError({ error, reset }: LayoutErrorProps) {
               </Button>
             )}
             <Button variant="outline" asChild>
-              <Link href="/">
+              <Link href={APP_ROUTES.HOME}>
                 <Undo2Icon />
                 <span>Ir para Início</span>
               </Link>

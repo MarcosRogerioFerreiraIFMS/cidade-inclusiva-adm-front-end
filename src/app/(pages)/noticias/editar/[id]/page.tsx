@@ -23,16 +23,14 @@ export default async function NoticiaEditarPage({
 
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Editar Notícia</h1>
-          <p className="text-muted-foreground mt-2">
-            Edite as informações da notícia &quot;{noticia.titulo}&quot;
-          </p>
-        </div>
-
-        <NoticiaEditarForm noticia={noticia} />
+      <div>
+        <h1 className="text-2xl font-bold">Editar Notícia</h1>
+        <p className="text-muted-foreground mt-1">
+          Edite as informações da notícia &quot;{noticia.titulo}&quot;
+        </p>
       </div>
+
+      <NoticiaEditarForm noticia={noticia} />
     </LayoutDashboard>
   )
 }

@@ -22,6 +22,7 @@ import {
   FilterXIcon,
   StarIcon
 } from 'lucide-react'
+import { Label } from './ui/label'
 
 interface ComentariosFiltrosProps {
   visibilidade: FiltroVisibilidade
@@ -84,13 +85,13 @@ export function ComentariosFiltros({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Filtro de Visibilidade */}
         <div className="space-y-2">
-          <label
+          <Label
             htmlFor="filtro-visibilidade"
             className="flex items-center gap-2 text-sm font-medium"
           >
             <EyeIcon className="size-4" aria-hidden="true" />
             Visibilidade
-          </label>
+          </Label>
           <Select value={visibilidade} onValueChange={onVisibilidadeChange}>
             <SelectTrigger
               id="filtro-visibilidade"
@@ -109,13 +110,13 @@ export function ComentariosFiltros({
 
         {/* Filtro de Nota Mínima */}
         <div className="space-y-2">
-          <label
+          <Label
             htmlFor="filtro-nota-minima"
             className="flex items-center gap-2 text-sm font-medium"
           >
             <StarIcon className="size-4" aria-hidden="true" />
             Nota Mínima
-          </label>
+          </Label>
           <Select
             value={notaMinima?.toString() ?? 'todas'}
             onValueChange={(value) =>
@@ -142,13 +143,13 @@ export function ComentariosFiltros({
 
         {/* Ordenação por Nota */}
         <div className="space-y-2">
-          <label
+          <Label
             htmlFor="ordem-nota"
             className="flex items-center gap-2 text-sm font-medium"
           >
             <ArrowDownAZIcon className="size-4" aria-hidden="true" />
             Ordenar por Nota
-          </label>
+          </Label>
           <Select
             value={ordemNota ?? 'nenhuma'}
             onValueChange={(value) =>
@@ -174,16 +175,17 @@ export function ComentariosFiltros({
 
         {/* Ordenação por Data */}
         <div className="space-y-2">
-          <label
+          <Label
             htmlFor="ordem-data"
             className="flex items-center gap-2 text-sm font-medium"
           >
             <CalendarIcon className="size-4" aria-hidden="true" />
             Ordenar por Data
-          </label>
+          </Label>
           <Select
-            value={ordemData ?? 'recentes'}
+            value={ordemData}
             onValueChange={(value) => onOrdemDataChange(value as OrdemData)}
+            disabled={ordemNota !== null}
           >
             <SelectTrigger
               id="ordem-data"
@@ -197,6 +199,11 @@ export function ComentariosFiltros({
               <SelectItem value="antigas">Mais antigas</SelectItem>
             </SelectContent>
           </Select>
+          {ordemNota !== null && (
+            <p className="text-muted-foreground text-xs">
+              Desative a ordenação por nota para usar este filtro
+            </p>
+          )}
         </div>
       </div>
 

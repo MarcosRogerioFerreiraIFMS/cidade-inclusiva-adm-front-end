@@ -1,8 +1,8 @@
 'use client'
 
 import {
-  TituloCell,
   UsuarioFotoCell,
+  UsuarioNomeCell,
   UsuarioTipoCell
 } from '@/app/_components/cells'
 import { Button } from '@/app/_components/ui/button'
@@ -39,7 +39,8 @@ export const usuarioTableColumns: ColumnDef<UsuarioResponseDTO>[] = [
     },
     cell: ({ row }) => {
       const nome = row.getValue('nome') as string
-      return <TituloCell titulo={nome} />
+      const usuarioId = row.original.id
+      return <UsuarioNomeCell nome={nome} usuarioId={usuarioId} />
     }
   },
   {

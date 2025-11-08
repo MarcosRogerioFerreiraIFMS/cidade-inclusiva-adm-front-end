@@ -2,6 +2,7 @@
 
 import { revalidateProfissionais } from '@/app/_actions/profissionalActions'
 import { Button } from '@/app/_components/ui/button'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
@@ -42,7 +43,7 @@ export function ProfissionalTableActions() {
         Atualizar
       </Button>
       <Button asChild aria-label="Adicionar novo profissional">
-        <Link href="/profissionais/adicionar">
+        <Link href={APP_ROUTES.PROFISSIONAL_ADICIONAR()}>
           <PlusIcon aria-hidden="true" />
           Adicionar Profissional
         </Link>

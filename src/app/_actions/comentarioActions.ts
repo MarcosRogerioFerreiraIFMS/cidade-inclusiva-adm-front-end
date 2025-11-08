@@ -4,6 +4,7 @@ import type { ActionResult } from '@/app/_types/apiResponsesType'
 import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { revalidateTag } from 'next/cache'
 import { apiClient } from '../_api/apiClient'
+import { API_ROUTES, CACHE_TAGS } from '../_constants/appSettingsConstants'
 
 /**
  * Opções para revalidação de cache específico por entidade
@@ -13,6 +14,7 @@ interface RevalidateOptions {
   motoristaId?: string
   manutencaoId?: string
   acessibilidadeUrbanaId?: string
+  usuarioId?: string
 }
 
 /**
@@ -20,22 +22,27 @@ interface RevalidateOptions {
  */
 function revalidateComentarioTags(options?: RevalidateOptions) {
   // Sempre revalida a tag genérica de comentários
-  revalidateTag('comentarios')
+  revalidateTag(CACHE_TAGS.COMENTARIOS)
 
   // Revalida tags específicas por entidade, se fornecidas
   if (options?.profissionalId) {
-    revalidateTag(`profissional-${options.profissionalId}-comentarios`)
+    revalidateTag(CACHE_TAGS.PROFISSIONAL_COMENTARIOS(options.profissionalId))
   }
   if (options?.motoristaId) {
-    revalidateTag(`motorista-${options.motoristaId}-comentarios`)
+    revalidateTag(CACHE_TAGS.MOTORISTA_COMENTARIOS(options.motoristaId))
   }
   if (options?.manutencaoId) {
-    revalidateTag(`manutencao-${options.manutencaoId}-comentarios`)
+    revalidateTag(CACHE_TAGS.MANUTENCAO_COMENTARIOS(options.manutencaoId))
   }
   if (options?.acessibilidadeUrbanaId) {
     revalidateTag(
-      `acessibilidade-urbana-${options.acessibilidadeUrbanaId}-comentarios`
+      CACHE_TAGS.ACESSIBILIDADE_URBANA_COMENTARIOS(
+        options.acessibilidadeUrbanaId
+      )
     )
+  }
+  if (options?.usuarioId) {
+    revalidateTag(CACHE_TAGS.USUARIO_COMENTARIOS(options.usuarioId))
   }
 }
 
@@ -48,7 +55,7 @@ export async function deleteComentario(
   }
 
   try {
-    await apiClient(`/comentarios/${id}`, {
+    await apiClient(`${API_ROUTES.COMENTARIO}/${id}`, {
       method: 'DELETE'
     })
 
@@ -74,7 +81,7 @@ export async function toggleComentarioVisibilidade(
   }
 
   try {
-    await apiClient(`/comentarios/${id}/visibilidade`, {
+    await apiClient(`${API_ROUTES.COMENTARIO}/${id}/visibilidade`, {
       method: 'PATCH'
     })
 

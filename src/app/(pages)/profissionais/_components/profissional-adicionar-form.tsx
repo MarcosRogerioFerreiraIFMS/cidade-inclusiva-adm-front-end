@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/app/_components/ui/select'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import {
   PROFISSIONAL_ESPECIALIDADES,
   ProfissionalEspecialidadesDisplay
@@ -89,7 +90,7 @@ export function ProfissionalAdicionarForm() {
 
         if (result.success) {
           notifySuccess({ message: 'Profissional criado com sucesso!' })
-          router.push('/profissionais/listar')
+          router.push(APP_ROUTES.PROFISSIONAL_LISTAR())
         } else {
           const errorMessage =
             result.error ?? 'Ocorreu um erro ao criar o profissional.'

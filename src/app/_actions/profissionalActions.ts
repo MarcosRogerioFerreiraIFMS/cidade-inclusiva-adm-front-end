@@ -11,6 +11,11 @@ import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { apiClient } from '../_api/apiClient'
 import { validateWithZod } from '../_api/zodValidator'
+import {
+  API_ROUTES,
+  APP_ROUTES,
+  CACHE_TAGS
+} from '../_constants/appSettingsConstants'
 
 export async function createProfissional(
   data: ProfissionalCreateDTO
@@ -21,13 +26,13 @@ export async function createProfissional(
   }
 
   try {
-    await apiClient('/profissionais', {
+    await apiClient(API_ROUTES.PROFISSIONAL, {
       method: 'POST',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('profissionais')
-    revalidatePath('/profissionais/listar')
+    revalidateTag(CACHE_TAGS.PROFISSIONAIS)
+    revalidatePath(APP_ROUTES.PROFISSIONAL_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -54,15 +59,15 @@ export async function updateProfissional(
   }
 
   try {
-    await apiClient(`/profissionais/${id}`, {
+    await apiClient(`${API_ROUTES.PROFISSIONAL}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('profissionais')
-    revalidateTag(`profissional-${id}`)
-    revalidatePath('/profissionais/listar')
-    revalidatePath(`/profissionais/${id}`)
+    revalidateTag(CACHE_TAGS.PROFISSIONAIS)
+    revalidateTag(CACHE_TAGS.PROFISSIONAL_ID(id))
+    revalidatePath(APP_ROUTES.PROFISSIONAL_LISTAR())
+    revalidatePath(APP_ROUTES.PROFISSIONAL_DETALHE(id))
 
     return { success: true }
   } catch (error) {
@@ -81,12 +86,12 @@ export async function deleteProfissional(id: string): Promise<ActionResult> {
   }
 
   try {
-    await apiClient(`/profissionais/${id}`, {
+    await apiClient(`${API_ROUTES.PROFISSIONAL}/${id}`, {
       method: 'DELETE'
     })
 
-    revalidateTag('profissionais')
-    revalidatePath('/profissionais/listar')
+    revalidateTag(CACHE_TAGS.PROFISSIONAIS)
+    revalidatePath(APP_ROUTES.PROFISSIONAL_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -100,8 +105,8 @@ export async function deleteProfissional(id: string): Promise<ActionResult> {
 }
 
 export async function revalidateProfissionais(): Promise<ActionResult> {
-  revalidateTag('profissionais')
-  revalidatePath('/profissionais/listar')
+  revalidateTag(CACHE_TAGS.PROFISSIONAIS)
+  revalidatePath(APP_ROUTES.PROFISSIONAL_LISTAR())
 
   return { success: true }
 }

@@ -24,6 +24,7 @@ import {
   FormMessage
 } from '@/app/_components/ui/form'
 import { Input } from '@/app/_components/ui/input'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
 import { useAuth } from '@/app/_hooks/useAuth'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
@@ -162,11 +163,10 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
         if (result.success) {
           notifySuccess({ message: 'Perfil atualizado com sucesso!' })
 
-          // Revalidar autenticação para buscar dados atualizados do servidor
+          // Atualizar store de autenticação
           await checkAuthentication()
 
-          // Redirecionar para home após atualização bem-sucedida
-          router.push('/')
+          router.push(APP_ROUTES.HOME)
         } else {
           const errorMessage =
             result.error ?? 'Ocorreu um erro ao atualizar o perfil.'
@@ -206,7 +206,7 @@ export function PerfilForm({ usuario }: PerfilFormProps) {
         const result = await deleteUsuario(usuario.id)
         if (result.success) {
           await logout()
-          router.push('/login')
+          router.push(APP_ROUTES.LOGIN)
         }
         return result
       },

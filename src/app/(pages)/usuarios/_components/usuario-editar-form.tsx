@@ -15,6 +15,7 @@ import {
   FormMessage
 } from '@/app/_components/ui/form'
 import { Input } from '@/app/_components/ui/input'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useCep } from '@/app/_hooks/useCep'
@@ -133,7 +134,7 @@ export function UsuarioEditarForm({ usuario }: UsuarioEditarFormProps) {
 
         if (result.success) {
           notifySuccess({ message: 'Usuário atualizado com sucesso!' })
-          router.push('/usuarios/listar')
+          router.push(APP_ROUTES.USUARIO_LISTAR())
         } else {
           const errorMessage =
             result.error ?? 'Ocorreu um erro ao atualizar o usuário.'

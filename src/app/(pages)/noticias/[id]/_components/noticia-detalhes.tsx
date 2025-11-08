@@ -4,6 +4,7 @@ import { deleteNoticia } from '@/app/_actions/noticiaActions'
 import { Badge } from '@/app/_components/ui/badge'
 import { Button } from '@/app/_components/ui/button'
 import { Card, CardContent } from '@/app/_components/ui/card'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import { NoticiaCategoriasDisplay } from '@/app/_enums/noticiaEnums'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
@@ -30,7 +31,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
       async () => {
         const result = await deleteNoticia(noticia.id)
         if (result.success) {
-          router.replace('/noticias/listar')
+          router.replace(APP_ROUTES.NOTICIA_LISTAR())
         }
         return result
       },
@@ -42,7 +43,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold">{noticia.titulo}</h1>{' '}
+          <h1 className="text-2xl font-bold">{noticia.titulo}</h1>{' '}
           <p className="text-muted-foreground">
             Publicado em {formatDateToDateString(noticia.dataPublicacao)}
           </p>
@@ -54,7 +55,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
         <div className="flex items-center gap-2">
           <Button asChild>
             <Link
-              href={`/noticias/editar/${noticia.id}`}
+              href={APP_ROUTES.NOTICIA_EDITAR(noticia.id)}
               aria-label={`Editar notícia ${noticia.titulo}`}
             >
               <EditIcon aria-hidden="true" />
@@ -113,7 +114,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
 
         <Button variant="outline" asChild>
           <Link
-            href="/noticias/listar"
+            href={APP_ROUTES.NOTICIA_LISTAR()}
             aria-label="Voltar para lista de notícias"
           >
             <Undo2Icon aria-hidden="true" />

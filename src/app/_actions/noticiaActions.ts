@@ -11,6 +11,11 @@ import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { apiClient } from '../_api/apiClient'
 import { validateWithZod } from '../_api/zodValidator'
+import {
+  API_ROUTES,
+  APP_ROUTES,
+  CACHE_TAGS
+} from '../_constants/appSettingsConstants'
 
 export async function createNoticia(
   data: NoticiaCreateDTO
@@ -21,13 +26,13 @@ export async function createNoticia(
   }
 
   try {
-    await apiClient('/noticias', {
+    await apiClient(API_ROUTES.NOTICIA, {
       method: 'POST',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('noticias')
-    revalidatePath('/noticias/listar')
+    revalidateTag(CACHE_TAGS.NOTICIAS)
+    revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -54,15 +59,15 @@ export async function updateNoticia(
   }
 
   try {
-    await apiClient(`/noticias/${id}`, {
+    await apiClient(`${API_ROUTES.NOTICIA}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag('noticias')
-    revalidateTag(`noticia-${id}`)
-    revalidatePath('/noticias/listar')
-    revalidatePath(`/noticias/${id}`)
+    revalidateTag(CACHE_TAGS.NOTICIAS)
+    revalidateTag(CACHE_TAGS.NOTICIA_ID(id))
+    revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
+    revalidatePath(APP_ROUTES.NOTICIA_DETALHE(id))
 
     return { success: true }
   } catch (error) {
@@ -81,12 +86,12 @@ export async function deleteNoticia(id: string): Promise<ActionResult> {
   }
 
   try {
-    await apiClient(`/noticias/${id}`, {
+    await apiClient(`${API_ROUTES.NOTICIA}/${id}`, {
       method: 'DELETE'
     })
 
-    revalidateTag('noticias')
-    revalidatePath('/noticias/listar')
+    revalidateTag(CACHE_TAGS.NOTICIAS)
+    revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
 
     return { success: true }
   } catch (error) {
@@ -100,8 +105,8 @@ export async function deleteNoticia(id: string): Promise<ActionResult> {
 }
 
 export async function revalidateNoticias(): Promise<ActionResult> {
-  revalidateTag('noticias')
-  revalidatePath('/noticias/listar')
+  revalidateTag(CACHE_TAGS.NOTICIAS)
+  revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
 
   return { success: true }
 }

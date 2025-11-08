@@ -8,13 +8,23 @@ import {
   TriangleAlertIcon,
   WrenchIcon
 } from 'lucide-react'
+import { APP_ROUTES } from './appSettingsConstants'
+
+interface SubMenuItem {
+  href: string
+  icon: LucideIcon
+  text: string
+  title: string
+  enabled?: boolean
+}
 
 export interface MenuItem {
   href: string
   icon: LucideIcon
   text: string
   title: string
-  subItems?: MenuItem[]
+  enabled?: boolean
+  subItems?: SubMenuItem[]
 }
 
 /**
@@ -22,126 +32,145 @@ export interface MenuItem {
  */
 export const menuItems: MenuItem[] = [
   {
-    href: '/',
+    href: APP_ROUTES.HOME,
     icon: HomeIcon,
     text: 'Dashboard',
-    title: 'Dashboard'
+    title: 'Dashboard',
+    enabled: true
   },
   {
-    href: '/acessibilidade-urbana',
+    href: APP_ROUTES.ACESSIBILIDADE_URBANA,
     icon: AccessibilityIcon,
     text: 'Acessibilidade Urbana',
-    title: 'Acessibilidade Urbana'
+    title: 'Acessibilidade Urbana',
+    enabled: false
   },
   {
-    href: '/oficinas-manutencao',
+    href: APP_ROUTES.MANUTENCAO,
     icon: WrenchIcon,
     text: 'Oficinas de Manutenção',
     title: 'Oficinas de Manutenção',
+    enabled: false,
     subItems: [
       {
-        href: '/oficinas-manutencao/listar',
+        href: APP_ROUTES.MANUTENCAO_LISTAR(),
         icon: WrenchIcon,
         text: 'Listar oficinas de manutenção',
-        title: 'Listar Oficinas de Manutenção'
+        title: 'Listar Oficinas de Manutenção',
+        enabled: true
       },
       {
-        href: '/oficinas-manutencao/adicionar',
+        href: APP_ROUTES.MANUTENCAO_ADICIONAR(),
         icon: WrenchIcon,
         text: 'Adicionar oficinas de manutenção',
-        title: 'Adicionar Oficinas de Manutenção'
+        title: 'Adicionar Oficinas de Manutenção',
+        enabled: true
       }
     ]
   },
   {
-    href: '/profissionais',
+    href: APP_ROUTES.PROFISSIONAL,
     icon: BriefcaseMedicalIcon,
     text: 'Profissionais',
     title: 'Profissionais',
+    enabled: true,
     subItems: [
       {
-        href: '/profissionais/listar',
+        href: APP_ROUTES.PROFISSIONAL_LISTAR(),
         icon: BriefcaseMedicalIcon,
         text: 'Listar Profissionais',
-        title: 'Listar Profissionais'
+        title: 'Listar Profissionais',
+        enabled: true
       },
       {
-        href: '/profissionais/adicionar',
+        href: APP_ROUTES.PROFISSIONAL_ADICIONAR(),
         icon: BriefcaseMedicalIcon,
         text: 'Adicionar Profissional',
-        title: 'Adicionar Profissional'
+        title: 'Adicionar Profissional',
+        enabled: true
       }
     ]
   },
   {
-    href: '/noticias',
+    href: APP_ROUTES.NOTICIA,
     icon: NewspaperIcon,
     text: 'Notícias',
     title: 'Notícias',
+    enabled: true,
     subItems: [
       {
-        href: '/noticias/listar',
+        href: APP_ROUTES.NOTICIA_LISTAR(),
         icon: NewspaperIcon,
         text: 'Listar Notícias',
-        title: 'Listar Notícias'
+        title: 'Listar Notícias',
+        enabled: true
       },
       {
-        href: '/noticias/adicionar',
+        href: APP_ROUTES.NOTICIA_ADICIONAR(),
         icon: NewspaperIcon,
         text: 'Adicionar Notícias',
-        title: 'Adicionar Notícia'
+        title: 'Adicionar Notícia',
+        enabled: true
       }
     ]
   },
   {
-    href: '/ocorrencias',
+    href: APP_ROUTES.OCORRENCIA,
     icon: TriangleAlertIcon,
     text: 'Ocorrências',
     title: 'Ocorrências',
+    enabled: false,
     subItems: [
       {
-        href: '/ocorrencias/listar',
+        href: APP_ROUTES.OCORRENCIA_LISTAR(),
         icon: TriangleAlertIcon,
         text: 'Listar Ocorrências',
-        title: 'Listar Ocorrências'
+        title: 'Listar Ocorrências',
+        enabled: true
       },
       {
-        href: '/ocorrencias/mapa',
+        href: APP_ROUTES.OCORRENCIA_MAPA(),
         icon: TriangleAlertIcon,
         text: 'Mapa Interativo',
-        title: 'Mapa Interativo de Ocorrências'
+        title: 'Mapa Interativo de Ocorrências',
+        enabled: true
       },
       {
-        href: '/ocorrencias/gerar-relatorio',
+        href: APP_ROUTES.OCORRENCIA_GERAR_RELATORIO(),
         icon: TriangleAlertIcon,
         text: 'Gerar relatório de ocorrências',
-        title: 'Gerar Relatório de Ocorrências'
+        title: 'Gerar Relatório de Ocorrências',
+        enabled: true
       }
     ]
   },
   {
-    href: '/transportes',
+    href: APP_ROUTES.MOTORISTA,
     icon: BusFrontIcon,
-    text: 'Transportes',
-    title: 'Transportes'
+    text: 'Motoristas',
+    title: 'Motoristas',
+    enabled: false
   },
   {
-    href: '/usuarios',
+    href: APP_ROUTES.USUARIO,
     icon: AccessibilityIcon,
     text: 'Usuários',
     title: 'Usuários',
+    enabled: true,
     subItems: [
       {
-        href: '/usuarios/listar',
+        href: APP_ROUTES.USUARIO_LISTAR(),
         icon: AccessibilityIcon,
         text: 'Listar Usuários',
-        title: 'Listar Usuários'
+        title: 'Listar Usuários',
+        enabled: true
       },
       {
-        href: '/usuarios/adicionar',
+        href: APP_ROUTES.USUARIO_ADICIONAR(),
         icon: AccessibilityIcon,
         text: 'Adicionar Usuário',
-        title: 'Adicionar Usuário'
+        title: 'Adicionar Usuário',
+        enabled: true
       }
     ]
   }

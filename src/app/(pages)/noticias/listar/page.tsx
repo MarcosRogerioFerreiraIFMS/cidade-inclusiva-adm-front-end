@@ -11,24 +11,22 @@ export default async function NoticiaListarPage() {
 
   return (
     <LayoutDashboard>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Notícias</h1>
-          <p className="text-muted-foreground mt-2">
-            Gerencie todas as notícias do sistema ({noticias.length}{' '}
-            {noticias.length === 1 ? 'notícia' : 'notícias'})
-          </p>
-        </div>
-
-        <DataTable
-          columns={noticiaTableColumns}
-          data={noticias}
-          searchKey="titulo"
-          searchPlaceholder="Pesquisar por título..."
-          actions={<NoticiaTableActions />}
-          enableColumnVisibility={true}
-        />
+      <div>
+        <h1 className="text-2xl font-bold">Notícias</h1>
+        <p className="text-muted-foreground mt-1">
+          Gerencie todas as notícias do sistema ({noticias.length}{' '}
+          {noticias.length === 1 ? 'notícia' : 'notícias'})
+        </p>
       </div>
+
+      <DataTable
+        columns={noticiaTableColumns}
+        data={noticias}
+        searchKey="titulo"
+        searchPlaceholder="Pesquisar por título..."
+        actions={<NoticiaTableActions />}
+        enableColumnVisibility={true}
+      />
     </LayoutDashboard>
   )
 }
