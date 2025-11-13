@@ -1,5 +1,6 @@
 'use client'
 
+import { ComentarioActionsMenu } from '@/app/_components/comentario-actions-menu'
 import { ComentariosFiltros } from '@/app/_components/comentarios-filtros'
 import {
   Avatar,
@@ -10,11 +11,15 @@ import { Badge } from '@/app/_components/ui/badge'
 import { Button } from '@/app/_components/ui/button'
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle
 } from '@/app/_components/ui/card'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from '@/app/_components/ui/collapsible'
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +31,8 @@ import { useComentarioFilters } from '@/app/_hooks/useComentarioFilters'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
 import {
   ArrowRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   EyeIcon,
   EyeOffIcon,
   MessageSquareIcon,
@@ -33,7 +40,7 @@ import {
   ThumbsUpIcon
 } from 'lucide-react'
 import Link from 'next/link'
-import { ComentarioActionsMenu } from './comentario-actions-menu'
+import { useState } from 'react'
 
 interface ComentarioDestino {
   href: string
@@ -90,6 +97,7 @@ export function UsuarioComentariosList({
   comentarios,
   usuarioId
 }: UsuarioComentariosListProps) {
+  const [isOpen, setIsOpen] = useState(true)
   const {
     filtros,
     comentariosFiltrados,
@@ -119,179 +127,189 @@ export function UsuarioComentariosList({
   }
 
   return (
-    <div className="space-y-6">
-      <ComentariosFiltros
-        visibilidade={filtros.visibilidade}
-        notaMinima={filtros.notaMinima}
-        ordemNota={filtros.ordemNota}
-        ordemData={filtros.ordemData}
-        onVisibilidadeChange={setVisibilidade}
-        onNotaMinimaChange={setNotaMinima}
-        onOrdemNotaChange={setOrdemNota}
-        onOrdemDataChange={setOrdemData}
-        onLimparFiltros={limparFiltros}
-        temFiltrosAtivos={temFiltrosAtivos}
-        contadorFiltrosAtivos={contadorFiltrosAtivos}
-        totalComentarios={comentarios.length}
-        totalFiltrados={comentariosFiltrados.length}
-      />
-
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageSquareIcon className="size-5" aria-hidden="true" />
-            Comentários
-            {temFiltrosAtivos && (
-              <Badge variant="secondary">
-                {comentariosFiltrados.length} de {comentarios.length}
-              </Badge>
-            )}
-          </CardTitle>
+          <CollapsibleTrigger className="w-full cursor-pointer">
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquareIcon className="size-5" aria-hidden="true" />
+                Comentários
+                <Badge variant="secondary">{comentarios.length}</Badge>
+              </CardTitle>
+              {isOpen ? (
+                <ChevronUpIcon className="size-5" aria-hidden="true" />
+              ) : (
+                <ChevronDownIcon className="size-5" aria-hidden="true" />
+              )}
+            </div>
+          </CollapsibleTrigger>
           <CardDescription>
             Avaliações e comentários feitos por este usuário
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {comentariosFiltrados.length === 0 ? (
-            <div className="text-muted-foreground py-8 text-center text-sm">
-              Nenhum comentário encontrado com os filtros aplicados.
-            </div>
-          ) : (
-            comentariosFiltrados.map((comentario) => {
-              const destino = getComentarioDestino(comentario)
+        <CollapsibleContent>
+          <div className="space-y-4 px-6 pb-6">
+            <ComentariosFiltros
+              visibilidade={filtros.visibilidade}
+              notaMinima={filtros.notaMinima}
+              ordemNota={filtros.ordemNota}
+              ordemData={filtros.ordemData}
+              onVisibilidadeChange={setVisibilidade}
+              onNotaMinimaChange={setNotaMinima}
+              onOrdemNotaChange={setOrdemNota}
+              onOrdemDataChange={setOrdemData}
+              onLimparFiltros={limparFiltros}
+              temFiltrosAtivos={temFiltrosAtivos}
+              contadorFiltrosAtivos={contadorFiltrosAtivos}
+              totalComentarios={comentarios.length}
+              totalFiltrados={comentariosFiltrados.length}
+            />
+            <div className="space-y-4">
+              {comentariosFiltrados.length === 0 ? (
+                <div className="text-muted-foreground py-8 text-center text-sm">
+                  Nenhum comentário encontrado com os filtros aplicados.
+                </div>
+              ) : (
+                comentariosFiltrados.map((comentario) => {
+                  const destino = getComentarioDestino(comentario)
 
-              return (
-                <div
-                  key={comentario.id}
-                  className="border-border rounded-lg border p-4"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex gap-3">
-                      <Avatar className="size-10">
-                        <AvatarImage
-                          src={comentario.autor.fotoUrl ?? undefined}
-                          alt={`Foto de ${comentario.autor.nome}`}
-                        />
-                        <AvatarFallback>
-                          {comentario.autor.nome.charAt(0).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-
-                      <div className="flex-1 space-y-2">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <p className="font-semibold">
-                            {comentario.autor.nome}
-                          </p>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Badge
-                                variant={
-                                  comentario.visivel ? 'default' : 'secondary'
-                                }
-                                className="flex items-center gap-1"
-                              >
-                                {comentario.visivel ? (
-                                  <EyeIcon
-                                    className="size-3"
-                                    aria-hidden="true"
-                                  />
-                                ) : (
-                                  <EyeOffIcon
-                                    className="size-3"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {comentario.visivel ? 'Visível' : 'Oculto'}
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {comentario.visivel
-                                ? 'Este comentário está visível para os usuários no aplicativo'
-                                : 'Este comentário está oculto e não aparece no aplicativo'}
-                            </TooltipContent>
-                          </Tooltip>
-                          {destino && (
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="h-6 px-2 text-xs"
-                                  asChild
-                                >
-                                  <Link
-                                    href={destino.href}
-                                    aria-label={destino.label}
-                                  >
-                                    <ArrowRightIcon
-                                      className="size-3"
-                                      aria-hidden="true"
-                                    />
-                                    {destino.label}
-                                  </Link>
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                Comentário sobre {destino.tipo}
-                              </TooltipContent>
-                            </Tooltip>
-                          )}
-                        </div>
-
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: 5 }).map((_, index) => (
-                            <StarIcon
-                              key={index}
-                              className={`size-4 ${
-                                index < comentario.nota
-                                  ? 'fill-yellow-400 text-yellow-400'
-                                  : 'text-muted-foreground'
-                              }`}
-                              aria-hidden="true"
+                  return (
+                    <div
+                      key={comentario.id}
+                      className="border-border rounded-lg border p-4"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex gap-3">
+                          <Avatar className="size-10">
+                            <AvatarImage
+                              src={comentario.autor.fotoUrl ?? undefined}
+                              alt={`Foto de ${comentario.autor.nome}`}
                             />
-                          ))}
-                          <span className="text-muted-foreground ml-2 text-sm">
-                            {comentario.nota.toFixed(1)} estrelas
-                          </span>
+                            <AvatarFallback>
+                              {comentario.autor.nome.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+
+                          <div className="flex-1 space-y-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="font-semibold">
+                                {comentario.autor.nome}
+                              </p>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Badge
+                                    variant={
+                                      comentario.visivel
+                                        ? 'default'
+                                        : 'secondary'
+                                    }
+                                    className="flex items-center gap-1"
+                                  >
+                                    {comentario.visivel ? (
+                                      <EyeIcon
+                                        className="size-3"
+                                        aria-hidden="true"
+                                      />
+                                    ) : (
+                                      <EyeOffIcon
+                                        className="size-3"
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                    {comentario.visivel ? 'Visível' : 'Oculto'}
+                                  </Badge>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  {comentario.visivel
+                                    ? 'Este comentário está visível para os usuários no aplicativo'
+                                    : 'Este comentário está oculto e não aparece no aplicativo'}
+                                </TooltipContent>
+                              </Tooltip>
+                              {destino && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="h-6 px-2 text-xs"
+                                      asChild
+                                    >
+                                      <Link
+                                        href={destino.href}
+                                        aria-label={destino.label}
+                                      >
+                                        <ArrowRightIcon
+                                          className="size-3"
+                                          aria-hidden="true"
+                                        />
+                                        {destino.label}
+                                      </Link>
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    Comentário sobre {destino.tipo}
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                            </div>
+
+                            <div className="flex items-center gap-1">
+                              {Array.from({ length: 5 }).map((_, index) => (
+                                <StarIcon
+                                  key={index}
+                                  className={`size-4 ${
+                                    index < comentario.nota
+                                      ? 'fill-yellow-400 text-yellow-400'
+                                      : 'text-muted-foreground'
+                                  }`}
+                                  aria-hidden="true"
+                                />
+                              ))}
+                              <span className="text-muted-foreground ml-2 text-sm">
+                                {comentario.nota.toFixed(1)} estrelas
+                              </span>
+                            </div>
+
+                            <p className="text-muted-foreground text-sm whitespace-pre-wrap">
+                              {comentario.conteudo}
+                            </p>
+
+                            <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">
+                              <span>
+                                {formatDateToDateString(
+                                  comentario.criadoEm.toString()
+                                )}
+                              </span>
+                              {comentario.totalLikes > 0 && (
+                                <span className="flex items-center gap-1">
+                                  <ThumbsUpIcon
+                                    className="size-3"
+                                    aria-hidden="true"
+                                  />
+                                  {comentario.totalLikes}{' '}
+                                  {comentario.totalLikes === 1
+                                    ? 'curtida'
+                                    : 'curtidas'}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         </div>
 
-                        <p className="text-muted-foreground text-sm whitespace-pre-wrap">
-                          {comentario.conteudo}
-                        </p>
-
-                        <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">
-                          <span>
-                            {formatDateToDateString(
-                              comentario.criadoEm.toString()
-                            )}
-                          </span>
-                          {comentario.totalLikes > 0 && (
-                            <span className="flex items-center gap-1">
-                              <ThumbsUpIcon
-                                className="size-3"
-                                aria-hidden="true"
-                              />
-                              {comentario.totalLikes}{' '}
-                              {comentario.totalLikes === 1
-                                ? 'curtida'
-                                : 'curtidas'}
-                            </span>
-                          )}
-                        </div>
+                        <ComentarioActionsMenu
+                          comentario={comentario}
+                          revalidationContext={{ usuarioId }}
+                        />
                       </div>
                     </div>
-
-                    <ComentarioActionsMenu
-                      comentario={comentario}
-                      usuarioId={usuarioId}
-                    />
-                  </div>
-                </div>
-              )
-            })
-          )}
-        </CardContent>
+                  )
+                })
+              )}
+            </div>
+          </div>
+        </CollapsibleContent>
       </Card>
-    </div>
+    </Collapsible>
   )
 }

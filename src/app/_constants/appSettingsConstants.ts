@@ -109,6 +109,8 @@ export const API_ROUTES = {
     `${API_ROUTES.MOBILIDADE}/${mobilidadeId}`,
   MOBILIDADE_DELETAR: (mobilidadeId: string) =>
     `${API_ROUTES.MOBILIDADE}/${mobilidadeId}`,
+  MOBILIDADE_USUARIO: (usuarioId: string) =>
+    `${API_ROUTES.MOBILIDADE}/usuario/${usuarioId}`,
 
   /** Rotas para operações de motoristas */
   MOTORISTA: '/motoristas',

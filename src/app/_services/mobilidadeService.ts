@@ -47,3 +47,19 @@ export async function getMobilidadeById(
     throw error
   }
 }
+
+export async function getMobilidadesByUsuarioId(
+  usuarioId: string
+): Promise<MobilidadeResponseDTO[]> {
+  const result = await apiClient<ApiResponse<MobilidadeResponseDTO[]>>(
+    `${API_ROUTES.MOBILIDADE_USUARIO(usuarioId)}`,
+    {
+      next: {
+        revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
+        tags: [CACHE_TAGS.MOBILIDADES, CACHE_TAGS.USUARIO_ID(usuarioId)]
+      }
+    }
+  )
+
+  return result?.data || []
+}
