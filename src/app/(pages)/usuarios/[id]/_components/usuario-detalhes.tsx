@@ -60,7 +60,7 @@ export function UsuarioDetalhes({ usuario }: UsuarioDetalhesProps) {
   }
 
   const isCurrentUser = currentUser?.id === usuario.id
-  const canEditOrDelete = !isAdmin(usuario.tipo) || isCurrentUser
+  const canEditOrDelete = !isAdmin(usuario.tipo) && !isCurrentUser
   const editRoute = isCurrentUser
     ? APP_ROUTES.PERFIL
     : APP_ROUTES.USUARIO_EDITAR(usuario.id)

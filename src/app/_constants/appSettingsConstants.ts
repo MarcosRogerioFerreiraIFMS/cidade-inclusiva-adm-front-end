@@ -171,9 +171,9 @@ export const APP_ROUTES = {
 
   MOBILIDADE: '/mobilidades',
   MOBILIDADE_LISTAR: () => `${APP_ROUTES.MOBILIDADE}/listar`,
-  MOBILIDADE_ADICIONAR: () => `${APP_ROUTES.MOBILIDADE}/adicionar`,
   MOBILIDADE_DETALHE: (id: string) => `${APP_ROUTES.MOBILIDADE}/${id}`,
-  MOBILIDADE_EDITAR: (id: string) => `${APP_ROUTES.MOBILIDADE}/editar/${id}`,
+  MOBILIDADE_MAPA: () => `${APP_ROUTES.MOBILIDADE}/mapa`,
+  MOBILIDADE_GERAR_RELATORIO: () => `${APP_ROUTES.MOBILIDADE}/gerar-relatorio`,
 
   MOTORISTA: '/motoristas',
   MOTORISTA_LISTAR: () => `${APP_ROUTES.MOTORISTA}/listar`,
@@ -196,11 +196,6 @@ export const APP_ROUTES = {
     `${APP_ROUTES.ACESSIBILIDADE_URBANA}/${id}`,
   ACESSIBILIDADE_URBANA_EDITAR: (id: string) =>
     `${APP_ROUTES.ACESSIBILIDADE_URBANA}/editar/${id}`,
-
-  OCORRENCIA: '/ocorrencias',
-  OCORRENCIA_LISTAR: () => `${APP_ROUTES.OCORRENCIA}/listar`,
-  OCORRENCIA_MAPA: () => `${APP_ROUTES.OCORRENCIA}/mapa`,
-  OCORRENCIA_GERAR_RELATORIO: () => `${APP_ROUTES.OCORRENCIA}/gerar-relatorio`,
 
   PERFIL: '/perfil',
   LOGIN: '/login'

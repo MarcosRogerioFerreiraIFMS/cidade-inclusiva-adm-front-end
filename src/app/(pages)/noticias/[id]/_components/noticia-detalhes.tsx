@@ -6,10 +6,12 @@ import { Button } from '@/app/_components/ui/button'
 import { Card, CardContent } from '@/app/_components/ui/card'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
-import { NoticiaCategoriasDisplay } from '@/app/_enums/noticiaEnums'
+import {
+  getNoticiaCategoriaBadgeColor,
+  getNoticiaCategoriaLabel
+} from '@/app/_enums/noticiaEnums'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
-import { getNoticiaCategoriaBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
 import { EditIcon, ExternalLinkIcon, Trash2Icon, Undo2Icon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -48,8 +50,7 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
             Publicado em {formatDateToDateString(noticia.dataPublicacao)}
           </p>
           <Badge className={getNoticiaCategoriaBadgeColor(noticia.categoria)}>
-            {NoticiaCategoriasDisplay[noticia.categoria.toUpperCase()] ??
-              noticia.categoria}
+            {getNoticiaCategoriaLabel(noticia.categoria)}
           </Badge>
         </div>
         <div className="flex items-center gap-2">

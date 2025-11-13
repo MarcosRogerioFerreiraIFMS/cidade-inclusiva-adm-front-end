@@ -25,7 +25,7 @@ import { Textarea } from '@/app/_components/ui/textarea'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import {
   NOTICIA_CATEGORIES,
-  NoticiaCategoriasDisplay
+  getNoticiaCategoriaLabel
 } from '@/app/_enums/noticiaEnums'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useNotification } from '@/app/_hooks/useNotification'
@@ -167,7 +167,7 @@ export function NoticiaAdicionarForm() {
                     <SelectContent>
                       {NOTICIA_CATEGORIES.map((category) => (
                         <SelectItem key={category} value={category}>
-                          {NoticiaCategoriasDisplay[category]}
+                          {getNoticiaCategoriaLabel(category)}
                         </SelectItem>
                       ))}
                     </SelectContent>

@@ -26,7 +26,7 @@ import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import {
   NOTICIA_CATEGORIES,
-  NoticiaCategoriasDisplay
+  getNoticiaCategoriaLabel
 } from '@/app/_enums/noticiaEnums'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useNotification } from '@/app/_hooks/useNotification'
@@ -176,7 +176,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
                     <SelectContent>
                       {NOTICIA_CATEGORIES.map((category) => (
                         <SelectItem key={category} value={category}>
-                          {NoticiaCategoriasDisplay[category]}
+                          {getNoticiaCategoriaLabel(category)}
                         </SelectItem>
                       ))}
                     </SelectContent>

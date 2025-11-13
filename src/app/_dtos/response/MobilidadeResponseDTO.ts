@@ -9,13 +9,13 @@ export interface MobilidadeResponseDTO {
   longitude: number
   descricao: string
   dataRegistro: Date
-  status: string
-  usuarioId?: string
+  status: 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDO' | 'CANCELADO'
   criadoEm: Date
   atualizadoEm: Date
   usuario?: {
     id: string
     nome: string
     email: string
+    fotoUrl?: string | null
   }
 }

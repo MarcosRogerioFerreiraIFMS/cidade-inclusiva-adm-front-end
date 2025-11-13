@@ -19,11 +19,11 @@ export interface QuickActionType {
  */
 export const HOME_QUICK_ACTIONS: QuickActionType[] = [
   {
-    title: 'Ocorrências',
-    description: 'Visualize tudo sobre ocorrências',
-    imageSrc: QuickActionImageEnum.OCORRENCIAS,
-    href: APP_ROUTES.OCORRENCIA,
-    enabled: false
+    title: 'Ocorrências de Mobilidade',
+    description: 'Visualize tudo sobre ocorrências de mobilidade',
+    imageSrc: QuickActionImageEnum.MOBILIDADE,
+    href: APP_ROUTES.MOBILIDADE,
+    enabled: true
   },
   {
     title: 'Acessibilidade Urbana',
@@ -125,6 +125,19 @@ export const USUARIOS_QUICK_ACTIONS: QuickActionType[] = [
     description: 'Adicione um novo usuário ao sistema',
     imageSrc: QuickActionImageEnum.USUARIOS,
     href: APP_ROUTES.USUARIO_ADICIONAR(),
+    enabled: true
+  }
+]
+
+/**
+ * Ações rápidas para o módulo de Mobilidades
+ */
+export const MOBILIDADES_QUICK_ACTIONS: QuickActionType[] = [
+  {
+    title: 'Listar Ocorrências de Mobilidade',
+    description: 'Visualize uma tabela com todas as ocorrências de mobilidade',
+    imageSrc: QuickActionImageEnum.MOBILIDADE,
+    href: APP_ROUTES.MOBILIDADE_LISTAR(),
     enabled: true
   }
 ]

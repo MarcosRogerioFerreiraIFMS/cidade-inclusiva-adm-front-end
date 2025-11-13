@@ -11,11 +11,13 @@ import {
 } from '@/app/_components/ui/card'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ProfissionalResponseDTO } from '@/app/_dtos/response'
-import { ProfissionalEspecialidadesDisplay } from '@/app/_enums/profissionalEnums'
+import {
+  getProfissionalEspecialidadeBadgeColor,
+  getProfissionalEspecialidadeLabel
+} from '@/app/_enums/profissionalEnums'
 import { useDeleteModal } from '@/app/_hooks/useDeleteModal'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
 import { formatTelefone } from '@/app/_utils/formatUtils'
-import { getProfissionalEspecialidadeBadgeColor } from '@/app/_utils/getShadcnBadgeColor'
 import {
   BriefcaseIcon,
   CalendarIcon,
@@ -56,9 +58,9 @@ export function ProfissionalDetalhes({
     )
   }
 
-  const especialidadeDisplay =
-    ProfissionalEspecialidadesDisplay[profissional.especialidade] ||
+  const especialidadeDisplay = getProfissionalEspecialidadeLabel(
     profissional.especialidade
+  )
 
   const especialidadeColorClasses = getProfissionalEspecialidadeBadgeColor(
     profissional.especialidade

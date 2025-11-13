@@ -25,7 +25,7 @@ import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ProfissionalResponseDTO } from '@/app/_dtos/response'
 import {
   PROFISSIONAL_ESPECIALIDADES,
-  ProfissionalEspecialidadesDisplay
+  getProfissionalEspecialidadeLabel
 } from '@/app/_enums/profissionalEnums'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useNotification } from '@/app/_hooks/useNotification'
@@ -228,7 +228,7 @@ export function ProfissionalEditarForm({
                       <SelectContent>
                         {PROFISSIONAL_ESPECIALIDADES.map((especialidade) => (
                           <SelectItem key={especialidade} value={especialidade}>
-                            {ProfissionalEspecialidadesDisplay[especialidade]}
+                            {getProfissionalEspecialidadeLabel(especialidade)}
                           </SelectItem>
                         ))}
                       </SelectContent>

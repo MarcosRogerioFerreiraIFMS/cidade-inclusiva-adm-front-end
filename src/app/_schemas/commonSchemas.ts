@@ -285,7 +285,7 @@ export const enderecoSchema = z.object({
       required_error: 'O logradouro é obrigatório',
       invalid_type_error: 'O logradouro deve ser um texto'
     })
-    .trim()
+    .transform(sanitizeString)
     .refine(
       (val) => val.length >= 3,
       'O logradouro deve ter no mínimo 3 caracteres'
@@ -304,13 +304,17 @@ export const enderecoSchema = z.object({
     .refine(
       (val) => val.length <= 10,
       'O número deve ter no máximo 10 caracteres'
-    ),
+    )
+    .refine((val) => /^[0-9A-Za-z\s-/]+$/.test(val), {
+      message:
+        'O número deve conter apenas números, letras, espaços, hífens ou barras.'
+    }),
   cidade: z
     .string({
       required_error: 'A cidade é obrigatória',
       invalid_type_error: 'A cidade deve ser um texto'
     })
-    .trim()
+    .transform(sanitizeString)
     .refine(
       (val) => val.length >= 2,
       'A cidade deve ter no mínimo 2 caracteres'
@@ -318,13 +322,16 @@ export const enderecoSchema = z.object({
     .refine(
       (val) => val.length <= 100,
       'A cidade deve ter no máximo 100 caracteres'
-    ),
+    )
+    .refine((val) => /^[a-zA-ZÀ-ÿ\s-]+$/.test(val), {
+      message: 'A cidade deve conter apenas letras, espaços e hífens.'
+    }),
   bairro: z
     .string({
       required_error: 'O bairro é obrigatório',
       invalid_type_error: 'O bairro deve ser um texto'
     })
-    .trim()
+    .transform(sanitizeString)
     .refine(
       (val) => val.length >= 2,
       'O bairro deve ter no mínimo 2 caracteres'
@@ -354,17 +361,20 @@ export const enderecoSchema = z.object({
       required_error: 'O país é obrigatório',
       invalid_type_error: 'O país deve ser um texto'
     })
-    .trim()
+    .transform(sanitizeString)
     .refine((val) => val.length >= 2, 'O país deve ter no mínimo 2 caracteres')
     .refine(
       (val) => val.length <= 100,
       'O país deve ter no máximo 100 caracteres'
     ),
   complemento: z
-    .string()
-    .optional()
+    .string({
+      invalid_type_error: 'O complemento deve ser um texto'
+    })
+    .transform(sanitizeString)
     .refine(
       (val) => !val || val.length <= 200,
       'O complemento deve ter no máximo 200 caracteres'
     )
+    .optional()
 })

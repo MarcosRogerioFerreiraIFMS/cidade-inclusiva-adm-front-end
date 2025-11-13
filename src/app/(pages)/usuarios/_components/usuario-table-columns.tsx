@@ -1,11 +1,8 @@
 'use client'
 
-import {
-  UsuarioFotoCell,
-  UsuarioNomeCell,
-  UsuarioTipoCell
-} from '@/app/_components/cells'
+import { AvatarCell, UsuarioTipoCell } from '@/app/_components/cells'
 import { Button } from '@/app/_components/ui/button'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { UsuarioResponseDTO } from '@/app/_dtos/response'
 import { formatTelefone } from '@/app/_utils/formatUtils'
 import { type ColumnDef } from '@tanstack/react-table'
@@ -13,15 +10,6 @@ import { ArrowUpDownIcon } from 'lucide-react'
 import { UsuarioTableActionsMenu } from './usuario-table-actions-menu'
 
 export const usuarioTableColumns: ColumnDef<UsuarioResponseDTO>[] = [
-  {
-    accessorKey: 'foto',
-    header: 'Foto',
-    cell: ({ row }) => {
-      const foto = row.getValue('foto') as UsuarioResponseDTO['foto']
-      const nome = row.getValue('nome') as string
-      return <UsuarioFotoCell foto={foto} nome={nome} />
-    }
-  },
   {
     accessorKey: 'nome',
     header: ({ column }) => {
@@ -32,15 +20,24 @@ export const usuarioTableColumns: ColumnDef<UsuarioResponseDTO>[] = [
           className="h-auto p-0 hover:bg-transparent"
           aria-label="Ordenar por nome"
         >
-          Nome
+          Usuário
           <ArrowUpDownIcon aria-hidden="true" />
         </Button>
       )
     },
     cell: ({ row }) => {
-      const nome = row.getValue('nome') as string
-      const usuarioId = row.original.id
-      return <UsuarioNomeCell nome={nome} usuarioId={usuarioId} />
+      const usuario = row.original
+      return (
+        <AvatarCell
+          entity={{
+            id: usuario.id,
+            nome: usuario.nome,
+            fotoUrl: usuario.foto?.url ?? null
+          }}
+          enableNavigation={true}
+          getDetailRoute={APP_ROUTES.USUARIO_DETALHE}
+        />
+      )
     }
   },
   {

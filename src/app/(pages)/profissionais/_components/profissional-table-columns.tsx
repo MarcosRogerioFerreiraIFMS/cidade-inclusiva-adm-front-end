@@ -1,11 +1,11 @@
 'use client'
 
 import {
-  ProfissionalEspecialidadeCell,
-  TituloCell,
-  UsuarioFotoCell
+  AvatarCell,
+  ProfissionalEspecialidadeCell
 } from '@/app/_components/cells'
 import { Button } from '@/app/_components/ui/button'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { ProfissionalResponseDTO } from '@/app/_dtos/response'
 import type { ProfissionalEspecialidade } from '@/app/_enums/profissionalEnums'
 import { formatTelefone } from '@/app/_utils/formatUtils'
@@ -14,15 +14,6 @@ import { ArrowUpDownIcon } from 'lucide-react'
 import { ProfissionalTableActionsMenu } from './profissional-table-actions-menu'
 
 export const profissionalTableColumns: ColumnDef<ProfissionalResponseDTO>[] = [
-  {
-    accessorKey: 'foto',
-    header: 'Foto',
-    cell: ({ row }) => {
-      const foto = row.getValue('foto') as ProfissionalResponseDTO['foto']
-      const nome = row.getValue('nome') as string
-      return <UsuarioFotoCell foto={foto} nome={nome} />
-    }
-  },
   {
     accessorKey: 'nome',
     header: ({ column }) => {
@@ -33,14 +24,24 @@ export const profissionalTableColumns: ColumnDef<ProfissionalResponseDTO>[] = [
           className="h-auto p-0 hover:bg-transparent"
           aria-label="Ordenar por nome"
         >
-          Nome
+          Profissional
           <ArrowUpDownIcon aria-hidden="true" />
         </Button>
       )
     },
     cell: ({ row }) => {
-      const nome = row.getValue('nome') as string
-      return <TituloCell titulo={nome} />
+      const profissional = row.original
+      return (
+        <AvatarCell
+          entity={{
+            id: profissional.id,
+            nome: profissional.nome,
+            fotoUrl: profissional.foto?.url ?? null
+          }}
+          getDetailRoute={APP_ROUTES.PROFISSIONAL_DETALHE}
+          enableNavigation={true}
+        />
+      )
     }
   },
   {

@@ -4,6 +4,7 @@ import {
   BusFrontIcon,
   HomeIcon,
   LucideIcon,
+  MapIcon,
   NewspaperIcon,
   TriangleAlertIcon,
   WrenchIcon
@@ -115,31 +116,31 @@ export const menuItems: MenuItem[] = [
     ]
   },
   {
-    href: APP_ROUTES.OCORRENCIA,
+    href: APP_ROUTES.MOBILIDADE,
     icon: TriangleAlertIcon,
-    text: 'Ocorrências',
-    title: 'Ocorrências',
+    text: 'Ocorrências de Mobilidade',
+    title: 'Ocorrências de Mobilidade',
     enabled: false,
     subItems: [
       {
-        href: APP_ROUTES.OCORRENCIA_LISTAR(),
+        href: APP_ROUTES.MOBILIDADE_LISTAR(),
         icon: TriangleAlertIcon,
-        text: 'Listar Ocorrências',
-        title: 'Listar Ocorrências',
+        text: 'Listar Ocorrências de Mobilidade',
+        title: 'Listar Ocorrências de Mobilidade',
         enabled: true
       },
       {
-        href: APP_ROUTES.OCORRENCIA_MAPA(),
+        href: APP_ROUTES.MOBILIDADE_MAPA(),
         icon: TriangleAlertIcon,
         text: 'Mapa Interativo',
-        title: 'Mapa Interativo de Ocorrências',
+        title: 'Mapa Interativo de Ocorrências de Mobilidade',
         enabled: true
       },
       {
-        href: APP_ROUTES.OCORRENCIA_GERAR_RELATORIO(),
+        href: APP_ROUTES.MOBILIDADE_GERAR_RELATORIO(),
         icon: TriangleAlertIcon,
-        text: 'Gerar relatório de ocorrências',
-        title: 'Gerar Relatório de Ocorrências',
+        text: 'Gerar relatório de ocorrências de mobilidade',
+        title: 'Gerar Relatório de Ocorrências de Mobilidade',
         enabled: true
       }
     ]
@@ -150,6 +151,22 @@ export const menuItems: MenuItem[] = [
     text: 'Motoristas',
     title: 'Motoristas',
     enabled: false
+  },
+  {
+    href: APP_ROUTES.MOBILIDADE,
+    icon: MapIcon,
+    text: 'Mobilidades',
+    title: 'Mobilidades',
+    enabled: true,
+    subItems: [
+      {
+        href: APP_ROUTES.MOBILIDADE_LISTAR(),
+        icon: MapIcon,
+        text: 'Listar Mobilidades',
+        title: 'Listar Mobilidades',
+        enabled: true
+      }
+    ]
   },
   {
     href: APP_ROUTES.USUARIO,

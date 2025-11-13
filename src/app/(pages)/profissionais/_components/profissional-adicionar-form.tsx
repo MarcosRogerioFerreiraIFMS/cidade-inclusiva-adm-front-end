@@ -24,7 +24,7 @@ import {
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import {
   PROFISSIONAL_ESPECIALIDADES,
-  ProfissionalEspecialidadesDisplay
+  getProfissionalEspecialidadeLabel
 } from '@/app/_enums/profissionalEnums'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useNotification } from '@/app/_hooks/useNotification'
@@ -216,7 +216,7 @@ export function ProfissionalAdicionarForm() {
                     <SelectContent>
                       {PROFISSIONAL_ESPECIALIDADES.map((especialidade) => (
                         <SelectItem key={especialidade} value={especialidade}>
-                          {ProfissionalEspecialidadesDisplay[especialidade]}
+                          {getProfissionalEspecialidadeLabel(especialidade)}
                         </SelectItem>
                       ))}
                     </SelectContent>
