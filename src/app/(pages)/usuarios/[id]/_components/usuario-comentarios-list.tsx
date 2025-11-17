@@ -231,7 +231,6 @@ export function UsuarioComentariosList({
                                   <TooltipTrigger asChild>
                                     <Button
                                       variant="outline"
-                                      size="sm"
                                       className="h-6 px-2 text-xs"
                                       asChild
                                     >

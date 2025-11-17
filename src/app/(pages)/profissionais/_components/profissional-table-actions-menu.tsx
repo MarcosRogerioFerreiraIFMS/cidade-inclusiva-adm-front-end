@@ -48,7 +48,6 @@ export function ProfissionalTableActionsMenu({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="sm"
             aria-label={`Abrir menu de ações para ${profissional.nome}`}
           >
             <MoreHorizontalIcon aria-hidden="true" />

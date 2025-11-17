@@ -178,7 +178,6 @@ export function ProfissionalComentariosList({
                             {comentario.autor.id && (
                               <Button
                                 variant="outline"
-                                size="sm"
                                 className="h-6 px-2 text-xs"
                                 asChild
                               >

@@ -57,7 +57,6 @@ export function UsuarioTableActionsMenu({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="sm"
             aria-label={`Abrir menu de ações para ${usuario.nome}`}
           >
             <MoreHorizontalIcon aria-hidden="true" />

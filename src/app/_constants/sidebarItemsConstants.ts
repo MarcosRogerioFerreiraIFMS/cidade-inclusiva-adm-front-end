@@ -6,7 +6,6 @@ import {
   LucideIcon,
   MapIcon,
   NewspaperIcon,
-  TriangleAlertIcon,
   WrenchIcon
 } from 'lucide-react'
 import { APP_ROUTES } from './appSettingsConstants'
@@ -116,36 +115,6 @@ export const menuItems: MenuItem[] = [
     ]
   },
   {
-    href: APP_ROUTES.MOBILIDADE,
-    icon: TriangleAlertIcon,
-    text: 'Ocorrências de Mobilidade',
-    title: 'Ocorrências de Mobilidade',
-    enabled: false,
-    subItems: [
-      {
-        href: APP_ROUTES.MOBILIDADE_LISTAR(),
-        icon: TriangleAlertIcon,
-        text: 'Listar Ocorrências de Mobilidade',
-        title: 'Listar Ocorrências de Mobilidade',
-        enabled: true
-      },
-      {
-        href: APP_ROUTES.MOBILIDADE_MAPA(),
-        icon: TriangleAlertIcon,
-        text: 'Mapa Interativo',
-        title: 'Mapa Interativo de Ocorrências de Mobilidade',
-        enabled: true
-      },
-      {
-        href: APP_ROUTES.MOBILIDADE_GERAR_RELATORIO(),
-        icon: TriangleAlertIcon,
-        text: 'Gerar relatório de ocorrências de mobilidade',
-        title: 'Gerar Relatório de Ocorrências de Mobilidade',
-        enabled: true
-      }
-    ]
-  },
-  {
     href: APP_ROUTES.MOTORISTA,
     icon: BusFrontIcon,
     text: 'Motoristas',
@@ -164,6 +133,13 @@ export const menuItems: MenuItem[] = [
         icon: MapIcon,
         text: 'Listar Mobilidades',
         title: 'Listar Mobilidades',
+        enabled: true
+      },
+      {
+        href: APP_ROUTES.MOBILIDADE_MAPA(),
+        icon: MapIcon,
+        text: 'Mapa Interativo',
+        title: 'Mapa Interativo de Mobilidades',
         enabled: true
       }
     ]

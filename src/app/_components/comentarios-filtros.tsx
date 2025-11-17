@@ -72,7 +72,6 @@ export function ComentariosFiltros({
         {temFiltrosAtivos && (
           <Button
             variant="ghost"
-            size="sm"
             onClick={onLimparFiltros}
             aria-label="Limpar todos os filtros"
           >

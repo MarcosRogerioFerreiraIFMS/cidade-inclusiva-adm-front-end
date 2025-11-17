@@ -11,7 +11,7 @@ import {
 } from '@/app/_components/ui/dropdown-menu'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { MobilidadeResponseDTO } from '@/app/_dtos/response'
-import { EyeIcon, MoreHorizontalIcon } from 'lucide-react'
+import { EyeIcon, MapIcon, MoreHorizontalIcon } from 'lucide-react'
 import Link from 'next/link'
 
 interface MobilidadeTableActionsMenuProps {
@@ -26,7 +26,6 @@ export function MobilidadeTableActionsMenu({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="sm"
           aria-label={`Abrir menu de ações para mobilidade ${mobilidade.id}`}
         >
           <MoreHorizontalIcon aria-hidden="true" />
@@ -43,6 +42,15 @@ export function MobilidadeTableActionsMenu({
           >
             <EyeIcon aria-hidden="true" />
             Visualizar
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`${APP_ROUTES.MOBILIDADE_MAPA()}?id=${mobilidade.id}`}
+            aria-label={`Ver mobilidade ${mobilidade.id} no mapa`}
+          >
+            <MapIcon aria-hidden="true" />
+            Ver no Mapa
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

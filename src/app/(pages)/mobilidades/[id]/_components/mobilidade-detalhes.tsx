@@ -16,7 +16,13 @@ import {
   getMobilidadeStatusLabel
 } from '@/app/_enums/mobilidadeEnums'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
-import { CalendarIcon, MapPinIcon, TextIcon, Undo2Icon } from 'lucide-react'
+import {
+  CalendarIcon,
+  MapIcon,
+  MapPinIcon,
+  TextIcon,
+  Undo2Icon
+} from 'lucide-react'
 import Link from 'next/link'
 
 interface MobilidadeDetalhesProps {
@@ -158,6 +164,16 @@ export function MobilidadeDetalhes({ mobilidade }: MobilidadeDetalhesProps) {
           >
             <Undo2Icon aria-hidden="true" />
             <span>Voltar para lista</span>
+          </Link>
+        </Button>
+
+        <Button asChild>
+          <Link
+            href={`${APP_ROUTES.MOBILIDADE_MAPA()}?id=${mobilidade.id}`}
+            aria-label="Ver mobilidade no mapa"
+          >
+            <MapIcon aria-hidden="true" />
+            <span>Ver no Mapa</span>
           </Link>
         </Button>
       </div>

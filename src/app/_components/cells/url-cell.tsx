@@ -7,7 +7,7 @@ export function UrlCell({ url }: { url: string }) {
   }
 
   return (
-    <Button variant="ghost" size="sm" asChild className="h-8">
+    <Button variant="ghost" asChild className="h-8">
       <a
         href={url}
         target="_blank"

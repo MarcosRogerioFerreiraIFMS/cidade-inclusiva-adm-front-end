@@ -177,3 +177,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Estilos para o Google Maps */
+.gm-style .gm-style-iw-c {
+  background-color: var(--background) !important;
+  padding: 0 !important;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: auto !important;
+  max-height: none !important;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background: var(--background) !important;
+}

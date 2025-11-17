@@ -139,6 +139,14 @@ export const MOBILIDADES_QUICK_ACTIONS: QuickActionType[] = [
     imageSrc: QuickActionImageEnum.MOBILIDADE,
     href: APP_ROUTES.MOBILIDADE_LISTAR(),
     enabled: true
+  },
+  {
+    title: 'Mapa Interativo de Mobilidades',
+    description:
+      'Visualize o mapa interativo com todas as ocorrências de mobilidade',
+    imageSrc: QuickActionImageEnum.MOBILIDADE,
+    href: APP_ROUTES.MOBILIDADE_MAPA(),
+    enabled: true
   }
 ]
 

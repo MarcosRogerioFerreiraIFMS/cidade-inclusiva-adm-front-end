@@ -62,7 +62,6 @@ export function ComentarioActionsMenu({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="sm"
           aria-label={`Abrir menu de ações para comentário de ${comentario.autor.nome}`}
         >
           <MoreHorizontalIcon aria-hidden="true" />

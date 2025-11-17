@@ -44,7 +44,6 @@ export function NoticiaTableActionsMenu({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="sm"
             aria-label={`Abrir menu de ações para ${noticia.titulo}`}
           >
             <MoreHorizontalIcon aria-hidden="true" />
