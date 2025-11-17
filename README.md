@@ -8,6 +8,7 @@ O sistema tem como objetivo principal facilitar a inclusão social e a mobilidad
 
 - **🚍 Gestão de Transporte:** Interface para controle de veículos, motoristas e rotas acessíveis
 - **♿ Acessibilidade Urbana:** Visualização e gerenciamento de locais acessíveis na cidade
+- **🗺️ Mapa Interativo:** Sistema de mapeamento em tempo real com Google Maps para visualização e gestão de pontos de mobilidade
 - **🔧 Manutenção:** Sistema de gerenciamento de solicitações e acompanhamento de reparos
 - **📰 Comunicação:** Plataforma de notícias e informações relevantes para a comunidade
 - **👥 Comunidade:** Interface para comentários e interação entre usuários
@@ -121,23 +122,33 @@ O projeto segue a arquitetura moderna do **Next.js 15 App Router**, organizada d
 
 ### 📦 Dependências de Produção
 
-| 📚 **Biblioteca**          | 📖 **Versão** | 📖 **Descrição**                                                  | 🔗 **Link**                                                        |
-| -------------------------- | ------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `next`                     | `15.5.4`      | Framework React para aplicações web modernas                      | [Next.js](https://nextjs.org/)                                     |
-| `react`                    | `19.1.0`      | Biblioteca para construção de interfaces de usuário               | [React](https://react.dev/)                                        |
-| `react-dom`                | `19.1.0`      | Biblioteca para manipulação do DOM no React                       | [React DOM](https://react.dev/)                                    |
-| `@radix-ui/react-*`        | `^1.x - ^2.x` | Componentes UI acessíveis e sem estilo                            | [Radix UI](https://www.radix-ui.com/)                              |
-| `@tanstack/react-table`    | `^8.21.3`     | Biblioteca poderosa para tabelas de dados no React                | [TanStack Table](https://tanstack.com/table/)                      |
-| `@hookform/resolvers`      | `^5.2.2`      | Integrações de validação para React Hook Form                     | [Hookform Resolvers](https://github.com/react-hook-form/resolvers) |
-| `react-hook-form`          | `^7.64.0`     | Biblioteca performática para gerenciamento de formulários         | [React Hook Form](https://react-hook-form.com/)                    |
-| `zod`                      | `^3.25.76`    | Biblioteca de validação de schema TypeScript-first                | [Zod](https://zod.dev/)                                            |
-| `zustand`                  | `^5.0.8`      | Gerenciamento de estado global minimalista                        | [Zustand](https://zustand-demo.pmnd.rs/)                           |
-| `next-themes`              | `^0.4.6`      | Gerenciamento de temas (dark/light) para Next.js                  | [Next Themes](https://github.com/pacocoursey/next-themes)          |
-| `lucide-react`             | `^0.545.0`    | Biblioteca de ícones moderna e customizável                       | [Lucide](https://lucide.dev/)                                      |
-| `sonner`                   | `^2.0.7`      | Biblioteca de toast notifications elegante                        | [Sonner](https://sonner.emilkowal.ski/)                            |
-| `tailwind-merge`           | `^3.3.1`      | Utilitário para mesclar classes Tailwind CSS de forma inteligente | [Tailwind Merge](https://github.com/dcastil/tailwind-merge)        |
-| `clsx`                     | `^2.1.1`      | Utilitário para construir className condicionais                  | [clsx](https://github.com/lukeed/clsx)                             |
-| `class-variance-authority` | `^0.7.1`      | Gerenciamento de variantes de componentes com TypeScript          | [CVA](https://cva.style/)                                          |
+| 📚 **Biblioteca**               | 📖 **Versão** | 📖 **Descrição**                                                  | 🔗 **Link**                                                        |
+| ------------------------------- | ------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `next`                          | `15.5.4`      | Framework React para aplicações web modernas                      | [Next.js](https://nextjs.org/)                                     |
+| `react`                         | `19.1.0`      | Biblioteca para construção de interfaces de usuário               | [React](https://react.dev/)                                        |
+| `react-dom`                     | `19.1.0`      | Biblioteca para manipulação do DOM no React                       | [React DOM](https://react.dev/)                                    |
+| `@radix-ui/react-accordion`     | `^1.2.12`     | Componente de acordeão acessível                                  | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-alert-dialog`  | `^1.1.15`     | Componente de diálogo de alerta acessível                         | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-avatar`        | `^1.1.10`     | Componente de avatar acessível                                    | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-collapsible`   | `^1.1.12`     | Componente colapsável acessível                                   | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-dropdown-menu` | `^2.1.16`     | Componente de menu dropdown acessível                             | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-label`         | `^2.1.7`      | Componente de label acessível                                     | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-select`        | `^2.2.6`      | Componente de select acessível                                    | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-slot`          | `^1.2.3`      | Utilitário para composição de componentes                         | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-tooltip`       | `^1.2.8`      | Componente de tooltip acessível                                   | [Radix UI](https://www.radix-ui.com/)                              |
+| `@tanstack/react-table`         | `^8.21.3`     | Biblioteca poderosa para tabelas de dados no React                | [TanStack Table](https://tanstack.com/table/)                      |
+| `@vis.gl/react-google-maps`     | `^1.7.1`      | Componentes React para Google Maps                                | [React Google Maps](https://visgl.github.io/react-google-maps/)    |
+| `axios`                         | `^1.13.1`     | Cliente HTTP baseado em Promises para o navegador e Node.js       | [Axios](https://axios-http.com/)                                   |
+| `@hookform/resolvers`           | `^5.2.2`      | Integrações de validação para React Hook Form                     | [Hookform Resolvers](https://github.com/react-hook-form/resolvers) |
+| `react-hook-form`               | `^7.66.0`     | Biblioteca performática para gerenciamento de formulários         | [React Hook Form](https://react-hook-form.com/)                    |
+| `zod`                           | `^3.25.76`    | Biblioteca de validação de schema TypeScript-first                | [Zod](https://zod.dev/)                                            |
+| `zustand`                       | `^5.0.8`      | Gerenciamento de estado global minimalista                        | [Zustand](https://zustand-demo.pmnd.rs/)                           |
+| `next-themes`                   | `^0.4.6`      | Gerenciamento de temas (dark/light) para Next.js                  | [Next Themes](https://github.com/pacocoursey/next-themes)          |
+| `lucide-react`                  | `^0.545.0`    | Biblioteca de ícones moderna e customizável                       | [Lucide](https://lucide.dev/)                                      |
+| `sonner`                        | `^2.0.7`      | Biblioteca de toast notifications elegante                        | [Sonner](https://sonner.emilkowal.ski/)                            |
+| `tailwind-merge`                | `^3.3.1`      | Utilitário para mesclar classes Tailwind CSS de forma inteligente | [Tailwind Merge](https://github.com/dcastil/tailwind-merge)        |
+| `clsx`                          | `^2.1.1`      | Utilitário para construir className condicionais                  | [clsx](https://github.com/lukeed/clsx)                             |
+| `class-variance-authority`      | `^0.7.1`      | Gerenciamento de variantes de componentes com TypeScript          | [CVA](https://cva.style/)                                          |
 
 ### 🛠️ Dependências de Desenvolvimento
 
@@ -147,14 +158,14 @@ O projeto segue a arquitetura moderna do **Next.js 15 App Router**, organizada d
 | `@types/node`                 | `^20`         | Definições de tipos TypeScript para Node.js                 | [Types Node](https://www.npmjs.com/package/@types/node)                                        |
 | `@types/react`                | `^19`         | Definições de tipos TypeScript para React                   | [Types React](https://www.npmjs.com/package/@types/react)                                      |
 | `@types/react-dom`            | `^19`         | Definições de tipos TypeScript para React DOM               | [Types React DOM](https://www.npmjs.com/package/@types/react-dom)                              |
-| `eslint`                      | `^9`          | Ferramenta de linting para identificar problemas no código  | [ESLint](https://eslint.org/)                                                                  |
+| `eslint`                      | `^9.39.1`     | Ferramenta de linting para identificar problemas no código  | [ESLint](https://eslint.org/)                                                                  |
 | `eslint-config-next`          | `15.5.4`      | Configurações ESLint oficiais do Next.js                    | [ESLint Config Next](https://nextjs.org/docs/app/building-your-application/configuring/eslint) |
 | `@next/eslint-plugin-next`    | `^15.5.4`     | Plugin ESLint oficial do Next.js                            | [Next ESLint Plugin](https://nextjs.org/docs/app/building-your-application/configuring/eslint) |
-| `eslint-plugin-react-hooks`   | `^7.0.0`      | Regras ESLint para React Hooks                              | [React Hooks ESLint](https://www.npmjs.com/package/eslint-plugin-react-hooks)                  |
+| `eslint-plugin-react-hooks`   | `^7.0.1`      | Regras ESLint para React Hooks                              | [React Hooks ESLint](https://www.npmjs.com/package/eslint-plugin-react-hooks)                  |
 | `@eslint/eslintrc`            | `^3`          | Utilitário de configuração do ESLint                        | [ESLint RC](https://eslint.org/)                                                               |
 | `prettier`                    | `^3.6.2`      | Ferramenta de formatação de código                          | [Prettier](https://prettier.io/)                                                               |
 | `prettier-plugin-tailwindcss` | `^0.6.14`     | Plugin Prettier para ordenar classes Tailwind CSS           | [Prettier Tailwind](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)               |
-| `tailwindcss`                 | `^4`          | Framework CSS utilitário                                    | [Tailwind CSS](https://tailwindcss.com/)                                                       |
+| `tailwindcss`                 | `^4.1.16`     | Framework CSS utilitário                                    | [Tailwind CSS](https://tailwindcss.com/)                                                       |
 | `@tailwindcss/postcss`        | `^4`          | Plugin PostCSS oficial do Tailwind CSS v4                   | [Tailwind PostCSS](https://tailwindcss.com/)                                                   |
 | `tw-animate-css`              | `^1.4.0`      | Animações CSS para Tailwind                                 | [TW Animate](https://www.npmjs.com/package/tw-animate-css)                                     |
 
@@ -187,6 +198,57 @@ Todos os componentes shadcn/ui podem ser customizados editando:
 - **`components.json`**: Configuração de paths e aliases
 - **`globals.css`**: Variáveis CSS e temas
 - **Arquivos individuais** em `src/app/_components/ui/`
+
+## 🗺️ Mapa Interativo com Google Maps
+
+### 🌟 Destaque: Sistema de Mapeamento Avançado
+
+O projeto integra **Google Maps** através da biblioteca **@vis.gl/react-google-maps**, proporcionando uma experiência de mapeamento moderna e interativa para gerenciamento de pontos de mobilidade urbana.
+
+#### 🚀 Recursos do Mapa Interativo
+
+- **📍 Visualização de Pontos de Mobilidade** - Marcadores customizados para locais acessíveis
+- **🗺️ Navegação Intuitiva** - Zoom, pan e controles de navegação fluidos
+- **🎯 Geolocalização** - Detecção automática da localização do usuário
+- **♿ Foco em Acessibilidade** - Visualização clara de rotas e locais acessíveis
+
+#### 📦 Biblioteca Utilizada
+
+```json
+"@vis.gl/react-google-maps": "^1.7.1"
+```
+
+A biblioteca **vis.gl** é mantida pelo Urban Computing Foundation e oferece componentes React de alta performance para Google Maps, com suporte a:
+
+- ✅ TypeScript nativo
+- ✅ Hooks modernos do React
+- ✅ Performance otimizada
+- ✅ API declarativa
+- ✅ Suporte a todas as features do Google Maps
+
+#### 🔑 Configuração
+
+Para utilizar o Google Maps, é necessário configurar uma chave de API no arquivo `.env.local`:
+
+```bash
+GOOGLE_MAPS_API_KEY=sua_chave_api_aqui
+```
+
+> **📝 Nota:** Certifique-se de habilitar as APIs necessárias no Google Cloud Console:
+>
+> - Maps JavaScript API
+> - Places API (para busca de endereços)
+> - Geocoding API (para conversão de coordenadas)
+
+#### 🎯 Casos de Uso
+
+1. **Gestão de Mobilidade** - Visualizar e gerenciar pontos de ônibus acessíveis
+2. **Locais Acessíveis** - Mapear calçadas, rampas e áreas adaptadas
+3. **Rotas Seguras** - Definir trajetos recomendados para cadeirantes
+4. **Monitoramento** - Acompanhar solicitações de manutenção por localização
+5. **Planejamento Urbano** - Análise espacial de acessibilidade na cidade
+
+---
 
 ## ⚠️ Aviso Importante sobre Dependências
 
@@ -363,6 +425,16 @@ pnpm start
 - ✅ **Zustand** - Estado global minimalista e eficiente
 - ✅ **API Client** - Cliente HTTP configurado com tratamento de erros
 - ✅ **DTOs Tipados** - Estruturas de dados consistentes
+- ✅ **Axios** - Cliente HTTP baseado em Promises para requisições
+
+### 🗺️ Mapeamento e Geolocalização
+
+- ✅ **Google Maps Integration** - Integração completa com Google Maps API
+- ✅ **React Google Maps** - Componentes React modernos para mapas (@vis.gl)
+- ✅ **Marcadores Customizados** - Pins e overlays personalizados
+- ✅ **Geolocalização** - Detecção automática de localização
+- ✅ **Rotas Interativas** - Visualização de trajetos acessíveis
+- ✅ **Mapas Responsivos** - Otimizado para todos os dispositivos
 
 ### 🔐 Segurança e Autenticação
 
