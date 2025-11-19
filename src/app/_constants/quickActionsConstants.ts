@@ -58,7 +58,7 @@ export const HOME_QUICK_ACTIONS: QuickActionType[] = [
     description: 'Visualize tudo sobre Oficinas de Manutenção',
     imageSrc: QuickActionImageEnum.MANUTENCAO,
     href: APP_ROUTES.MANUTENCAO,
-    enabled: false
+    enabled: true
   },
   {
     title: 'Usuários',
@@ -146,6 +146,23 @@ export const MOBILIDADES_QUICK_ACTIONS: QuickActionType[] = [
       'Visualize o mapa interativo com todas as ocorrências de mobilidade',
     imageSrc: QuickActionImageEnum.MOBILIDADE,
     href: APP_ROUTES.MOBILIDADE_MAPA(),
+    enabled: true
+  }
+]
+
+export const MANUTENCAO_QUICK_ACTIONS: QuickActionType[] = [
+  {
+    title: 'Listar Oficinas de Manutenção',
+    description: 'Visualize uma tabela com todas as oficinas de manutenção',
+    imageSrc: QuickActionImageEnum.MANUTENCAO,
+    href: APP_ROUTES.MANUTENCAO_LISTAR(),
+    enabled: true
+  },
+  {
+    title: 'Adicionar Oficina de Manutenção',
+    description: 'Adicione uma nova oficina de manutenção',
+    imageSrc: QuickActionImageEnum.MANUTENCAO,
+    href: APP_ROUTES.MANUTENCAO_ADICIONAR(),
     enabled: true
   }
 ]

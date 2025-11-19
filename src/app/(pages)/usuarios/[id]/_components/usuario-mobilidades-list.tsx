@@ -21,7 +21,7 @@ import {
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { MobilidadeResponseDTO } from '@/app/_dtos/response'
 import {
-  getMobilidadeStatusBadgeVariant,
+  getMobilidadeStatusBadgeClasses,
   getMobilidadeStatusLabel
 } from '@/app/_enums/mobilidadeEnums'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
@@ -94,7 +94,7 @@ export function UsuarioMobilidadesList({
                   <div className="flex-1 space-y-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge
-                        variant={getMobilidadeStatusBadgeVariant(
+                        className={getMobilidadeStatusBadgeClasses(
                           mobilidade.status
                         )}
                       >

@@ -2,11 +2,12 @@
 
 import { revalidateMobilidades } from '@/app/_actions/mobilidadeActions'
 import { Button } from '@/app/_components/ui/button'
+import { useNotification } from '@/app/_hooks/useNotification'
 import { RefreshCwIcon } from 'lucide-react'
 import { useState, useTransition } from 'react'
-import { toast } from 'sonner'
 
 export function MobilidadeTableActions() {
+  const { notifySuccess, notifyError } = useNotification()
   const [isPending, startTransition] = useTransition()
   const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -17,9 +18,11 @@ export function MobilidadeTableActions() {
       const result = await revalidateMobilidades()
 
       if (result.success) {
-        toast.success('Dados atualizados com sucesso!')
+        notifySuccess({ message: 'Dados atualizados com sucesso!' })
       } else {
-        toast.error(result.error || 'Erro ao atualizar dados')
+        notifyError({
+          message: result.error || 'Erro ao atualizar dados'
+        })
       }
 
       setIsRefreshing(false)

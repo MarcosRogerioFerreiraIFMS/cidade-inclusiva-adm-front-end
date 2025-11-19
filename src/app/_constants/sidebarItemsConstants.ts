@@ -50,7 +50,7 @@ export const menuItems: MenuItem[] = [
     icon: WrenchIcon,
     text: 'Oficinas de Manutenção',
     title: 'Oficinas de Manutenção',
-    enabled: false,
+    enabled: true,
     subItems: [
       {
         href: APP_ROUTES.MANUTENCAO_LISTAR(),

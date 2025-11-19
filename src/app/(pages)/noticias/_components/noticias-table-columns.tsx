@@ -3,12 +3,12 @@
 import {
   ConteudoCell,
   DataCell,
-  FotoCell,
   NoticiaCategoriaCell,
-  TituloCell,
+  NoticiaFotoCell,
   UrlCell
 } from '@/app/_components/cells'
 import { Button } from '@/app/_components/ui/button'
+import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { NoticiaResponseDTO } from '@/app/_dtos/response'
 import { type NoticiaCategoria } from '@/app/_enums/noticiaEnums'
 import { ColumnDef } from '@tanstack/react-table'
@@ -16,15 +16,15 @@ import { ArrowUpDownIcon } from 'lucide-react'
 import { NoticiaTableActionsMenu } from './noticia-table-actions-menu'
 
 export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
-  {
-    accessorKey: 'foto',
-    header: 'Imagem',
-    cell: ({ row }) => {
-      const foto = row.getValue('foto') as NoticiaResponseDTO['foto']
-      const titulo = row.getValue('titulo') as string
-      return <FotoCell foto={foto} titulo={titulo} />
-    }
-  },
+  // {
+  //   accessorKey: 'foto',
+  //   header: 'Imagem',
+  //   cell: ({ row }) => {
+  //     const foto = row.getValue('foto') as NoticiaResponseDTO['foto']
+  //     const titulo = row.getValue('titulo') as string
+  //     return <FotoCell foto={foto} titulo={titulo} />
+  //   }
+  // },
   {
     accessorKey: 'titulo',
     header: ({ column }) => {
@@ -41,8 +41,16 @@ export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
       )
     },
     cell: ({ row }) => {
-      const titulo = row.getValue('titulo') as string
-      return <TituloCell titulo={titulo} />
+      const noticia = row.original
+      return (
+        <NoticiaFotoCell
+          id={noticia.id}
+          foto={noticia.foto}
+          titulo={noticia.titulo}
+          enableNavigation={true}
+          getDetailRoute={APP_ROUTES.NOTICIA_DETALHE}
+        />
+      )
     }
   },
   {

@@ -1,4 +1,3 @@
-import type { ProfissionalEspecialidade } from '@/app/_enums/profissionalEnums'
 import type { FotoResponseDTO } from './FotoResponsesDTO'
 
 /**
@@ -18,7 +17,14 @@ export interface ProfissionalResponseDTO {
   /** Endereço de email do profissional */
   email: string
   /** Área de especialidade do profissional */
-  especialidade: ProfissionalEspecialidade
+  especialidade:
+    | 'CUIDADOR'
+    | 'SECRETARIO_DO_LAR'
+    | 'ENFERMEIRO'
+    | 'MEDICO'
+    | 'FISIOTERAPEUTA'
+    | 'PSICOLOGO'
+    | 'OUTROS'
   /** Data e hora de criação do registro */
   criadoEm: Date
 }

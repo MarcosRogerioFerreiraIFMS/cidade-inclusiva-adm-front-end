@@ -1,4 +1,3 @@
-import type { TipoUsuario } from '@/app/_enums/tipoUsuarioEnum'
 import type { EnderecoResponseDTO } from './EnderecoResponseDTO'
 import type { FotoResponseDTO } from './FotoResponsesDTO'
 
@@ -17,7 +16,7 @@ export interface UsuarioResponseDTO {
   /** URL da foto do perfil (opcional) */
   foto?: FotoResponseDTO
   /** Tipo de usuário */
-  tipo: TipoUsuario
+  tipo: 'ADMIN' | 'USUARIO'
   /** Endereço de email do usuário */
   email: string
   /** Endereço completo do usuário (opcional) */

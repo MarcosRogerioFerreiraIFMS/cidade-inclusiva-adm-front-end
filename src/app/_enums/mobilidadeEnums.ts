@@ -22,16 +22,15 @@ export const MobilidadeStatusDisplay: Record<MobilidadeStatus, string> = {
 }
 
 /**
- * Mapeamento dos status para variantes de badge do Shadcn/UI
+ * Mapeamento dos status para classes de cor de badge customizadas
+ * Usa as mesmas cores dos pins do mapa
  */
-export const MobilidadeStatusBadgeVariant: Record<
-  MobilidadeStatus,
-  'default' | 'secondary' | 'destructive' | 'outline'
-> = {
-  PENDENTE: 'destructive',
-  EM_ANDAMENTO: 'default',
-  CONCLUIDO: 'secondary',
-  CANCELADO: 'destructive'
+export const MobilidadeStatusBadgeClasses: Record<MobilidadeStatus, string> = {
+  PENDENTE: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+  EM_ANDAMENTO: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
+  CONCLUIDO:
+    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+  CANCELADO: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
 }
 
 /**
@@ -42,10 +41,14 @@ export function getMobilidadeStatusLabel(status: MobilidadeStatus): string {
 }
 
 /**
- * Obtém a variante de Badge para um status de mobilidade
+ * Obtém as classes CSS para Badge de um status de mobilidade
+ * Usa as mesmas cores dos pins do mapa
  */
-export function getMobilidadeStatusBadgeVariant(
+export function getMobilidadeStatusBadgeClasses(
   status: MobilidadeStatus
-): 'default' | 'secondary' | 'destructive' | 'outline' {
-  return MobilidadeStatusBadgeVariant[status] || 'default'
+): string {
+  return (
+    MobilidadeStatusBadgeClasses[status] ||
+    MobilidadeStatusBadgeClasses.PENDENTE
+  )
 }

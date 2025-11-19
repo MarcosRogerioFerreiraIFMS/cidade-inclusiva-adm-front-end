@@ -1,8 +1,9 @@
 'use client'
 
-import { createAdmin, createUsuario } from '@/app/_actions/usuarioActions'
-import { FormAlert } from '@/app/_components/form-alert'
-import { ProfileImagePreview } from '@/app/_components/profile-image-preview'
+import { updateManutencao } from '@/app/_actions/manutencaoActions'
+import { EspecialidadesSelector } from '@/app/_components/especialidades-selector'
+import { LogoImagePreview } from '@/app/_components/logo-image-preview'
+import { MultipleImagesPreview } from '@/app/_components/multiple-images-preview'
 import { Button } from '@/app/_components/ui/button'
 import { Card } from '@/app/_components/ui/card'
 import {
@@ -15,34 +16,30 @@ import {
   FormMessage
 } from '@/app/_components/ui/form'
 import { Input } from '@/app/_components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/app/_components/ui/select'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
-import {
-  isAdmin,
-  TipoUsuarioEnum,
-  TipoUsuarioOptions
-} from '@/app/_enums/tipoUsuarioEnum'
+import type { ManutencaoResponseDTO } from '@/app/_dtos/response'
+import { ManutencaoEspecialidadesOptions } from '@/app/_enums/manutencaoEnums'
 import { useAutoFormat } from '@/app/_hooks/useAutoFormat'
 import { useCep } from '@/app/_hooks/useCep'
 import { useNotification } from '@/app/_hooks/useNotification'
 import {
-  createUsuarioSchema,
-  type UsuarioCreateDTO
-} from '@/app/_schemas/usuarioSchema'
+  updateManutencaoSchema,
+  type ManutencaoUpdateDTO
+} from '@/app/_schemas/manutencaoSchema'
 import { removeNonDigits } from '@/app/_utils/formatUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { EyeIcon, EyeOffIcon, RotateCwIcon, SaveIcon } from 'lucide-react'
+import { RotateCwIcon, SaveIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 
-export function UsuarioAdicionarForm() {
+interface ManutencaoEditarFormProps {
+  manutencao: ManutencaoResponseDTO
+}
+
+export function ManutencaoEditarForm({
+  manutencao
+}: ManutencaoEditarFormProps) {
   const router = useRouter()
 
   const { notifySuccess, notifyError } = useNotification()
@@ -58,34 +55,33 @@ export function UsuarioAdicionarForm() {
   const { loading: loadingCep, buscarCep } = useCep()
 
   const [isPending, startTransition] = useTransition()
-  const [isImageValid, setIsImageValid] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const [isLogoValid, setIsLogoValid] = useState(false)
+  const [areFotosValid, setAreFotosValid] = useState(true)
 
-  const form = useForm<UsuarioCreateDTO>({
-    resolver: zodResolver(createUsuarioSchema),
+  const form = useForm<ManutencaoUpdateDTO>({
+    resolver: zodResolver(updateManutencaoSchema),
     defaultValues: {
-      nome: '',
-      email: '',
-      telefone: '',
-      senha: '',
-      foto: '',
-      tipo: TipoUsuarioEnum.USUARIO,
+      nome: manutencao.nome,
+      email: manutencao.email,
+      telefone: formatTelefone(manutencao.telefone),
+      logo: manutencao.logo?.url || '',
+      especialidades: manutencao.especialidades.map((esp) => esp.tipo),
       endereco: {
-        logradouro: '',
-        numero: '',
-        cidade: '',
-        bairro: '',
-        cep: '',
-        estado: '',
-        pais: 'Brasil',
-        complemento: ''
-      }
+        logradouro: manutencao.endereco?.logradouro || '',
+        numero: manutencao.endereco?.numero || '',
+        cidade: manutencao.endereco?.cidade || '',
+        bairro: manutencao.endereco?.bairro || '',
+        cep: formatCEP(manutencao.endereco?.cep || ''),
+        estado: manutencao.endereco?.estado || '',
+        pais: manutencao.endereco?.pais || 'Brasil',
+        complemento: manutencao.endereco?.complemento || ''
+      },
+      fotos: manutencao.fotos.map((foto) => foto.url)
     },
     mode: 'onChange'
   })
 
-  const fotoUrl = form.watch('foto') as string | undefined
-  const tipoUsuario = form.watch('tipo')
+  const logoUrl = form.watch('logo') as string | undefined
 
   async function handleCepChange(cep: string): Promise<void> {
     const cepLimpo = removeNonDigits(cep)
@@ -107,14 +103,6 @@ export function UsuarioAdicionarForm() {
           form.setValue('endereco.estado', cepData.estado)
         }
 
-        // Revalida os campos de endereço após preencher
-        await form.trigger([
-          'endereco.logradouro',
-          'endereco.bairro',
-          'endereco.cidade',
-          'endereco.estado'
-        ])
-
         notifySuccess({
           message:
             'Endereço preenchido! Você pode editar os campos se necessário.'
@@ -123,41 +111,51 @@ export function UsuarioAdicionarForm() {
     }
   }
 
-  async function onSubmit(data: UsuarioCreateDTO): Promise<void> {
+  async function onSubmit(data: ManutencaoUpdateDTO): Promise<void> {
     const dataToSubmit = {
       ...data,
-      foto: data.foto || '',
+      logo: data.logo || '',
+      fotos: data.fotos || [],
       endereco: {
         ...data.endereco,
         complemento: data.endereco.complemento || ''
       }
     }
 
-    if (dataToSubmit.foto && !isImageValid && dataToSubmit.foto !== '') {
-      form.setError('foto', {
+    if (dataToSubmit.logo && !isLogoValid && dataToSubmit.logo !== '') {
+      form.setError('logo', {
         type: 'manual',
         message: 'A imagem fornecida não é válida ou não pode ser carregada'
       })
       notifyError({
-        message: 'Por favor, verifique a URL da imagem antes de continuar'
+        message: 'Por favor, verifique a URL da logo antes de continuar'
+      })
+      return
+    }
+
+    // Só valida fotos se houver fotos para validar
+    if (!areFotosValid) {
+      notifyError({
+        message:
+          'Por favor, aguarde o carregamento de todas as fotos antes de continuar'
       })
       return
     }
 
     startTransition(async () => {
       try {
-        const result = isAdmin(tipoUsuario)
-          ? await createAdmin(dataToSubmit)
-          : await createUsuario(dataToSubmit)
+        const result = await updateManutencao(manutencao.id, dataToSubmit)
 
         if (result.success) {
-          notifySuccess({ message: 'Usuário criado com sucesso!' })
-          router.push(APP_ROUTES.USUARIO_LISTAR())
+          notifySuccess({
+            message: 'Oficina de manutenção atualizada com sucesso!'
+          })
+          router.push(APP_ROUTES.MANUTENCAO_LISTAR())
         } else {
           const errorMessage =
-            result.error ?? 'Ocorreu um erro ao criar o usuário.'
+            result.error ??
+            'Ocorreu um erro ao atualizar a oficina de manutenção.'
 
-          // Marcar campo específico com erro de duplicação
           const lowerErrorMessage = errorMessage.toLowerCase()
           if (lowerErrorMessage.includes('email')) {
             form.setError('email', {
@@ -179,7 +177,7 @@ export function UsuarioAdicionarForm() {
         const errorMessage =
           error instanceof Error
             ? error.message
-            : 'Erro ao criar usuário. Tente novamente.'
+            : 'Erro ao atualizar oficina de manutenção. Tente novamente.'
         notifyError({ message: errorMessage })
       }
     })
@@ -190,57 +188,23 @@ export function UsuarioAdicionarForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Informações Pessoais</h2>
-
-            <FormField
-              control={form.control}
-              name="tipo"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tipo de Usuário</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    disabled={isPending}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo de usuário" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {TipoUsuarioOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    {tipoUsuario
-                      ? TipoUsuarioOptions.find(
-                          (opt) => opt.value === tipoUsuario
-                        )?.description
-                      : 'Selecione o tipo de usuário'}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <h2 className="text-lg font-semibold">
+              Informações da Oficina de Manutenção
+            </h2>
 
             <FormField
               control={form.control}
               name="nome"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Nome da Oficina</FormLabel>
                   <FormControl>
                     <Input
-                      autoComplete="name"
-                      placeholder="Digite o nome completo"
+                      autoComplete="organization"
+                      placeholder="Digite o nome da oficina"
                       {...createAutoFormatHandler(field, formatTrim)}
                       value={field.value}
-                      maxLength={100}
+                      maxLength={120}
                       disabled={isPending}
                     />
                   </FormControl>
@@ -260,7 +224,7 @@ export function UsuarioAdicionarForm() {
                       <Input
                         type="email"
                         autoComplete="email"
-                        placeholder="usuario@email.com"
+                        placeholder="oficina@email.com"
                         {...createAutoFormatHandler(field, formatTrim)}
                         value={field.value}
                         disabled={isPending}
@@ -296,49 +260,21 @@ export function UsuarioAdicionarForm() {
 
             <FormField
               control={form.control}
-              name="senha"
+              name="especialidades"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Senha</FormLabel>
-                  <div className="relative">
-                    <FormControl>
-                      <Input
-                        type={showPassword ? 'text' : 'password'}
-                        autoComplete="new-password"
-                        placeholder="Digite a senha do usuário"
-                        {...field}
-                        disabled={isPending}
-                        className="pr-10"
-                        maxLength={128}
-                      />
-                    </FormControl>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-                      onClick={() => setShowPassword(!showPassword)}
-                      disabled={isPending}
-                      tabIndex={-1}
-                      aria-label={
-                        showPassword ? 'Ocultar senha' : 'Mostrar senha'
-                      }
-                    >
-                      {showPassword ? (
-                        <EyeOffIcon
-                          className="text-muted-foreground h-4 w-4"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <EyeIcon
-                          className="text-muted-foreground h-4 w-4"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </Button>
-                  </div>
+                  <FormLabel>Especialidades</FormLabel>
                   <FormDescription>
-                    A senha deve ter no mínimo 8 caracteres
+                    Selecione as especialidades da oficina de manutenção
                   </FormDescription>
+                  <FormControl>
+                    <EspecialidadesSelector
+                      options={ManutencaoEspecialidadesOptions}
+                      selectedValues={field.value}
+                      onChange={field.onChange}
+                      disabled={isPending}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -346,29 +282,52 @@ export function UsuarioAdicionarForm() {
 
             <FormField
               control={form.control}
-              name="foto"
+              name="logo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL da Foto de Perfil (Opcional)</FormLabel>
+                  <FormLabel>URL da Logo (Opcional)</FormLabel>
                   <FormControl>
                     <Input
                       type="url"
                       autoComplete="url"
-                      placeholder="https://exemplo.com/foto.jpg"
+                      placeholder="https://exemplo.com/logo.jpg"
                       {...createAutoFormatHandler(field, formatUrl)}
                       value={field.value ?? ''}
                       disabled={isPending}
                     />
                   </FormControl>
                   <FormDescription>
-                    URL da imagem que será exibida no perfil
+                    URL da imagem da logo da oficina
                   </FormDescription>
                   <FormMessage />
 
-                  <ProfileImagePreview
-                    fotoUrl={fotoUrl}
-                    onValidationChange={setIsImageValid}
+                  <LogoImagePreview
+                    logoUrl={logoUrl}
+                    onValidationChange={setIsLogoValid}
+                    entityName="Logo da Oficina"
                   />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="fotos"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fotos da Oficina (Opcional)</FormLabel>
+                  <FormControl>
+                    <MultipleImagesPreview
+                      fotosUrls={field.value || []}
+                      onFotosChange={(urls) => field.onChange(urls)}
+                      onValidationChange={setAreFotosValid}
+                      maxImages={20}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Adicione URLs de fotos da oficina (máximo 20)
+                  </FormDescription>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -549,7 +508,7 @@ export function UsuarioAdicionarForm() {
                   <FormControl>
                     <Input
                       autoComplete="off"
-                      placeholder="Apartamento 101"
+                      placeholder="Sala 101"
                       {...createAutoFormatHandler(field, formatTrim)}
                       value={field.value ?? ''}
                       disabled={isPending}
@@ -561,42 +520,36 @@ export function UsuarioAdicionarForm() {
             />
           </div>
 
-          {isAdmin(tipoUsuario) && (
-            <FormAlert
-              variant="warning"
-              title="Atenção: Criando Administrador"
-              description="Você está criando um usuário com privilégios de administrador. Este usuário terá acesso total ao sistema."
-            />
-          )}
-
-          <div className="flex gap-4 border-t pt-6">
-            <Button
-              type="submit"
-              disabled={isPending}
-              aria-label="Criar novo usuário"
-            >
-              <SaveIcon aria-hidden="true" />
-              {isPending ? 'Criando...' : 'Criar Usuário'}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => form.reset()}
-              disabled={isPending}
-              aria-label="Resetar formulário ao estado inicial"
-            >
-              <RotateCwIcon aria-hidden="true" />
-              Resetar
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.back()}
-              disabled={isPending}
-              aria-label="Cancelar e voltar"
-            >
-              Cancelar
-            </Button>
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t pt-6">
+            <div className="flex gap-4">
+              <Button
+                type="submit"
+                disabled={isPending}
+                aria-label="Salvar alterações da oficina"
+              >
+                <SaveIcon aria-hidden="true" />
+                {isPending ? 'Salvando...' : 'Salvar Alterações'}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => form.reset()}
+                disabled={isPending}
+                aria-label="Resetar formulário ao estado inicial"
+              >
+                <RotateCwIcon aria-hidden="true" />
+                Resetar
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.back()}
+                disabled={isPending}
+                aria-label="Cancelar e voltar"
+              >
+                Cancelar
+              </Button>
+            </div>
           </div>
         </form>
       </Form>

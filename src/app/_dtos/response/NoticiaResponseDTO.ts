@@ -1,4 +1,3 @@
-import type { NoticiaCategoria } from '@/app/_enums/noticiaEnums'
 import type { FotoResponseDTO } from './FotoResponsesDTO'
 
 /**
@@ -17,9 +16,21 @@ export interface NoticiaResponseDTO {
   /** URL de referência externa (opcional) */
   url?: string
   /** Data e hora de publicação da notícia */
-  dataPublicacao: string
+  dataPublicacao: Date
   /** Categoria da notícia */
-  categoria: NoticiaCategoria
+  categoria:
+    | 'OUTROS'
+    | 'DIREITOS'
+    | 'BENEFICIOS'
+    | 'OPORTUNIDADES'
+    | 'TECNOLOGIA'
+    | 'TRABALHO'
+    | 'SAUDE'
+    | 'EDUCACAO'
+    | 'CULTURA'
+    | 'EVENTOS'
+    | 'ESPORTE'
+    | 'ACESSIBILIDADE'
   /** Data e hora de criação do registro */
-  criadoEm: string
+  criadoEm: Date
 }

@@ -47,7 +47,8 @@ export function NoticiaDetalhes({ noticia }: NoticiaDetalhesProps) {
         <div className="space-y-1">
           <h1 className="text-2xl font-bold">{noticia.titulo}</h1>{' '}
           <p className="text-muted-foreground">
-            Publicado em {formatDateToDateString(noticia.dataPublicacao)}
+            Publicado em{' '}
+            {formatDateToDateString(noticia.dataPublicacao.toString())}
           </p>
           <Badge className={getNoticiaCategoriaBadgeColor(noticia.categoria)}>
             {getNoticiaCategoriaLabel(noticia.categoria)}

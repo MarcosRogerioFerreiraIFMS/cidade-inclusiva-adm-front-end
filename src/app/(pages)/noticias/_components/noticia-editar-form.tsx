@@ -280,7 +280,7 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
             )}
           />
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 border-t pt-6">
             <Button
               type="submit"
               disabled={isPending}

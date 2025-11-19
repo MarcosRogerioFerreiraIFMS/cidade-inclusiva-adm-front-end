@@ -9,7 +9,21 @@ export interface AcessibilidadeUrbanaRecursoResponseDTO {
   /** ID único do recurso */
   id: string
   /** Símbolo de acessibilidade */
-  simbolo: string
+  simbolo:
+    | 'CADEIRA_DE_RODAS'
+    | 'BRAILLE'
+    | 'LIBRAS'
+    | 'AUDIO_DESCRICAO'
+    | 'CLOSED_CAPTION'
+    | 'RAMPA'
+    | 'ELEVADOR'
+    | 'SINALIZACAO_TATIL'
+    | 'BANHEIRO_ACESSIVEL'
+    | 'ESTACIONAMENTO_ACESSIVEL'
+    | 'ATENDIMENTO_PRIORIZADO'
+    | 'ANIMAIS_DE_ASSISTENCIA_PERMITIDOS'
+    | 'MOBILIARIO_ACESSIVEL'
+    | 'COMUNICACAO_SIMPLIFICADA'
   /** Descrição do recurso (opcional) */
   descricao?: string
   /** Data e hora de criação do registro */
@@ -30,7 +44,33 @@ export interface AcessibilidadeUrbanaResponseDTO {
   /** E-mail de contato */
   email: string
   /** Categoria do estabelecimento */
-  categoria: string
+  categoria:
+    | 'OUTROS'
+    | 'RESTAURANTE'
+    | 'LANCHONETE'
+    | 'BAR'
+    | 'CAFETERIA'
+    | 'HOTEL'
+    | 'SALAO_DE_BELEZA'
+    | 'ACADEMIA'
+    | 'PARQUE'
+    | 'MUSEU'
+    | 'CINEMA'
+    | 'TEATRO'
+    | 'AQUARIO'
+    | 'ZOOLOGICO'
+    | 'BIBLIOTECA'
+    | 'SHOPPING'
+    | 'SUPERMERCADO'
+    | 'HOSPITAL'
+    | 'POSTO_DE_SAUDE'
+    | 'FARMACIA'
+    | 'ESCOLA'
+    | 'UNIVERSIDADE'
+    | 'AEROPORTO'
+    | 'PONTO_DE_ONIBUS'
+    | 'RODOVIARIA'
+    | 'ESTACIONAMENTO'
   /** Logo do estabelecimento (opcional) */
   logo?: FotoResponseDTO
   /** Fotos do estabelecimento */

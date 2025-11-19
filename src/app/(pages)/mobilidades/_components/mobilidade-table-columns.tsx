@@ -6,7 +6,7 @@ import { Button } from '@/app/_components/ui/button'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { MobilidadeResponseDTO } from '@/app/_dtos/response'
 import {
-  getMobilidadeStatusBadgeVariant,
+  getMobilidadeStatusBadgeClasses,
   getMobilidadeStatusLabel
 } from '@/app/_enums/mobilidadeEnums'
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
@@ -57,7 +57,7 @@ export const mobilidadeTableColumns: ColumnDef<MobilidadeResponseDTO>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as MobilidadeResponseDTO['status']
       return (
-        <Badge variant={getMobilidadeStatusBadgeVariant(status)}>
+        <Badge className={getMobilidadeStatusBadgeClasses(status)}>
           {getMobilidadeStatusLabel(status)}
         </Badge>
       )
