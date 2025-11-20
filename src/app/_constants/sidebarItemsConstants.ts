@@ -119,27 +119,43 @@ export const menuItems: MenuItem[] = [
     icon: BusFrontIcon,
     text: 'Motoristas',
     title: 'Motoristas',
-    enabled: false
+    enabled: true,
+    subItems: [
+      {
+        href: APP_ROUTES.MOTORISTA_LISTAR(),
+        icon: BusFrontIcon,
+        text: 'Listar Motoristas',
+        title: 'Listar Motoristas',
+        enabled: true
+      },
+      {
+        href: APP_ROUTES.MOTORISTA_ADICIONAR(),
+        icon: BusFrontIcon,
+        text: 'Adicionar Motorista',
+        title: 'Adicionar Motorista',
+        enabled: true
+      }
+    ]
   },
   {
     href: APP_ROUTES.MOBILIDADE,
     icon: MapIcon,
-    text: 'Mobilidades',
-    title: 'Mobilidades',
+    text: 'Ocorrências de Mobilidade',
+    title: 'Ocorrências de Mobilidade',
     enabled: true,
     subItems: [
       {
         href: APP_ROUTES.MOBILIDADE_LISTAR(),
         icon: MapIcon,
-        text: 'Listar Mobilidades',
-        title: 'Listar Mobilidades',
+        text: 'Listar Ocorrências de Mobilidade',
+        title: 'Listar Ocorrências de Mobilidade',
         enabled: true
       },
       {
         href: APP_ROUTES.MOBILIDADE_MAPA(),
         icon: MapIcon,
         text: 'Mapa Interativo',
-        title: 'Mapa Interativo de Mobilidades',
+        title: 'Mapa Interativo de Ocorrências de Mobilidade',
         enabled: true
       }
     ]

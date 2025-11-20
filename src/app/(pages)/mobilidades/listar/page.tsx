@@ -12,7 +12,7 @@ export default async function MobilidadeListarPage() {
   return (
     <LayoutDashboard>
       <div>
-        <h1 className="text-2xl font-bold">Mobilidades</h1>
+        <h1 className="text-2xl font-bold">Ocorrências de Mobilidade</h1>
         <p className="text-muted-foreground mt-1">
           Visualize todas as mobilidades registradas no sistema (
           {mobilidades.length}{' '}

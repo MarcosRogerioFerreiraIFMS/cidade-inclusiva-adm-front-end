@@ -51,7 +51,7 @@ export const HOME_QUICK_ACTIONS: QuickActionType[] = [
     description: 'Visualize tudo sobre Motoristas',
     imageSrc: QuickActionImageEnum.MOTORISTAS,
     href: APP_ROUTES.MOTORISTA,
-    enabled: false
+    enabled: true
   },
   {
     title: 'Oficinas de Manutenção',
@@ -141,7 +141,7 @@ export const MOBILIDADES_QUICK_ACTIONS: QuickActionType[] = [
     enabled: true
   },
   {
-    title: 'Mapa Interativo de Mobilidades',
+    title: 'Mapa Interativo',
     description:
       'Visualize o mapa interativo com todas as ocorrências de mobilidade',
     imageSrc: QuickActionImageEnum.MOBILIDADE,
@@ -163,6 +163,26 @@ export const MANUTENCAO_QUICK_ACTIONS: QuickActionType[] = [
     description: 'Adicione uma nova oficina de manutenção',
     imageSrc: QuickActionImageEnum.MANUTENCAO,
     href: APP_ROUTES.MANUTENCAO_ADICIONAR(),
+    enabled: true
+  }
+]
+
+/**
+ * Ações rápidas para o módulo de Motoristas
+ */
+export const MOTORISTAS_QUICK_ACTIONS: QuickActionType[] = [
+  {
+    title: 'Listar Motoristas',
+    description: 'Visualize uma tabela com todos os motoristas',
+    imageSrc: QuickActionImageEnum.MOTORISTAS,
+    href: APP_ROUTES.MOTORISTA_LISTAR(),
+    enabled: true
+  },
+  {
+    title: 'Adicionar Motorista',
+    description: 'Adicione um novo motorista ao sistema',
+    imageSrc: QuickActionImageEnum.MOTORISTAS,
+    href: APP_ROUTES.MOTORISTA_ADICIONAR(),
     enabled: true
   }
 ]

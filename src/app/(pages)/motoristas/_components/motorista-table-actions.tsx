@@ -1,6 +1,6 @@
 'use client'
 
-import { revalidateManutencoes } from '@/app/_actions/manutencaoActions'
+import { revalidateMotoristas } from '@/app/_actions/motoristaActions'
 import { Button } from '@/app/_components/ui/button'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import { useNotification } from '@/app/_hooks/useNotification'
@@ -8,7 +8,7 @@ import { PlusIcon, RefreshCwIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useTransition } from 'react'
 
-export function ManutencaoTableActions() {
+export function MotoristaTableActions() {
   const { notifySuccess, notifyError } = useNotification()
   const [isPending, startTransition] = useTransition()
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -17,7 +17,7 @@ export function ManutencaoTableActions() {
     setIsRefreshing(true)
 
     startTransition(async () => {
-      const result = await revalidateManutencoes()
+      const result = await revalidateMotoristas()
 
       if (result.success) {
         notifySuccess({ message: 'Dados atualizados com sucesso!' })
@@ -45,10 +45,10 @@ export function ManutencaoTableActions() {
         />
         Atualizar
       </Button>
-      <Button asChild aria-label="Adicionar nova oficina de manutenção">
-        <Link href={APP_ROUTES.MANUTENCAO_ADICIONAR()}>
+      <Button asChild>
+        <Link href={APP_ROUTES.MOTORISTA_ADICIONAR()}>
           <PlusIcon aria-hidden="true" />
-          Adicionar Oficina
+          Adicionar Motorista
         </Link>
       </Button>
     </div>
