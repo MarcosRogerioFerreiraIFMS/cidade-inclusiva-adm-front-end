@@ -143,7 +143,12 @@ export const API_ROUTES = {
   ACESSIBILIDADE_URBANA_DELETAR: (acessibilidadeId: string) =>
     `${API_ROUTES.ACESSIBILIDADE_URBANA}/${acessibilidadeId}`,
   ACESSIBILIDADE_URBANA_COMENTARIOS: (acessibilidadeId: string) =>
-    `${API_ROUTES.ACESSIBILIDADE_URBANA}/${acessibilidadeId}/comentarios`
+    `${API_ROUTES.ACESSIBILIDADE_URBANA}/${acessibilidadeId}/comentarios`,
+
+  /** Rotas para operações de veículos */
+  VEICULO: '/veiculos',
+  VEICULO_EDITAR: (veiculoId: string) => `${API_ROUTES.VEICULO}/${veiculoId}`,
+  VEICULO_DELETAR: (veiculoId: string) => `${API_ROUTES.VEICULO}/${veiculoId}`
 } as const
 
 /**

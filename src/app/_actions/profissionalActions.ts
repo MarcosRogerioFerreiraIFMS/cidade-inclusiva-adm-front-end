@@ -59,7 +59,7 @@ export async function updateProfissional(
   }
 
   try {
-    await apiClient(`${API_ROUTES.PROFISSIONAL}/${id}`, {
+    await apiClient(API_ROUTES.PROFISSIONAL_EDITAR(id), {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })
@@ -86,7 +86,7 @@ export async function deleteProfissional(id: string): Promise<ActionResult> {
   }
 
   try {
-    await apiClient(`${API_ROUTES.PROFISSIONAL}/${id}`, {
+    await apiClient(API_ROUTES.PROFISSIONAL_DELETAR(id), {
       method: 'DELETE'
     })
 

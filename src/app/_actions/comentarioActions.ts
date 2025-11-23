@@ -55,7 +55,7 @@ export async function deleteComentario(
   }
 
   try {
-    await apiClient(`${API_ROUTES.COMENTARIO}/${id}`, {
+    await apiClient(API_ROUTES.COMENTARIO_DELETAR(id), {
       method: 'DELETE'
     })
 
@@ -81,7 +81,7 @@ export async function toggleComentarioVisibilidade(
   }
 
   try {
-    await apiClient(`${API_ROUTES.COMENTARIO}/${id}/visibilidade`, {
+    await apiClient(API_ROUTES.COMENTARIO_ALTERNAR_VISIBILIDADE(id), {
       method: 'PATCH'
     })
 

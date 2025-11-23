@@ -59,7 +59,7 @@ export async function updateMotorista(
   }
 
   try {
-    await apiClient(`${API_ROUTES.MOTORISTA}/${id}`, {
+    await apiClient(API_ROUTES.MOTORISTA_EDITAR(id), {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })

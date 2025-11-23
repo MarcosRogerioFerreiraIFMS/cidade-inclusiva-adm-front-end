@@ -32,7 +32,7 @@ export async function getMotoristaById(
 ): Promise<MotoristaResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<MotoristaResponseDTO>>(
-      `${API_ROUTES.MOTORISTA}/${id}`,
+      API_ROUTES.MOTORISTA_ID(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
@@ -56,7 +56,7 @@ export async function getMotoristaComentarios(
 ): Promise<ComentarioResponseDTO[]> {
   try {
     const result = await apiClient<ApiResponse<ComentarioResponseDTO[]>>(
-      `${API_ROUTES.MOTORISTA}/${id}/comentarios`,
+      API_ROUTES.MOTORISTA_COMENTARIOS(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_COMMENTS,

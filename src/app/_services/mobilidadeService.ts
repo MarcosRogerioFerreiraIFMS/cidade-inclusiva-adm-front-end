@@ -29,7 +29,7 @@ export async function getMobilidadeById(
 ): Promise<MobilidadeResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<MobilidadeResponseDTO>>(
-      `${API_ROUTES.MOBILIDADE}/${id}`,
+      API_ROUTES.MOBILIDADE_ID(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
@@ -52,7 +52,7 @@ export async function getMobilidadesByUsuarioId(
   usuarioId: string
 ): Promise<MobilidadeResponseDTO[]> {
   const result = await apiClient<ApiResponse<MobilidadeResponseDTO[]>>(
-    `${API_ROUTES.MOBILIDADE_USUARIO(usuarioId)}`,
+    API_ROUTES.MOBILIDADE_USUARIO(usuarioId),
     {
       next: {
         revalidate: CACHE_CONFIG.REVALIDATE_SHORT,

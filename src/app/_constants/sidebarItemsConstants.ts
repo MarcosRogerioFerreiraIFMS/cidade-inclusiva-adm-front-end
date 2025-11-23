@@ -1,7 +1,7 @@
 import {
   AccessibilityIcon,
   BriefcaseMedicalIcon,
-  BusFrontIcon,
+  CarFrontIcon,
   HomeIcon,
   LucideIcon,
   MapIcon,
@@ -116,21 +116,21 @@ export const menuItems: MenuItem[] = [
   },
   {
     href: APP_ROUTES.MOTORISTA,
-    icon: BusFrontIcon,
+    icon: CarFrontIcon,
     text: 'Motoristas',
     title: 'Motoristas',
     enabled: true,
     subItems: [
       {
         href: APP_ROUTES.MOTORISTA_LISTAR(),
-        icon: BusFrontIcon,
+        icon: CarFrontIcon,
         text: 'Listar Motoristas',
         title: 'Listar Motoristas',
         enabled: true
       },
       {
         href: APP_ROUTES.MOTORISTA_ADICIONAR(),
-        icon: BusFrontIcon,
+        icon: CarFrontIcon,
         text: 'Adicionar Motorista',
         title: 'Adicionar Motorista',
         enabled: true

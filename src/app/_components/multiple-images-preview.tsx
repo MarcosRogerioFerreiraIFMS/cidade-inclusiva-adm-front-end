@@ -60,6 +60,8 @@ export function MultipleImagesPreview({
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editingUrl, setEditingUrl] = useState('')
+  const [addErrors, setAddErrors] = useState<string[]>([])
+  const [addSuccess, setAddSuccess] = useState<string | null>(null)
 
   // Notifica mudanças de validação
   useEffect(() => {
@@ -110,36 +112,81 @@ export function MultipleImagesPreview({
   }
 
   const handleAddUrl = () => {
-    const trimmedUrl = currentUrl.trim()
+    const trimmedInput = currentUrl.trim()
 
-    if (!trimmedUrl) return
+    if (!trimmedInput) return
 
-    if (fotosUrls.length >= maxImages) {
+    // Limpa erros e sucessos anteriores
+    setAddErrors([])
+    setAddSuccess(null)
+
+    // Separa múltiplas URLs por espaços
+    const urls = trimmedInput.split(/\s+/).filter((url) => url.length > 0)
+
+    // Valida e filtra URLs
+    const validUrls: string[] = []
+    const errors: string[] = []
+
+    for (const url of urls) {
+      // Ignora se já existe
+      if (fotosUrls.includes(url) || validUrls.includes(url)) {
+        errors.push(`URL duplicada: ${url.substring(0, 50)}...`)
+        continue
+      }
+
+      // Verifica limite
+      if (fotosUrls.length + validUrls.length >= maxImages) {
+        errors.push(`Limite de ${maxImages} fotos atingido`)
+        break
+      }
+
+      // Valida formato
+      const validation = validateUrl(url)
+      if (!validation.valid) {
+        errors.push(`${url.substring(0, 30)}...: ${validation.error}`)
+        continue
+      }
+
+      validUrls.push(url)
+    }
+
+    // Atualiza estados de erro
+    if (errors.length > 0) {
+      setAddErrors(errors)
+    }
+
+    // Se não há URLs válidas, não faz nada
+    if (validUrls.length === 0) {
       return
     }
 
-    if (fotosUrls.includes(trimmedUrl)) {
-      return
+    // Mensagem de sucesso
+    if (validUrls.length > 0) {
+      const message =
+        validUrls.length === 1
+          ? '1 foto adicionada com sucesso'
+          : `${validUrls.length} fotos adicionadas com sucesso`
+      setAddSuccess(message)
+
+      // Limpa mensagem de sucesso após 3 segundos
+      setTimeout(() => setAddSuccess(null), 3000)
     }
 
-    const validation = validateUrl(trimmedUrl)
-    if (!validation.valid) {
-      return
-    }
-
-    // Adiciona novo estado de validação para a URL
+    // Adiciona estados de validação para as novas URLs
     setValidationStates((prev) => {
       const newStates = new Map(prev)
-      newStates.set(trimmedUrl, {
-        url: trimmedUrl,
-        isValid: false,
-        isLoading: true,
-        hasError: false
+      validUrls.forEach((url) => {
+        newStates.set(url, {
+          url,
+          isValid: false,
+          isLoading: true,
+          hasError: false
+        })
       })
       return newStates
     })
 
-    onFotosChange([...fotosUrls, trimmedUrl])
+    onFotosChange([...fotosUrls, ...validUrls])
     setCurrentUrl('')
   }
 
@@ -251,10 +298,15 @@ export function MultipleImagesPreview({
         <div className="flex gap-2">
           <div className="flex-1">
             <Input
-              type="url"
-              placeholder="https://exemplo.com/foto.jpg"
+              type="text"
+              placeholder="https://exemplo.com/foto1.jpg https://exemplo.com/foto2.jpg"
               value={currentUrl}
-              onChange={(e) => setCurrentUrl(e.target.value)}
+              onChange={(e) => {
+                setCurrentUrl(e.target.value)
+                // Limpa mensagens ao digitar
+                if (addErrors.length > 0) setAddErrors([])
+                if (addSuccess) setAddSuccess(null)
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault()
@@ -279,6 +331,43 @@ export function MultipleImagesPreview({
             Adicionar
           </Button>
         </div>
+
+        {addSuccess && (
+          <div className="animate-fade-in mt-2 rounded-lg border border-green-500 bg-green-50 p-3 dark:bg-green-950/20">
+            <div className="flex items-start gap-3">
+              <CheckIcon className="mt-0.5 size-5 shrink-0 text-green-600 dark:text-green-400" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-green-800 dark:text-green-400">
+                  Sucesso
+                </p>
+                <p className="mt-1 text-xs text-green-700 opacity-90 dark:text-green-300">
+                  {addSuccess}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {addErrors.length > 0 && (
+          <div className="animate-fade-in border-destructive bg-destructive/10 mt-2 rounded-lg border p-3">
+            <div className="flex items-start gap-3">
+              <XIcon className="text-destructive mt-0.5 size-5 shrink-0 dark:text-red-400" />
+              <div className="flex-1">
+                <p className="text-destructive text-sm font-medium dark:text-red-400">
+                  {addErrors.length} problema{addErrors.length > 1 ? 's' : ''}{' '}
+                  encontrado{addErrors.length > 1 ? 's' : ''}
+                </p>
+                <ul className="text-destructive mt-2 list-disc space-y-1 pl-4 dark:text-red-400">
+                  {addErrors.map((error, idx) => (
+                    <li key={idx} className="text-xs opacity-90">
+                      {error}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {currentUrl && isDuplicate && (
           <FormAlert
@@ -305,7 +394,8 @@ export function MultipleImagesPreview({
         )}
 
         <p className="text-muted-foreground text-sm">
-          {fotosUrls.length} de {maxImages} fotos adicionadas
+          {fotosUrls.length} de {maxImages} fotos adicionadas • Separe múltiplas
+          URLs com espaço
         </p>
       </div>
 
@@ -316,7 +406,7 @@ export function MultipleImagesPreview({
             Nenhuma foto adicionada ainda
           </p>
           <p className="text-muted-foreground text-center text-xs">
-            Adicione URLs de fotos para visualizar os previews
+            Cole uma ou mais URLs separadas por espaço
           </p>
         </div>
       ) : (

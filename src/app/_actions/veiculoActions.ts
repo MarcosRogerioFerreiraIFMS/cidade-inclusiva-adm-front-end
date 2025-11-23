@@ -1,11 +1,11 @@
 'use server'
 
 import {
-  createNoticiaSchema,
-  updateNoticiaSchema,
-  type NoticiaCreateDTO,
-  type NoticiaUpdateDTO
-} from '@/app/_schemas/noticiaSchema'
+  createVeiculoSchema,
+  updateVeiculoSchema,
+  type VeiculoCreateDTO,
+  type VeiculoUpdateDTO
+} from '@/app/_schemas/veiculoSchema'
 import type { ActionResult } from '@/app/_types/apiResponsesType'
 import { validateUuidV4 } from '@/app/_utils/validateUuid'
 import { revalidatePath, revalidateTag } from 'next/cache'
@@ -17,96 +17,97 @@ import {
   CACHE_TAGS
 } from '../_constants/appSettingsConstants'
 
-export async function createNoticia(
-  data: NoticiaCreateDTO
+export async function createVeiculo(
+  data: VeiculoCreateDTO
 ): Promise<ActionResult> {
-  const validation = validateWithZod(createNoticiaSchema, data)
+  const validation = validateWithZod(createVeiculoSchema, data)
   if (!validation.success) {
     return { success: false, error: validation.error }
   }
 
   try {
-    await apiClient(API_ROUTES.NOTICIA, {
+    await apiClient(API_ROUTES.VEICULO, {
       method: 'POST',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag(CACHE_TAGS.NOTICIAS)
-    revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
+    revalidateTag(CACHE_TAGS.MOTORISTAS)
+    revalidateTag(CACHE_TAGS.MOTORISTA_ID(data.motoristaId))
+    revalidatePath(APP_ROUTES.MOTORISTA_DETALHE(data.motoristaId))
+    revalidatePath(APP_ROUTES.MOTORISTA_LISTAR())
 
     return { success: true }
   } catch (error) {
     const errorMessage =
       error instanceof Error
         ? error.message
-        : 'Erro ao criar notícia. Tente novamente.'
+        : 'Erro ao criar veículo. Tente novamente.'
 
     return { success: false, error: errorMessage }
   }
 }
 
-export async function updateNoticia(
+export async function updateVeiculo(
   id: string,
-  data: NoticiaUpdateDTO
+  motoristaId: string,
+  data: VeiculoUpdateDTO
 ): Promise<ActionResult> {
   if (!validateUuidV4(id)) {
     return { success: false, error: 'ID inválido.' }
   }
 
-  const validation = validateWithZod(updateNoticiaSchema, data)
+  const validation = validateWithZod(updateVeiculoSchema, data)
   if (!validation.success) {
     return { success: false, error: validation.error }
   }
 
   try {
-    await apiClient(API_ROUTES.NOTICIA_EDITAR(id), {
+    await apiClient(API_ROUTES.VEICULO_EDITAR(id), {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })
 
-    revalidateTag(CACHE_TAGS.NOTICIAS)
-    revalidateTag(CACHE_TAGS.NOTICIA_ID(id))
-    revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
-    revalidatePath(APP_ROUTES.NOTICIA_DETALHE(id))
+    revalidateTag(CACHE_TAGS.MOTORISTAS)
+    revalidateTag(CACHE_TAGS.MOTORISTA_ID(motoristaId))
+    revalidatePath(APP_ROUTES.MOTORISTA_DETALHE(motoristaId))
+    revalidatePath(APP_ROUTES.MOTORISTA_LISTAR())
 
     return { success: true }
   } catch (error) {
     const errorMessage =
       error instanceof Error
         ? error.message
-        : 'Erro ao atualizar notícia. Tente novamente.'
+        : 'Erro ao atualizar veículo. Tente novamente.'
 
     return { success: false, error: errorMessage }
   }
 }
 
-export async function deleteNoticia(id: string): Promise<ActionResult> {
+export async function deleteVeiculo(
+  id: string,
+  motoristaId: string
+): Promise<ActionResult> {
   if (!validateUuidV4(id)) {
     return { success: false, error: 'ID inválido.' }
   }
 
   try {
-    await apiClient(API_ROUTES.NOTICIA_DELETAR(id), {
+    await apiClient(API_ROUTES.VEICULO_DELETAR(id), {
       method: 'DELETE'
     })
 
-    revalidateTag(CACHE_TAGS.NOTICIAS)
-    revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
+    revalidateTag(CACHE_TAGS.MOTORISTAS)
+    revalidateTag(CACHE_TAGS.MOTORISTA_ID(motoristaId))
+    revalidatePath(APP_ROUTES.MOTORISTA_DETALHE(motoristaId))
+    revalidatePath(APP_ROUTES.MOTORISTA_LISTAR())
 
     return { success: true }
   } catch (error) {
     const errorMessage =
       error instanceof Error
         ? error.message
-        : 'Erro ao deletar notícia. Tente novamente.'
+        : 'Erro ao deletar veículo. Tente novamente.'
 
     return { success: false, error: errorMessage }
   }
-}
-
-export async function revalidateNoticias(): Promise<ActionResult> {
-  revalidateTag(CACHE_TAGS.NOTICIAS)
-  revalidatePath(APP_ROUTES.NOTICIA_LISTAR())
-
-  return { success: true }
 }

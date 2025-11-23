@@ -12,6 +12,7 @@ import {
 import { formatDateToDateString } from '@/app/_utils/dateUtils'
 import { type ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDownIcon } from 'lucide-react'
+import Link from 'next/link'
 import { MobilidadeTableActionsMenu } from './mobilidade-table-actions-menu'
 
 export const mobilidadeTableColumns: ColumnDef<MobilidadeResponseDTO>[] = [
@@ -33,9 +34,13 @@ export const mobilidadeTableColumns: ColumnDef<MobilidadeResponseDTO>[] = [
     cell: ({ row }) => {
       const descricao = row.getValue('descricao') as string
       return (
-        <span className="max-w-[300px] truncate font-medium" title={descricao}>
+        <Link
+          href={APP_ROUTES.MOBILIDADE_DETALHE(row.original.id)}
+          className="max-w-[300px] truncate font-medium hover:underline"
+          aria-label={`Ver detalhes de ${row.original.descricao}`}
+        >
           {descricao}
-        </span>
+        </Link>
       )
     }
   },

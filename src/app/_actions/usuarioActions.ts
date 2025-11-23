@@ -87,7 +87,7 @@ export async function updateUsuario(
   }
 
   try {
-    await apiClient(`${API_ROUTES.USUARIO}/${id}`, {
+    await apiClient(API_ROUTES.USUARIO_EDITAR(id), {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })

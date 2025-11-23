@@ -26,6 +26,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { MotoristaDeletarModal } from '../../_components/motorista-deletar-modal'
+import { VeiculoSecao } from './veiculo-secao'
 
 interface MotoristaDetalhesProps {
   motorista: MotoristaResponseDTO
@@ -155,6 +156,8 @@ export function MotoristaDetalhes({ motorista }: MotoristaDetalhesProps) {
           </CardContent>
         </Card>
       </div>
+
+      <VeiculoSecao motorista={motorista} />
 
       <div className="flex justify-start gap-4">
         <Button variant="outline" asChild>

@@ -32,7 +32,7 @@ export async function getUsuarioById(
 ): Promise<UsuarioResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<UsuarioResponseDTO>>(
-      `${API_ROUTES.USUARIO}/${id}`,
+      API_ROUTES.USUARIO_ID(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
@@ -56,7 +56,7 @@ export async function getUsuarioComentarios(
 ): Promise<ComentarioResponseDTO[]> {
   try {
     const result = await apiClient<ApiResponse<ComentarioResponseDTO[]>>(
-      `${API_ROUTES.USUARIO}/${id}/comentarios`,
+      API_ROUTES.USUARIO_COMENTARIOS(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_COMMENTS,

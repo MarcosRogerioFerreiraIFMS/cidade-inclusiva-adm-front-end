@@ -59,7 +59,7 @@ export async function updateManutencao(
   }
 
   try {
-    await apiClient(`${API_ROUTES.MANUTENCAO}/${id}`, {
+    await apiClient(API_ROUTES.MANUTENCAO_EDITAR(id), {
       method: 'PUT',
       body: JSON.stringify(validation.data)
     })

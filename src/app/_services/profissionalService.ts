@@ -32,7 +32,7 @@ export async function getProfissionalById(
 ): Promise<ProfissionalResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<ProfissionalResponseDTO>>(
-      `${API_ROUTES.PROFISSIONAL}/${id}`,
+      API_ROUTES.PROFISSIONAL_ID(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
@@ -56,7 +56,7 @@ export async function getProfissionalComentarios(
 ): Promise<ComentarioResponseDTO[]> {
   try {
     const result = await apiClient<ApiResponse<ComentarioResponseDTO[]>>(
-      `${API_ROUTES.PROFISSIONAL}/${id}/comentarios`,
+      API_ROUTES.PROFISSIONAL_COMENTARIOS(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_COMMENTS,

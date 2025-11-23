@@ -1,6 +1,7 @@
 export * from './categoria-cell'
 export * from './conteudo-cell'
 export * from './data-cell'
+export * from './motorista-veiculo-cell'
 export * from './noticia-foto-cell'
 export * from './profissional-especialidade-cell'
 export * from './url-cell'

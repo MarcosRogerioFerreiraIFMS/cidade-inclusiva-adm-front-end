@@ -32,7 +32,7 @@ export async function getManutencaoById(
 ): Promise<ManutencaoResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<ManutencaoResponseDTO>>(
-      `${API_ROUTES.MANUTENCAO}/${id}`,
+      API_ROUTES.MANUTENCAO_ID(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
@@ -56,7 +56,7 @@ export async function getManutencaoComentarios(
 ): Promise<ComentarioResponseDTO[]> {
   try {
     const result = await apiClient<ApiResponse<ComentarioResponseDTO[]>>(
-      `${API_ROUTES.MANUTENCAO}/${id}/comentarios`,
+      API_ROUTES.MANUTENCAO_COMENTARIOS(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_COMMENTS,

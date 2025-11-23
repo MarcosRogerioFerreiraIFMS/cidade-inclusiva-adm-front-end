@@ -1,6 +1,6 @@
 'use client'
 
-import { AvatarCell } from '@/app/_components/cells'
+import { AvatarCell, MotoristaVeiculoCell } from '@/app/_components/cells'
 import { Button } from '@/app/_components/ui/button'
 import { APP_ROUTES } from '@/app/_constants/appSettingsConstants'
 import type { MotoristaResponseDTO } from '@/app/_dtos/response'
@@ -78,6 +78,32 @@ export const motoristaTableColumns: ColumnDef<MotoristaResponseDTO>[] = [
     cell: ({ row }) => {
       const telefone = row.getValue('telefone') as string
       return <span className="font-medium">{formatTelefone(telefone)}</span>
+    }
+  },
+  {
+    accessorKey: 'veiculo',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          className="h-auto p-0 hover:bg-transparent"
+          aria-label="Ordenar por veículo"
+        >
+          Veículo
+          <ArrowUpDownIcon aria-hidden="true" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const motorista = row.original
+      return <MotoristaVeiculoCell temVeiculo={!!motorista.veiculo} />
+    },
+    sortingFn: (rowA, rowB) => {
+      const hasVeiculoA = !!rowA.original.veiculo
+      const hasVeiculoB = !!rowB.original.veiculo
+      if (hasVeiculoA === hasVeiculoB) return 0
+      return hasVeiculoA ? -1 : 1
     }
   },
   {

@@ -26,7 +26,7 @@ export async function getNoticiaById(
 ): Promise<NoticiaResponseDTO | null> {
   try {
     const result = await apiClient<ApiResponse<NoticiaResponseDTO>>(
-      `${API_ROUTES.NOTICIA}/${id}`,
+      API_ROUTES.NOTICIA_ID(id),
       {
         next: {
           revalidate: CACHE_CONFIG.REVALIDATE_SHORT,
