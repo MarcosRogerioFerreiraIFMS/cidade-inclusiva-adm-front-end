@@ -173,6 +173,13 @@ export const menuItems: MenuItem[] = [
         text: 'Mapa Interativo',
         title: 'Mapa Interativo de Ocorrências de Mobilidade',
         enabled: true
+      },
+      {
+        href: APP_ROUTES.MOBILIDADE_GERAR_RELATORIO(),
+        icon: MapIcon,
+        text: 'Gerar Relatório',
+        title: 'Gerar Relatório de Ocorrências de Mobilidade',
+        enabled: true
       }
     ]
   },

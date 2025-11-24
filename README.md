@@ -129,6 +129,7 @@ O projeto segue a arquitetura moderna do **Next.js 15 App Router**, organizada d
 | `@radix-ui/react-accordion`     | `^1.2.12`     | Componente de acordeão acessível                                  | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-alert-dialog`  | `^1.1.15`     | Componente de diálogo de alerta acessível                         | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-avatar`        | `^1.1.10`     | Componente de avatar acessível                                    | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-checkbox`      | `^1.3.3`      | Componente de checkbox acessível                                  | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-collapsible`   | `^1.1.12`     | Componente colapsável acessível                                   | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-dropdown-menu` | `^2.1.16`     | Componente de menu dropdown acessível                             | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-label`         | `^2.1.7`      | Componente de label acessível                                     | [Radix UI](https://www.radix-ui.com/)                              |
@@ -138,6 +139,8 @@ O projeto segue a arquitetura moderna do **Next.js 15 App Router**, organizada d
 | `@tanstack/react-table`         | `^8.21.3`     | Biblioteca poderosa para tabelas de dados no React                | [TanStack Table](https://tanstack.com/table/)                      |
 | `@vis.gl/react-google-maps`     | `^1.7.1`      | Componentes React para Google Maps                                | [React Google Maps](https://visgl.github.io/react-google-maps/)    |
 | `axios`                         | `^1.13.1`     | Cliente HTTP baseado em Promises para o navegador e Node.js       | [Axios](https://axios-http.com/)                                   |
+| `date-fns`                      | `^4.1.0`      | Biblioteca moderna de utilitários para manipulação de datas       | [date-fns](https://date-fns.org/)                                  |
+| `@react-pdf/renderer`           | `^4.3.1`      | Geração de documentos PDF no React                                | [React PDF](https://react-pdf.org/)                                |
 | `@hookform/resolvers`           | `^5.2.2`      | Integrações de validação para React Hook Form                     | [Hookform Resolvers](https://github.com/react-hook-form/resolvers) |
 | `react-hook-form`               | `^7.66.0`     | Biblioteca performática para gerenciamento de formulários         | [React Hook Form](https://react-hook-form.com/)                    |
 | `zod`                           | `^3.25.76`    | Biblioteca de validação de schema TypeScript-first                | [Zod](https://zod.dev/)                                            |
@@ -181,6 +184,7 @@ Este projeto utiliza **shadcn/ui**, uma coleção de componentes reutilizáveis 
 - **Badge** - Etiquetas e tags
 - **Button** - Botões com variantes
 - **Card** - Cartões de conteúdo
+- **Checkbox** - Caixas de seleção acessíveis
 - **Dropdown Menu** - Menus suspensos interativos
 - **Form** - Integração com React Hook Form
 - **Input** - Campos de entrada de texto
@@ -188,6 +192,7 @@ Este projeto utiliza **shadcn/ui**, uma coleção de componentes reutilizáveis 
 - **Select** - Seleção de opções
 - **Table** - Tabelas de dados
 - **Textarea** - Áreas de texto multilinha
+- **Tooltip** - Dicas e informações contextuais
 - **Theme Provider** - Gerenciamento de temas
 
 ### 🎨 Customização
@@ -462,6 +467,8 @@ pnpm start
 - ✅ **Custom Hooks** - Lógica reutilizável encapsulada
 - ✅ **Utility Functions** - Helpers para operações comuns
 - ✅ **Constants Management** - Centralização de valores constantes
+- ✅ **Date Utilities** - Manipulação de datas com date-fns
+- ✅ **PDF Generation** - Geração de relatórios em PDF com React PDF
 
 ### 🧩 Componentes Especializados
 

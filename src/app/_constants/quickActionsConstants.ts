@@ -147,6 +147,14 @@ export const MOBILIDADES_QUICK_ACTIONS: QuickActionType[] = [
     imageSrc: QuickActionImageEnum.MOBILIDADE,
     href: APP_ROUTES.MOBILIDADE_MAPA(),
     enabled: true
+  },
+  {
+    title: 'Gerar Relatório',
+    description:
+      'Gere relatórios personalizados em PDF das ocorrências de mobilidade',
+    imageSrc: QuickActionImageEnum.MOBILIDADE,
+    href: APP_ROUTES.MOBILIDADE_GERAR_RELATORIO(),
+    enabled: true
   }
 ]
 
