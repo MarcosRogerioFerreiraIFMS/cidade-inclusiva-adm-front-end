@@ -111,6 +111,8 @@ export const API_ROUTES = {
     `${API_ROUTES.MOBILIDADE}/${mobilidadeId}`,
   MOBILIDADE_USUARIO: (usuarioId: string) =>
     `${API_ROUTES.MOBILIDADE}/usuario/${usuarioId}`,
+  MOBILIDADE_STATUS: (mobilidadeId: string) =>
+    `${API_ROUTES.MOBILIDADE}/${mobilidadeId}/status`,
 
   /** Rotas para operações de motoristas */
   MOTORISTA: '/motoristas',
@@ -181,6 +183,8 @@ export const APP_ROUTES = {
   MOBILIDADE_DETALHE: (id: string) => `${APP_ROUTES.MOBILIDADE}/${id}`,
   MOBILIDADE_MAPA: () => `${APP_ROUTES.MOBILIDADE}/mapa`,
   MOBILIDADE_GERAR_RELATORIO: () => `${APP_ROUTES.MOBILIDADE}/gerar-relatorio`,
+  MOBILIDADE_ALTERAR_STATUS: (id: string) =>
+    `${APP_ROUTES.MOBILIDADE}/${id}/alterar-status`,
 
   MOTORISTA: '/motoristas',
   MOTORISTA_LISTAR: () => `${APP_ROUTES.MOTORISTA}/listar`,

@@ -131,6 +131,7 @@ O projeto segue a arquitetura moderna do **Next.js 15 App Router**, organizada d
 | `@radix-ui/react-avatar`        | `^1.1.10`     | Componente de avatar acessível                                    | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-checkbox`      | `^1.3.3`      | Componente de checkbox acessível                                  | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-collapsible`   | `^1.1.12`     | Componente colapsável acessível                                   | [Radix UI](https://www.radix-ui.com/)                              |
+| `@radix-ui/react-dialog`        | `^1.1.15`     | Componente de diálogo acessível                                   | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-dropdown-menu` | `^2.1.16`     | Componente de menu dropdown acessível                             | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-label`         | `^2.1.7`      | Componente de label acessível                                     | [Radix UI](https://www.radix-ui.com/)                              |
 | `@radix-ui/react-select`        | `^2.2.6`      | Componente de select acessível                                    | [Radix UI](https://www.radix-ui.com/)                              |
@@ -185,6 +186,8 @@ Este projeto utiliza **shadcn/ui**, uma coleção de componentes reutilizáveis 
 - **Button** - Botões com variantes
 - **Card** - Cartões de conteúdo
 - **Checkbox** - Caixas de seleção acessíveis
+- **Collapsible** - Seções colapsáveis
+- **Dialog** - Diálogos modais
 - **Dropdown Menu** - Menus suspensos interativos
 - **Form** - Integração com React Hook Form
 - **Input** - Campos de entrada de texto

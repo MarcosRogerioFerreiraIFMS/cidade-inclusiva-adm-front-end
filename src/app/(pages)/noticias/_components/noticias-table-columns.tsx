@@ -16,15 +16,6 @@ import { ArrowUpDownIcon } from 'lucide-react'
 import { NoticiaTableActionsMenu } from './noticia-table-actions-menu'
 
 export const noticiaTableColumns: ColumnDef<NoticiaResponseDTO>[] = [
-  // {
-  //   accessorKey: 'foto',
-  //   header: 'Imagem',
-  //   cell: ({ row }) => {
-  //     const foto = row.getValue('foto') as NoticiaResponseDTO['foto']
-  //     const titulo = row.getValue('titulo') as string
-  //     return <FotoCell foto={foto} titulo={titulo} />
-  //   }
-  // },
   {
     accessorKey: 'titulo',
     header: ({ column }) => {

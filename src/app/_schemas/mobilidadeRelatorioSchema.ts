@@ -33,3 +33,16 @@ export const mobilidadeRelatorioSchema = z.object({
 export type MobilidadeRelatorioFilterDTO = z.infer<
   typeof mobilidadeRelatorioSchema
 >
+
+/**
+ * Schema para atualização de status de mobilidade
+ */
+export const updateMobilidadeStatusSchema = z.object({
+  status: z.enum(MOBILIDADE_STATUS, {
+    errorMap: () => ({ message: 'Status inválido' })
+  })
+})
+
+export type UpdateMobilidadeStatusDTO = z.infer<
+  typeof updateMobilidadeStatusSchema
+>

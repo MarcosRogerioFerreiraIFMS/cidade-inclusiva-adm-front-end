@@ -36,7 +36,7 @@ export const mobilidadeTableColumns: ColumnDef<MobilidadeResponseDTO>[] = [
       return (
         <Link
           href={APP_ROUTES.MOBILIDADE_DETALHE(row.original.id)}
-          className="max-w-[300px] truncate font-medium hover:underline"
+          className="block max-w-[300px] truncate font-medium hover:underline"
           aria-label={`Ver detalhes de ${row.original.descricao}`}
         >
           {descricao}

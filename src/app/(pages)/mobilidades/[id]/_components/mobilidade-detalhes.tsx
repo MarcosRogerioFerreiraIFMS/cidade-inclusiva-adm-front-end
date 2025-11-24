@@ -24,6 +24,7 @@ import {
   Undo2Icon
 } from 'lucide-react'
 import Link from 'next/link'
+import { AlterarStatusDialog } from './alterar-status-dialog'
 
 interface MobilidadeDetalhesProps {
   mobilidade: MobilidadeResponseDTO
@@ -166,6 +167,11 @@ export function MobilidadeDetalhes({ mobilidade }: MobilidadeDetalhesProps) {
             <span>Voltar para lista</span>
           </Link>
         </Button>
+
+        <AlterarStatusDialog
+          mobilidadeId={mobilidade.id}
+          currentStatus={mobilidade.status}
+        />
 
         <Button asChild>
           <Link
