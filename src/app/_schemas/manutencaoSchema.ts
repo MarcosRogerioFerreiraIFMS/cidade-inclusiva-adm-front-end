@@ -3,7 +3,8 @@ import { MANUTENCAO_ESPECIALIDADES } from '../_enums/manutencaoEnums'
 import {
   emailSchema,
   enderecoSchema,
-  fotoUpdateSchema,
+  fotosArraySchema,
+  fotoSchema,
   nomeSchema,
   telefoneSchema
 } from './commonSchemas'
@@ -23,23 +24,8 @@ export const createManutencaoSchema = z.object({
     .min(1, 'Selecione pelo menos uma especialidade')
     .max(20, 'Selecione no máximo 20 especialidades'),
   endereco: enderecoSchema,
-  fotos: z
-    .array(
-      z
-        .string()
-        .url('URL inválida')
-        .refine(
-          (url) => {
-            const lowerUrl = url.toLowerCase()
-            return (
-              lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')
-            )
-          },
-          { message: 'A URL deve começar com http:// ou https://' }
-        )
-    )
-    .optional(),
-  logo: fotoUpdateSchema
+  fotos: fotosArraySchema,
+  logo: fotoSchema
 })
 
 export type ManutencaoCreateDTO = z.infer<typeof createManutencaoSchema>
@@ -59,23 +45,8 @@ export const updateManutencaoSchema = z.object({
     .min(1, 'Selecione pelo menos uma especialidade')
     .max(20, 'Selecione no máximo 20 especialidades'),
   endereco: enderecoSchema,
-  fotos: z
-    .array(
-      z
-        .string()
-        .url('URL inválida')
-        .refine(
-          (url) => {
-            const lowerUrl = url.toLowerCase()
-            return (
-              lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')
-            )
-          },
-          { message: 'A URL deve começar com http:// ou https://' }
-        )
-    )
-    .optional(),
-  logo: fotoUpdateSchema
+  fotos: fotosArraySchema,
+  logo: fotoSchema
 })
 
 export type ManutencaoUpdateDTO = z.infer<typeof updateManutencaoSchema>

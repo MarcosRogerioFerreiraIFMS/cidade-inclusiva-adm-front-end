@@ -112,7 +112,7 @@ export function LoginForm() {
           <div className="mb-6 rounded-xl border border-red-200 bg-linear-to-br from-red-50 to-red-100/50 p-4 shadow-md dark:border-red-900/50 dark:from-red-950/50 dark:to-red-900/20">
             <div className="flex items-start gap-3">
               <div className="rounded-full bg-red-100 p-2 dark:bg-red-900/50">
-                <ShieldAlertIcon className="h-5 w-5 shrink-0 text-red-600 dark:text-red-400" />
+                <ShieldAlertIcon className="size-5 shrink-0 text-red-600 dark:text-red-400" />
               </div>
               <div className="flex-1 space-y-1.5">
                 <p className="text-sm font-bold text-red-900 dark:text-red-200">

@@ -43,7 +43,23 @@ export const menuItems: MenuItem[] = [
     icon: AccessibilityIcon,
     text: 'Acessibilidade Urbana',
     title: 'Acessibilidade Urbana',
-    enabled: false
+    enabled: true,
+    subItems: [
+      {
+        href: APP_ROUTES.ACESSIBILIDADE_URBANA_LISTAR(),
+        icon: AccessibilityIcon,
+        text: 'Listar Acessibilidades Urbanas',
+        title: 'Listar Acessibilidades Urbanas',
+        enabled: true
+      },
+      {
+        href: APP_ROUTES.ACESSIBILIDADE_URBANA_ADICIONAR(),
+        icon: AccessibilityIcon,
+        text: 'Adicionar Acessibilidade Urbana',
+        title: 'Adicionar Acessibilidade Urbana',
+        enabled: true
+      }
+    ]
   },
   {
     href: APP_ROUTES.MANUTENCAO,

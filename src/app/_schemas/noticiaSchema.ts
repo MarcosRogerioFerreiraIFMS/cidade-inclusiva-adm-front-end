@@ -5,7 +5,7 @@ import {
   conteudoSchema,
   dataPublicacaoOptionalSchema,
   dataPublicacaoSchema,
-  fotoOptionalSchema,
+  fotoSchema,
   tituloOptionalSchema,
   tituloSchema,
   urlOptionalSchema,
@@ -30,7 +30,7 @@ export const createNoticiaSchema = z.object({
       }
     ),
   dataPublicacao: dataPublicacaoSchema,
-  foto: fotoOptionalSchema,
+  foto: fotoSchema,
   url: urlOptionalSchema
 })
 

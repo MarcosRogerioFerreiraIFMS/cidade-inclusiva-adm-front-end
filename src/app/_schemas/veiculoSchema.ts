@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { fotosArraySchema } from './commonSchemas'
 
 // Schema de placa brasileira
 const placaSchema = z
@@ -35,22 +36,7 @@ export const createVeiculoSchema = z.object({
     .min(3, 'Cor deve ter pelo menos 3 caracteres')
     .max(30, 'Cor deve ter no máximo 30 caracteres')
     .transform((val) => val.trim()),
-  fotos: z
-    .array(
-      z
-        .string()
-        .url('URL inválida')
-        .refine(
-          (url) => {
-            const lowerUrl = url.toLowerCase()
-            return (
-              lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')
-            )
-          },
-          { message: 'A URL deve começar com http:// ou https://' }
-        )
-    )
-    .optional()
+  fotos: fotosArraySchema
 })
 
 export type VeiculoCreateDTO = z.infer<typeof createVeiculoSchema>
@@ -76,22 +62,7 @@ export const updateVeiculoSchema = z.object({
     .min(3, 'Cor deve ter pelo menos 3 caracteres')
     .max(30, 'Cor deve ter no máximo 30 caracteres')
     .transform((val) => val.trim()),
-  fotos: z
-    .array(
-      z
-        .string()
-        .url('URL inválida')
-        .refine(
-          (url) => {
-            const lowerUrl = url.toLowerCase()
-            return (
-              lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')
-            )
-          },
-          { message: 'A URL deve começar com http:// ou https://' }
-        )
-    )
-    .optional()
+  fotos: fotosArraySchema
 })
 
 export type VeiculoUpdateDTO = z.infer<typeof updateVeiculoSchema>

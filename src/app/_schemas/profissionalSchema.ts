@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { PROFISSIONAL_ESPECIALIDADES } from '../_enums/profissionalEnums'
 import {
   emailSchema,
-  fotoUpdateSchema,
+  fotoSchema,
   nomeSchema,
   telefoneSchema
 } from './commonSchemas'
@@ -16,7 +16,7 @@ export const createProfissionalSchema = z.object({
     required_error: 'A especialidade é obrigatória',
     invalid_type_error: 'Especialidade inválida'
   }),
-  foto: fotoUpdateSchema
+  foto: fotoSchema
 })
 
 export type ProfissionalCreateDTO = z.infer<typeof createProfissionalSchema>
@@ -30,7 +30,7 @@ export const updateProfissionalSchema = z.object({
     required_error: 'A especialidade é obrigatória',
     invalid_type_error: 'Especialidade inválida'
   }),
-  foto: fotoUpdateSchema
+  foto: fotoSchema
 })
 
 export type ProfissionalUpdateDTO = z.infer<typeof updateProfissionalSchema>

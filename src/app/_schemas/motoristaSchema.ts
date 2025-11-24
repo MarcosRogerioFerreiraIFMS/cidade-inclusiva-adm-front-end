@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import {
   emailSchema,
-  fotoUpdateSchema,
+  fotoSchema,
   nomeSchema,
   telefoneSchema
 } from './commonSchemas'
@@ -11,7 +11,7 @@ export const createMotoristaSchema = z.object({
   nome: nomeSchema,
   telefone: telefoneSchema,
   email: emailSchema,
-  foto: fotoUpdateSchema
+  foto: fotoSchema
 })
 
 export type MotoristaCreateDTO = z.infer<typeof createMotoristaSchema>
@@ -21,7 +21,7 @@ export const updateMotoristaSchema = z.object({
   nome: nomeSchema,
   telefone: telefoneSchema,
   email: emailSchema,
-  foto: fotoUpdateSchema
+  foto: fotoSchema
 })
 
 export type MotoristaUpdateDTO = z.infer<typeof updateMotoristaSchema>

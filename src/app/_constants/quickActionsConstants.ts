@@ -30,7 +30,7 @@ export const HOME_QUICK_ACTIONS: QuickActionType[] = [
     description: 'Visualize tudo sobre Acessibilidade Urbana',
     imageSrc: QuickActionImageEnum.ACESSIBILIDADE_URBANA,
     href: APP_ROUTES.ACESSIBILIDADE_URBANA,
-    enabled: false
+    enabled: true
   },
   {
     title: 'Profissionais',
@@ -163,6 +163,26 @@ export const MANUTENCAO_QUICK_ACTIONS: QuickActionType[] = [
     description: 'Adicione uma nova oficina de manutenção',
     imageSrc: QuickActionImageEnum.MANUTENCAO,
     href: APP_ROUTES.MANUTENCAO_ADICIONAR(),
+    enabled: true
+  }
+]
+
+/**
+ * Ações rápidas para o módulo de Acessibilidade Urbana
+ */
+export const ACESSIBILIDADE_URBANA_QUICK_ACTIONS: QuickActionType[] = [
+  {
+    title: 'Listar Acessibilidades Urbanas',
+    description: 'Visualize uma tabela com todas as acessibilidades urbanas',
+    imageSrc: QuickActionImageEnum.ACESSIBILIDADE_URBANA,
+    href: APP_ROUTES.ACESSIBILIDADE_URBANA_LISTAR(),
+    enabled: true
+  },
+  {
+    title: 'Adicionar Acessibilidade Urbana',
+    description: 'Adicione uma nova acessibilidade urbana',
+    imageSrc: QuickActionImageEnum.ACESSIBILIDADE_URBANA,
+    href: APP_ROUTES.ACESSIBILIDADE_URBANA_ADICIONAR(),
     enabled: true
   }
 ]

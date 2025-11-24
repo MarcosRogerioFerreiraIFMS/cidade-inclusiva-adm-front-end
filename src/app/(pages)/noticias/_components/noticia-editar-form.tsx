@@ -145,10 +145,12 @@ export function NoticiaEditarForm({ noticia }: EditarNoticiaFormProps) {
                   <Textarea
                     autoComplete="off"
                     placeholder="Digite o conteúdo da notícia"
-                    className="min-h-[200px]"
+                    className="max-h-[400px] min-h-[200px] resize-y"
                     {...createAutoFormatHandler(field, formatContent)}
                     value={field.value ?? ''}
                     disabled={isPending}
+                    maxLength={5000}
+                    minLength={10}
                   />
                 </FormControl>
                 <FormMessage />

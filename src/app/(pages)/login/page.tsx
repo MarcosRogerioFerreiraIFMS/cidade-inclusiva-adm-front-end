@@ -82,7 +82,7 @@ export default async function LoginPage() {
               </div>
               <div className="space-y-1 rounded-xl bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all hover:bg-white dark:bg-slate-800/40 dark:hover:bg-slate-800/60">
                 <p className="flex items-center justify-center text-blue-600">
-                  <AccessibilityIcon className="h-8 w-8" />
+                  <AccessibilityIcon className="size-8" />
                 </p>
                 <p className="text-xs font-medium text-slate-800 dark:text-slate-400">
                   Acessível

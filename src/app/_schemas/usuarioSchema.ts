@@ -3,7 +3,7 @@ import { TIPO_USUARIO } from '../_enums/tipoUsuarioEnum'
 import {
   emailSchema,
   enderecoSchema,
-  fotoUpdateSchema,
+  fotoSchema,
   nomeSchema,
   senhaOptionalSchema,
   senhaSchema,
@@ -17,7 +17,7 @@ export const updateUsuarioSchema = z.object({
   telefone: telefoneSchema,
   email: emailSchema,
   senha: senhaOptionalSchema,
-  foto: fotoUpdateSchema
+  foto: fotoSchema
 })
 
 export type UsuarioUpdateDTO = z.infer<typeof updateUsuarioSchema>
@@ -33,7 +33,7 @@ export const createUsuarioSchema = z.object({
     required_error: 'O tipo de usuário é obrigatório',
     invalid_type_error: 'O tipo deve ser USUARIO ou ADMIN'
   }),
-  foto: fotoUpdateSchema
+  foto: fotoSchema
 })
 
 export type UsuarioCreateDTO = z.infer<typeof createUsuarioSchema>

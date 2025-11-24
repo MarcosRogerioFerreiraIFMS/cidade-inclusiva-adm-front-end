@@ -277,7 +277,7 @@ export function LayoutError({ error, reset }: LayoutErrorProps) {
           {/* Ação Sugerida */}
           {errorInfo.action && (
             <p className="text-muted-foreground flex items-center gap-2 text-center text-sm">
-              <LightbulbIcon className="h-4 w-4 shrink-0" />
+              <LightbulbIcon className="size-4 shrink-0" />
               {errorInfo.action}
             </p>
           )}

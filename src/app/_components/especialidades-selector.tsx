@@ -103,7 +103,7 @@ export function EspecialidadesSelector({
                       : 'border-muted-foreground/50'
                   )}
                 >
-                  {isSelected && <CheckIcon className="h-3.5 w-3.5" />}
+                  {isSelected && <CheckIcon className="size-3.5" />}
                 </div>
                 <span
                   className={cn(

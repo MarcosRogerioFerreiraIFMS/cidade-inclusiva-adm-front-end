@@ -17,6 +17,7 @@ export const CEP_REGEX = /^\d{5}-\d{3}$/
 export const SENHA_MIN_LENGTH = 8
 export const SENHA_MAX_LENGTH = 128
 export const EMAIL_MAX_LENGTH = 254
+export const MAX_FOTOS = 20
 
 // Schemas de campos comuns
 export const emailSchema = z
@@ -165,50 +166,7 @@ export const conteudoOptionalSchema = z
   )
   .optional()
 
-// Helper para criar schema de URL com validações de protocolo e imagem
-const createUrlSchema = (
-  fieldName: string,
-  optional = true,
-  validateImage = false
-) => {
-  const schema = z
-    .string()
-    .trim()
-    .transform((val) => (val === '' ? (optional ? undefined : '') : val))
-    .refine(
-      (val) => {
-        if (!val || (optional && val === '')) return true
-        const validation = validateUrlProtocol(val)
-        return validation.valid
-      },
-      {
-        message: `URL ${fieldName} inválida. Deve começar com http:// ou https://`
-      }
-    )
-
-  if (validateImage) {
-    return schema.refine(
-      (val) => {
-        if (!val || (optional && val === '')) return true
-        return hasValidImageExtension(val)
-      },
-      {
-        message:
-          'A URL deve terminar com uma extensão de imagem válida (.jpg, .png, .webp, etc.)'
-      }
-    )
-  }
-
-  return schema
-}
-
-export const fotoOptionalSchema = createUrlSchema(
-  'da foto',
-  true,
-  true
-).optional()
-
-export const fotoUpdateSchema = z
+export const fotoSchema = z
   .string()
   .trim()
   .transform((val) => (val === '' ? '' : val))
@@ -378,3 +336,29 @@ export const enderecoSchema = z.object({
     )
     .optional()
 })
+
+export const fotosArraySchema = z
+  .array(
+    z
+      .string()
+      .url('URL inválida')
+      .refine(
+        (url) => {
+          const lowerUrl = url.toLowerCase()
+          return (
+            lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')
+          )
+        },
+        { message: 'A URL deve começar com http:// ou https://' }
+      )
+  )
+  .default([])
+  .transform((fotos) => {
+    // Remove duplicadas
+    const unique = Array.from(new Set(fotos))
+    return unique
+  })
+  .refine((fotos) => fotos.length <= MAX_FOTOS, {
+    message: `O número máximo de fotos é ${MAX_FOTOS}`
+  })
+  .optional()

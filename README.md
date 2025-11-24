@@ -6,14 +6,13 @@ O **Cidade Inclusiva - Painel Administrativo - Front-end** é uma aplicação we
 
 O sistema tem como objetivo principal facilitar a inclusão social e a mobilidade urbana através de:
 
-- **🚍 Gestão de Transporte:** Interface para controle de veículos, motoristas e rotas acessíveis
+- **🚍 Gestão de Transporte:** Interface para controle de motoristas disponíveis e veículos adaptados
 - **♿ Acessibilidade Urbana:** Visualização e gerenciamento de locais acessíveis na cidade
-- **🗺️ Mapa Interativo:** Sistema de mapeamento em tempo real com Google Maps para visualização e gestão de pontos de mobilidade
-- **🔧 Manutenção:** Sistema de gerenciamento de solicitações e acompanhamento de reparos
+- **🗺️ Mapa Interativo:** Sistema de mapeamento em com Google Maps para visualização e gestão de pontos com ocorrências de mobilidade
+- **🔧 Manutenção:** Sistema de gerenciamento de oficinas especializadas
 - **📰 Comunicação:** Plataforma de notícias e informações relevantes para a comunidade
 - **👥 Comunidade:** Interface para comentários e interação entre usuários
 - **🏥 Profissionais:** Cadastro e gestão de profissionais especializados
-- **📊 Dashboard:** Visualização de dados e estatísticas em tempo real
 
 ## 📋 Informações do Projeto
 
