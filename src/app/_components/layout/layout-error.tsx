@@ -39,6 +39,7 @@ type ErrorType =
   | 'notfound'
   | 'ratelimit'
   | 'server'
+  | 'servercomponent'
   | 'validation'
   | 'unknown'
 
@@ -57,6 +58,16 @@ function identifyErrorType(error?: Error): ErrorType {
   if (!error?.message) return 'unknown'
 
   const message = error.message.toLowerCase()
+
+  // Erro específico de Server Components em produção
+  if (
+    message.includes('server components render') ||
+    message.includes('omitted in production') ||
+    message.includes('omitted in production builds') ||
+    message.includes('avoid leaking sensitive details')
+  ) {
+    return 'servercomponent'
+  }
 
   if (
     message.includes('fetch failed') ||
@@ -215,6 +226,15 @@ function getErrorInfo(error?: Error): ErrorInfo {
       icon: ClockIcon,
       action: 'Aguarde e tente novamente em alguns minutos'
     },
+    servercomponent: {
+      title: 'Erro no Servidor',
+      message:
+        'Não foi possível carregar a página no momento. Tente novamente em alguns instantes.',
+      cause:
+        '• Um problema temporário está impedindo o carregamento\n• O servidor pode estar processando muitas solicitações\n• Tente recarregar a página',
+      icon: ServerCrashIcon,
+      action: 'Recarregue a página ou tente novamente mais tarde'
+    },
     server: {
       title: 'Erro no Servidor',
       message:
@@ -248,6 +268,7 @@ function getErrorInfo(error?: Error): ErrorInfo {
 export function LayoutError({ error, reset }: LayoutErrorProps) {
   const errorInfo = getErrorInfo(error)
   const IconComponent = errorInfo.icon
+  const isDevelopment = process.env.NODE_ENV === 'development'
 
   return (
     <LayoutDashboard>
@@ -282,36 +303,44 @@ export function LayoutError({ error, reset }: LayoutErrorProps) {
             </p>
           )}
 
-          {/* Accordion com Detalhes Técnicos */}
+          {/* Accordion com Possíveis Causas */}
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="technical-details" className="border-none">
               <AccordionTrigger className="hover:no-underline">
                 <span className="text-muted-foreground text-sm">
-                  Ver possíveis causas
+                  Ver mais informações
                 </span>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="bg-muted text-muted-foreground mt-2 rounded-md px-4 py-3 text-left text-sm">
-                  <p className="mb-2 font-medium">Possíveis causas:</p>
+                  <p className="mb-2 font-medium">
+                    O que pode ter causado isso:
+                  </p>
                   <p className="whitespace-pre-line">{errorInfo.cause}</p>
                 </div>
 
-                <div className="bg-muted text-muted-foreground mt-3 rounded-md px-4 py-3 text-left">
-                  <p className="mb-2 text-xs font-medium text-orange-600 uppercase">
-                    Detalhes Técnicos
-                  </p>
-                  {error?.message && (
-                    <p className="mb-1 text-xs">
-                      <span className="font-medium">Mensagem:</span>{' '}
-                      {error.message}
+                {/* Detalhes Técnicos - Apenas em Desenvolvimento */}
+                {isDevelopment && (error?.message || error?.digest) && (
+                  <div className="bg-muted text-muted-foreground mt-3 rounded-md px-4 py-3 text-left">
+                    <p className="mb-2 text-xs font-medium text-orange-600 uppercase">
+                      Detalhes Técnicos (Dev)
                     </p>
-                  )}
-                  {error?.digest && (
-                    <p className="text-xs">
-                      <span className="font-medium">ID:</span> {error.digest}
-                    </p>
-                  )}
-                </div>
+                    {error?.message && (
+                      <p className="mb-1 text-xs">
+                        <span className="font-medium">Mensagem:</span>{' '}
+                        {error.message}
+                      </p>
+                    )}
+                    {error?.digest && (
+                      <p className="text-xs">
+                        <span className="font-medium">ID do Erro:</span>{' '}
+                        <code className="bg-background rounded px-1 py-0.5 font-mono">
+                          {error.digest}
+                        </code>
+                      </p>
+                    )}
+                  </div>
+                )}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
